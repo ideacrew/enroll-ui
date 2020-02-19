@@ -1,21 +1,30 @@
-import { PrimaryAgentVM, AgencyRoleState } from './agency-staff';
+/**
+ * This is the agent that will be listed underneath the Agency Name
+ *
+ * The requirements doc calls this the `Writing Agent`
+ *
+ * Is there a more generic name? This may influence the `AgencyPosition` enum
+ */
+export interface WritingAgent {
+  /**
+   * `primary_broker_role_id` on a Broker Agency profile
+   *
+   * `_id` on the `broker_role` object
+   *
+   * no analog for General Agency "primary" agent
+   */
+  agentId: string;
+  fullName: string;
+  npn: string; // what is the npn?
+}
 
-export interface AssociationProfile {
-  agencyProfileId: string; // from profile
-  agencyType: AgencyType; // from profile
-  agencyId: string; // from agency
-  agencyName: string; // from agency
+export interface Agency {
+  legalName: string;
+  agencyType: AgencyType;
+  writingAgent: WritingAgent;
 }
 
 export enum AgencyType {
   Broker = 'Broker',
   General = 'General',
 }
-
-export type AgencyAssociation = AssociationProfile & {
-  primaryAgent: PrimaryAgentVM;
-} & { currentState: AgencyRoleState };
-
-export type AgencyVM = AssociationProfile & {
-  primaryAgent: PrimaryAgentVM;
-};

@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import {
-  GeneralAgencyStaff,
-  PrimaryBrokerStaff,
-  BrokerAgencyStaff,
-  Agency,
-} from '@hbx/api-interfaces';
+import { Agency } from '@hbx/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -19,21 +14,18 @@ export class AgenciesApiService {
 
   /**
    * Retrieves all agencies (broker and general)
+   *
+   * Includes their "primary" agent
    */
   getAllAgencies(): Observable<Agency[]> {
     return this.http.get<Agency[]>(`${this.api}/agencies`);
   }
 
   /**
-   * Retrieves all agency staff, i.e. person objects that have one of three
-   * identified role properties
+   * Retrieves all non-primary agency staff
    */
-  getAllAgencyStaff(): Observable<
-    Array<GeneralAgencyStaff | PrimaryBrokerStaff | BrokerAgencyStaff>
-  > {
-    return this.http.get<
-      Array<GeneralAgencyStaff | PrimaryBrokerStaff | BrokerAgencyStaff>
-    >(`${this.api}/agencies/agency_staff`);
+  getAllAgencyStaff(): Observable<AgencyStaff[]> {
+    return this.http.get<AgencyStaff[]>(`${this.api}/agencies/agency_staff`);
     // .pipe(tap(console.log));
   }
 }
