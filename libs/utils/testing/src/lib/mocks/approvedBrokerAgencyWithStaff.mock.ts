@@ -9,7 +9,7 @@ import {
   mockPrimaryBroker,
   mockBrokerAgencyStaff,
 } from './brokerAgencyStaff.mock';
-import { mockBrokerAgency } from './brokerAgency.mock';
+import { mockAgency } from './agency.mock';
 
 const DEFAULT_STAFF = 5;
 
@@ -31,7 +31,7 @@ export function approvedBrokerAgencyWithStaff(
 
   const primaryBroker = mockPrimaryBroker(agencyProfileId, primaryBrokerRoleId);
 
-  const brokerAgency = mockBrokerAgency(agencyProfileId, primaryBrokerRoleId);
+  const brokerAgency = mockAgency(agencyProfileId, primaryBrokerRoleId);
 
   // Creates an array that is totalStaff long and fills it with mock staff
   const brokerStaff = Array.from({ length: options.totalStaff }, () =>

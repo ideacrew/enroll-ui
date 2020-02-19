@@ -5,9 +5,10 @@ export interface AgencyStaff {
   personId: string;
 
   // Needed for Agency Staff List View
-  fullName: string;
+  firstName: string;
+  lastName: string;
   hbxId: string;
-  agencyRoles: AgentRole[];
+  agentRoles: AgentRole[];
 
   // Demographic Information
   email: string;
@@ -24,13 +25,7 @@ export interface AgentRole extends Agency {
    *
    * `benefit_sponsors_general_agency_profile_id` on a general agent
    */
-  roleId: string;
-
-  /**
-   * This isn't strictly required for any views, but may help clear
-   * up the understanding of roles within an Agency
-   */
-  agencyPosition: AgencyPosition;
+  agencyProfileId: string;
 
   /**
    * The current state of the role with the Agency
@@ -41,12 +36,6 @@ export interface AgentRole extends Agency {
    * This is required for the detail page of each individual Agency Staff
    */
   roleChangeHistory: ChangeHistory<AgencyRoleState>[];
-}
-
-export enum AgencyPosition {
-  Primary = 'Primary',
-  Writing = 'Writing',
-  Staff = 'Staff',
 }
 
 export const enum AgencyRoleState {

@@ -1,12 +1,9 @@
-import {
-  AgencyStaffVM,
-  AgencyAssociation,
-} from '@hbx/admin/shared/view-models';
+import { AgencyStaff, AgentRole } from '@hbx/api-interfaces';
 
 export function searchAgencyStaff(
   query: string,
-  agencyStaffVMs: AgencyStaffVM[]
-): AgencyStaffVM[] {
+  agencyStaffVMs: AgencyStaff[]
+): AgencyStaff[] {
   if (query === null || query.length === 0) {
     return agencyStaffVMs;
   } else {
@@ -21,33 +18,32 @@ export function searchAgencyStaff(
   }
 }
 
-function searchAgentName(query: string, agencyStaff: AgencyStaffVM): boolean {
-  return agencyStaff.fullName.toLowerCase().includes(query);
+function searchAgentName(query: string, agencyStaff: AgencyStaff): boolean {
+  const fullName = `${agencyStaff.firstName} ${agencyStaff.lastName}`;
+
+  return fullName.toLowerCase().includes(query);
 }
 
-function searchHBXId(query: string, agencyStaff: AgencyStaffVM): boolean {
+function searchHBXId(query: string, agencyStaff: AgencyStaff): boolean {
   return agencyStaff.hbxId.toLowerCase().includes(query);
 }
 
-function searchAgencyNames(query: string, agencyStaff: AgencyStaffVM): boolean {
-  const associations: AgencyAssociation[] = agencyStaff.agencyAssociations;
+function searchAgencyNames(query: string, agencyStaff: AgencyStaff): boolean {
+  const roles: AgentRole[] = agencyStaff.agentRoles;
 
   return (
-    associations.filter(agency =>
-      agency.agencyName.toLowerCase().includes(query)
-    ).length > 0
+    roles.filter(role => role.agencyName.toLowerCase().includes(query)).length >
+    0
   );
 }
 
-function searchPrimaryAgent(
-  query: string,
-  agencyStaff: AgencyStaffVM
-): boolean {
-  const associations: AgencyAssociation[] = agencyStaff.agencyAssociations;
+function searchPrimaryAgent(query: string, agencyStaff: AgencyStaff): boolean {
+  const roles: AgentRole[] = agencyStaff.agentRoles;
 
   return (
-    associations.filter(agency =>
-      agency.primaryAgent.fullName.toLowerCase().includes(query)
-    ).length > 0
+    roles.filter(role => {
+      const fullName = `${role.primaryAgent.firstName} ${role.primaryAgent.lastName}`;
+      return fullName.toLowerCase().includes(query);
+    }).length > 0
   );
 }

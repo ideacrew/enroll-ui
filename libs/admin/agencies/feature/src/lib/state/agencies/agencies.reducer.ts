@@ -8,7 +8,7 @@ export const AGENCIES_FEATURE_KEY = 'agencies';
 
 function selectAgencyId(a: AgenciesEntity): string {
   //In this case this would be optional since primary key is id
-  return a._id;
+  return a.agencyProfileId;
 }
 
 export interface State extends EntityState<AgenciesEntity> {

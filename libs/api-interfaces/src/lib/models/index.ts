@@ -15,3 +15,4 @@ export * from './generalAgencyStaffRole';
 export * from './brokerAgencyProfile';
 export * from './generalAgencyProfile';
 export * from './agency';
+export * from './agencyStaff';

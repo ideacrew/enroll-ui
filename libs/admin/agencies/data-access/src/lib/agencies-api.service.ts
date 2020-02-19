@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Agency } from '@hbx/api-interfaces';
+import { Agency, AgencyStaff } from '@hbx/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,5 @@ export class AgenciesApiService {
    */
   getAllAgencyStaff(): Observable<AgencyStaff[]> {
     return this.http.get<AgencyStaff[]>(`${this.api}/agencies/agency_staff`);
-    // .pipe(tap(console.log));
   }
 }

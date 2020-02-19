@@ -8,7 +8,6 @@ import * as AgenciesSelectors from './agencies.selectors';
 export class AgenciesFacade {
   loaded$ = this.store.pipe(select(AgenciesSelectors.getAgenciesLoaded));
   allAgencies$ = this.store.pipe(select(AgenciesSelectors.getAllAgencies));
-  selectedAgency$ = this.store.pipe(select(AgenciesSelectors.getSelected));
 
   constructor(private store: Store<fromAgencies.AgenciesPartialState>) {}
 
