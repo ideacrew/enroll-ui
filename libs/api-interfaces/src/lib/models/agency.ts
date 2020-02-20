@@ -1,9 +1,9 @@
 export interface Agency {
-  agencyProfileId: string;
+  organization_id: string;
+  agency_profile_id: string;
+  legal_name: string;
   dba: string;
-  legalName: string;
-  agencyType: AgencyType;
-  primaryAgent: PrimaryAgent;
+  agency_profile_type: string;
 }
 
 /**
@@ -13,19 +13,6 @@ export interface Agency {
  *
  * Is there a more generic name? This may influence the `AgencyPosition` enum
  */
-export interface PrimaryAgent {
-  /**
-   * `primary_broker_role_id` on a Broker Agency profile
-   *
-   * `_id` on the `broker_role` object
-   *
-   * no analog for General Agency "primary" agent
-   */
-  agentRoleId: string;
-  firstName: string;
-  lastName: string;
-  npn: string; // what is the npn?
-}
 
 export enum AgencyType {
   Broker = 'Broker',

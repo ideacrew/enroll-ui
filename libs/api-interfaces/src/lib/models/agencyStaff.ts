@@ -1,21 +1,19 @@
-import { Agency } from './agency';
-
 export interface AgencyStaff {
   // Likely needed to update demographic information
-  personId: string;
+  _id: string;
 
   // Needed for Agency Staff List View
-  firstName: string;
-  lastName: string;
-  hbxId: string;
-  agentRoles: AgentRole[];
+  first_name: string;
+  last_name: string;
+  hbx_id: string;
+  agency_roles: AgencyRole[];
 
   // Demographic Information
-  email: string;
-  dateOfBirth: string; // will be converted to date object
+  agent_emails: AgentEmail[];
+  dob: string; // will be converted to date object
 }
 
-export interface AgentRole extends Agency {
+export interface AgencyRole {
   /**
    * ### Needed to terminate the link between agent and agency
    *
@@ -25,17 +23,13 @@ export interface AgentRole extends Agency {
    *
    * `benefit_sponsors_general_agency_profile_id` on a general agent
    */
-  agencyProfileId: string;
+  agency_profile_id: string;
 
   /**
    * The current state of the role with the Agency
    */
-  currentState: AgencyRoleState;
-
-  /**
-   * This is required for the detail page of each individual Agency Staff
-   */
-  roleChangeHistory: ChangeHistory<AgencyRoleState>[];
+  aasm_state: string; // aasm_state
+  type: string;
 }
 
 export const enum AgencyRoleState {
@@ -49,4 +43,15 @@ export interface ChangeHistory<T> {
   changedFrom: T;
   changedTo: T;
   changedAt: string; // will be converted to Date object
+}
+
+export interface AgentEmail {
+  id: string;
+  kind: EmailKind;
+  address: string;
+}
+
+export const enum EmailKind {
+  Home = 'home',
+  Work = 'work',
 }
