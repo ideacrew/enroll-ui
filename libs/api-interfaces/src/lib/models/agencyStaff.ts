@@ -51,7 +51,7 @@ export interface AgentEmail {
   address: string;
 }
 
-export const enum EmailKind {
+export enum EmailKind {
   Home = 'home',
   Work = 'work',
 }

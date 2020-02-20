@@ -28,6 +28,9 @@ export class AgenciesApiService {
     return this.http.get<AgencyStaff[]>(`${this.api}/agencies/agency_staff`);
   }
 
+  /**
+   * Returns all agency staff that have been identified as primary agents
+   */
   getAllPrimaryAgents(): Observable<PrimaryAgent[]> {
     return this.http.get<PrimaryAgent[]>(`${this.api}/agencies/primary_agents`);
   }

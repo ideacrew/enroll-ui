@@ -8,11 +8,11 @@ export const AGENCYSTAFF_FEATURE_KEY = 'agencyStaff';
 
 function selectAgencyStaffId(a: AgencyStaffEntity): string {
   //In this case this would be optional since primary key is id
-  return a.personId;
+  return a._id;
 }
 
 function sortStaff(a: AgencyStaffEntity, b: AgencyStaffEntity): number {
-  return a.lastName.localeCompare(b.lastName);
+  return a.last_name.localeCompare(b.last_name);
 }
 
 export interface State extends EntityState<AgencyStaffEntity> {

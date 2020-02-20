@@ -11,6 +11,9 @@ import { AgenciesFeatureShellComponent } from './agencies-feature-shell/agencies
 import * as fromAgencyStaff from './state/agency-staff/agency-staff.reducer';
 import { AgencyStaffEffects } from './state/agency-staff/agency-staff.effects';
 import { AgencyStaffFacade } from './state/agency-staff/agency-staff.facade';
+import * as fromPrimaryAgents from './state/primary-agents/primary-agents.reducer';
+import { PrimaryAgentsEffects } from './state/primary-agents/primary-agents.effects';
+import { PrimaryAgentsFacade } from './state/primary-agents/primary-agents.facade';
 
 @NgModule({
   imports: [
@@ -49,8 +52,13 @@ import { AgencyStaffFacade } from './state/agency-staff/agency-staff.facade';
       fromAgencyStaff.reducer
     ),
     EffectsModule.forFeature([AgencyStaffEffects]),
+    StoreModule.forFeature(
+      fromPrimaryAgents.PRIMARYAGENTS_FEATURE_KEY,
+      fromPrimaryAgents.reducer
+    ),
+    EffectsModule.forFeature([PrimaryAgentsEffects]),
   ],
-  providers: [AgenciesFacade, AgencyStaffFacade],
+  providers: [AgenciesFacade, AgencyStaffFacade, PrimaryAgentsFacade],
   declarations: [AgenciesFeatureShellComponent],
 })
 export class AdminAgenciesFeatureModule {}

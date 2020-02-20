@@ -5,6 +5,7 @@
     "Buildable",
     "Devtools",
     "Marak",
+    "PRIMARYAGENTS",
     "Serializers",
     "aasm",
     "bluechoice",
