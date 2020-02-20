@@ -5,10 +5,12 @@ import {
   PrimaryAgentsPartialState,
   primaryAgentsAdapter,
 } from './primary-agents.reducer';
+import { AgenciesPartialState } from '../agencies/agencies.reducer';
+import { AgencyStaffPartialState } from '../agency-staff/agency-staff.reducer';
 
 // Lookup the 'PrimaryAgents' feature state managed by NgRx
 export const getPrimaryAgentsState = createFeatureSelector<
-  PrimaryAgentsPartialState,
+  AgenciesPartialState & AgencyStaffPartialState & PrimaryAgentsPartialState,
   State
 >(PRIMARYAGENTS_FEATURE_KEY);
 

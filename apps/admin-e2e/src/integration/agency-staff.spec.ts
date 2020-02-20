@@ -1,13 +1,20 @@
-import { mockAgencies } from '@hbx/utils/testing';
+import * as faker from 'faker/locale/en_US';
+
+import { mockAgencyWithStaff } from '@hbx/utils/testing';
+
 import { getSearchBox, getStaffList } from '../support/agency-staff.po';
 
 describe('Agency Staff', () => {
-  const { agencies, agencyStaff } = mockAgencies();
+  const agencyProfileId = faker.random.uuid();
+  const { agency, agencyStaff, primaryAgent } = mockAgencyWithStaff(
+    agencyProfileId
+  );
 
   beforeEach(() => {
     cy.server();
-    cy.route('**/agencies', agencies).as('agencies');
+    cy.route('**/agencies', [agency]).as('agencies');
     cy.route('**/agencies/agency_staff', agencyStaff).as('agencyStaff');
+    cy.route('**/agencies/primary_agents', [primaryAgent]).as('agencyStaff');
     cy.visit('/');
   });
 
@@ -17,11 +24,9 @@ describe('Agency Staff', () => {
   });
 
   it('should return one result if an agent name is used for the search', () => {
-    const [nonPrimaryAgent] = agencyStaff.filter(
-      staff => staff.broker_agency_staff_roles
-    );
+    const [agencyStaffOne] = agencyStaff;
 
-    getSearchBox().type(nonPrimaryAgent.first_name);
+    getSearchBox().type(agencyStaffOne.first_name);
 
     getStaffList().should('have.length', 1);
 

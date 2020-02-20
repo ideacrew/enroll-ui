@@ -1,26 +1,23 @@
-import { Agency, AgencyStaff } from '@hbx/api-interfaces';
+import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
+
+const DEFAULT_AGENCIES = 5;
 
 export interface FullAgencies {
-  agencies: Agency[];
+  agencies: AgencyProfile[];
   agencyStaff: AgencyStaff[];
+  primaryAgents: PrimaryAgent[];
 }
 
-export function mockAgencies(totalAgencies: number = 5): FullAgencies {
-  const numberOfBrokerAgencies = totalAgencies - 1;
+export function mockAgencies(
+  totalAgencies: number = DEFAULT_AGENCIES
+): FullAgencies {
+  const agenciesWithStaff = Array.from({ length: DEFAULT_AGENCIES });
 
-  const approvedBrokerAgencies: ApprovedBrokerAgencyWithStaff[] = Array.from(
-    { length: numberOfBrokerAgencies },
-    approvedAgencyWithStaff
-  );
-
-  const approvedBrokerAgencyStaff: Array<
-    BrokerAgencyStaff | PrimaryBrokerStaff
-  > = approvedBrokerAgencies.reduce((staff, agency) => {
-    return [...staff, ...agency.brokerStaff, agency.primaryBroker];
-  }, []);
-
-  return {
-    agencies,
-    agencyStaff,
+  const fullAgencies: FullAgencies = {
+    agencies: [],
+    agencyStaff: [],
+    primaryAgents: [],
   };
+
+  return fullAgencies;
 }

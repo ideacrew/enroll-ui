@@ -1,10 +1,10 @@
-import { GeneralAgencyProfile, Agency } from '@hbx/api-interfaces';
+import { GeneralAgencyProfile, AgencyProfile } from '@hbx/api-interfaces';
 
 import { mockBaseOrganizationProfile } from './baseOrganizationProfile.mock';
 import { mockBaseBenefitSponsorsOrg } from './baseOrganization.mock';
 
-export function mockGeneralAgency(agencyProfileId: string): Agency {
-  const generalAgency: Agency = {
+export function mockGeneralAgency(agencyProfileId: string): AgencyProfile {
+  const generalAgency: AgencyProfile = {
     ...mockBaseBenefitSponsorsOrg(),
     profiles: [mockGeneralAgencyProfile(agencyProfileId)],
   };

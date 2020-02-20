@@ -1,11 +1,10 @@
 <div class="staff-detail-container">
-  <h2 class="hbx-heading-s staff-name">{{ staff.fullName }}</h2>
+  <h2 class="hbx-heading-s staff-name">
+    {{ staff.firstName }} {{ staff.lastName }}
+  </h2>
   <span class="hbx-id">{{ staff.hbxId }}</span>
 </div>
 <div class="agency-associations">
-  <hbx-agency-association
-    *ngFor="let association of staff.agencyAssociations"
-    [association]="association"
-  >
+  <hbx-agency-association *ngFor="let role of staff.agencyRoles" [role]="role">
   </hbx-agency-association>
 </div>

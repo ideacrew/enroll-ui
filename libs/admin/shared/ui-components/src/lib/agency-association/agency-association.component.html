@@ -1,17 +1,15 @@
 <div class="hbx-body agency-name">
-  {{ association.agencyName }}
-  <span
-    class="agency-type"
-    *ngIf="association.agencyType === AgencyType.General"
+  {{ role.agencyName }}
+  <!-- <span class="agency-type" *ngIf="role.agencyType === AgencyType.General"
     >GA</span
-  >
+  > -->
 </div>
 <div class="hbx-body-s primary-agent">
-  {{ association.primaryAgent.fullName }}
+  {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
 </div>
 <div class="state-and-action">
   <div class="association-state">
-    {{ association.currentState }}
+    {{ role.currentState }}
   </div>
   <button type="button" class="hbx-button terminate-action">
     <span>Terminate</span>

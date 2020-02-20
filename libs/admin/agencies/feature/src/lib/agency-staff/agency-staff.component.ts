@@ -3,25 +3,14 @@ import { FormControl } from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import {
   map,
+  debounceTime,
   startWith,
   distinctUntilChanged,
-  debounceTime,
 } from 'rxjs/operators';
 
-import {
-  AgencyStaffVM,
-  Dictionary,
-  PrimaryAgentVM,
-} from '@hbx/admin/shared/view-models';
-import {
-  Agency,
-  GeneralAgencyStaff,
-  BrokerAgencyStaff,
-} from '@hbx/api-interfaces';
-
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
-import { AgenciesFacade } from '../state/agencies/agencies.facade';
-import { createStaffVMs, searchAgencyStaff } from '../utils';
+import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import { searchAgencyStaff } from '../utils';
 
 @Component({
   templateUrl: './agency-staff.component.html',
@@ -38,39 +27,15 @@ export class AgencyStaffComponent implements OnInit {
 
   agencyStaffVM$: Observable<AgencyStaffVM[]> = combineLatest([
     this.globalSearch$.pipe(startWith('')),
-    this.agenciesFacade.allAgencies$,
-    this.agencyStaffFacade.primaryAgencyStaffEntities$,
-    this.agencyStaffFacade.nonPrimaryAgencyStaff$,
+    this.agencyStaffFacade.allAgencyStaff$,
   ]).pipe(
     distinctUntilChanged(),
-    map(
-      ([globalSearch, agencies, primaryStaff, staff]: [
-        string,
-        Agency[],
-        Dictionary<PrimaryAgentVM>,
-        Array<GeneralAgencyStaff | BrokerAgencyStaff>
-      ]) => {
-        return [globalSearch, createStaffVMs(agencies, primaryStaff, staff)];
-      }
-    ),
     map(([searchQuery, agencyStaffVMs]: [string, AgencyStaffVM[]]) => {
       return searchAgencyStaff(searchQuery, agencyStaffVMs);
     })
   );
 
-  // agencyVMs$: Observable<AgencyVM[]> = combineLatest([
-  //   this.agenciesFacade.allAgencies$,
-  //   this.agencyStaffFacade.allAgencyStaff$,
-  // ]).pipe(
-  //   map(([agencies, staff]: [Agency[], AgencyStaffEntity[]]) =>
-  //     createAgencyVMs(agencies, staff)
-  //   )
-  // );
-
-  constructor(
-    private agencyStaffFacade: AgencyStaffFacade,
-    private agenciesFacade: AgenciesFacade
-  ) {}
+  constructor(private agencyStaffFacade: AgencyStaffFacade) {}
 
   ngOnInit(): void {}
 

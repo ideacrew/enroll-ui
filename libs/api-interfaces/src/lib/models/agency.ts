@@ -1,8 +1,8 @@
-export interface Agency {
+export interface AgencyProfile {
   organization_id: string;
   agency_profile_id: string;
   legal_name: string;
-  dba: string;
+  dba?: string;
   agency_profile_type: string;
 }
 
@@ -15,6 +15,6 @@ export interface Agency {
  */
 
 export enum AgencyType {
-  Broker = 'Broker',
-  General = 'General',
+  Broker = 'BenefitSponsors::Organizations::BrokerAgencyProfile',
+  General = 'BenefitSponsors::Organizations::GeneralAgencyProfile',
 }

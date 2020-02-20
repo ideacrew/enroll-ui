@@ -9,7 +9,7 @@ import * as AgencyStaffSelectors from './agency-staff.selectors';
 export class AgencyStaffFacade {
   loaded$ = this.store.pipe(select(AgencyStaffSelectors.getAgencyStaffLoaded));
   allAgencyStaff$ = this.store.pipe(
-    select(AgencyStaffSelectors.getAllAgencyStaff)
+    select(AgencyStaffSelectors.getAgencyStaffVMs)
   );
 
   constructor(private store: Store<fromAgencyStaff.AgencyStaffPartialState>) {}

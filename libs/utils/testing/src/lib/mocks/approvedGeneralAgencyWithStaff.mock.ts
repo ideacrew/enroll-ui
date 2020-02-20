@@ -1,6 +1,6 @@
 import * as faker from 'faker/locale/en_US';
 
-import { Agency, GeneralAgencyStaff } from '@hbx/api-interfaces';
+import { AgencyProfile, GeneralAgencyStaff } from '@hbx/api-interfaces';
 
 import { mockGeneralAgencyStaff } from './generalAgencyStaff.mock';
 import { mockGeneralAgency } from './generalAgency.mock';
@@ -12,7 +12,7 @@ export interface MockGeneralAgencyOptions {
 }
 
 export interface ApprovedGeneralAgencyWithStaff {
-  generalAgency: Agency;
+  generalAgency: AgencyProfile;
   primaryAgent: GeneralAgencyStaff;
   agencyStaff: GeneralAgencyStaff[];
 }

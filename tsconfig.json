@@ -13,7 +13,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-    "strictNullChecks": true,
+    // "strictNullChecks": true,
     "importHelpers": true,
     "preserveConstEnums": true,
     "target": "es2015",

@@ -8,7 +8,7 @@ export const PRIMARYAGENTS_FEATURE_KEY = 'primaryAgents';
 
 function selectAgencyProfileId(a: PrimaryAgentsEntity): string {
   //In this case this would be optional since primary key is id
-  return a.agencyProfileId;
+  return a.connected_profile_id;
 }
 
 export interface State extends EntityState<PrimaryAgentsEntity> {
@@ -41,8 +41,13 @@ const primaryAgentsReducer = createReducer(
   })),
   on(
     PrimaryAgentsActions.loadPrimaryAgentsSuccess,
-    (state, { primaryAgents }) =>
-      primaryAgentsAdapter.setAll(primaryAgents, { ...state, loaded: true })
+    (state, { primaryAgents }) => {
+      console.log('reducer', { primaryAgents });
+      return primaryAgentsAdapter.setAll(primaryAgents, {
+        ...state,
+        loaded: true,
+      });
+    }
   ),
   on(PrimaryAgentsActions.loadPrimaryAgentsFailure, (state, { error }) => ({
     ...state,

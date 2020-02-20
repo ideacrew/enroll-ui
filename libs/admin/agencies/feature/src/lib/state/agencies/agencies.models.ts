@@ -1,4 +1,4 @@
-import { Agency } from '@hbx/api-interfaces';
+import { AgencyProfile } from '@hbx/api-interfaces';
 
 /**
  * Interface for the 'Agencies' data
@@ -25,4 +25,4 @@ import { Agency } from '@hbx/api-interfaces';
 //   planDesignSubjectIds?: any[];
 // }
 
-export type AgenciesEntity = Agency;
+export type AgenciesEntity = AgencyProfile;

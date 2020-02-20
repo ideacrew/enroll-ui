@@ -29,7 +29,7 @@ export interface AgencyRole {
    * The current state of the role with the Agency
    */
   aasm_state: string; // aasm_state
-  type: string;
+  type?: string;
 }
 
 export const enum AgencyRoleState {

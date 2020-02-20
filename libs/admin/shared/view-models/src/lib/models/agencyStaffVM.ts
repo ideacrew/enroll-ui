@@ -8,4 +8,5 @@ export interface AgencyStaffVM {
   hbxId: string;
   emails: EmailVM[];
   agencyRoles: AgencyRoleVM[];
+  dob: Date;
 }

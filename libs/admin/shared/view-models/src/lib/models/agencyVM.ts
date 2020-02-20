@@ -2,7 +2,8 @@ import { PrimaryAgentVM } from './primaryAgentVM';
 
 export interface AgencyVM {
   orgId: string;
-  legalName: string;
+  agencyName: string;
   profileType: string;
   primaryAgent: PrimaryAgentVM;
+  agencyProfileId: string;
 }

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { AgencyAssociation, AgencyType } from '@hbx/admin/shared/view-models';
+import { AgencyRoleVM } from '@hbx/admin/shared/view-models';
 
 @Component({
   selector: 'hbx-agency-association',
@@ -8,6 +8,5 @@ import { AgencyAssociation, AgencyType } from '@hbx/admin/shared/view-models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgencyAssociationComponent {
-  AgencyType = AgencyType;
-  @Input() association: AgencyAssociation;
+  @Input() role: AgencyRoleVM;
 }

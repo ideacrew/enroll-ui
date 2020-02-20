@@ -6,9 +6,9 @@ export interface PrimaryAgent {
    *
    * no analog for General Agency "primary" agent
    */
-  agentRoleId: string;
-  firstName: string;
-  lastName: string;
-  agencyProfileId: string;
-  npn: string; // what is the npn?
+  agency_role_id: string;
+  first_name: string;
+  last_name: string;
+  connected_profile_id: string;
+  agent_npn: string; // what is the npn?
 }

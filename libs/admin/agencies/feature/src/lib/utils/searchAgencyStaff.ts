@@ -1,9 +1,9 @@
-import { AgencyStaff, AgentRole } from '@hbx/api-interfaces';
+import { AgencyStaffVM, AgencyRoleVM } from '@hbx/admin/shared/view-models';
 
 export function searchAgencyStaff(
   query: string,
-  agencyStaffVMs: AgencyStaff[]
-): AgencyStaff[] {
+  agencyStaffVMs: AgencyStaffVM[]
+): AgencyStaffVM[] {
   if (query === null || query.length === 0) {
     return agencyStaffVMs;
   } else {
@@ -18,18 +18,18 @@ export function searchAgencyStaff(
   }
 }
 
-function searchAgentName(query: string, agencyStaff: AgencyStaff): boolean {
+function searchAgentName(query: string, agencyStaff: AgencyStaffVM): boolean {
   const fullName = `${agencyStaff.firstName} ${agencyStaff.lastName}`;
 
   return fullName.toLowerCase().includes(query);
 }
 
-function searchHBXId(query: string, agencyStaff: AgencyStaff): boolean {
+function searchHBXId(query: string, agencyStaff: AgencyStaffVM): boolean {
   return agencyStaff.hbxId.toLowerCase().includes(query);
 }
 
-function searchAgencyNames(query: string, agencyStaff: AgencyStaff): boolean {
-  const roles: AgentRole[] = agencyStaff.agentRoles;
+function searchAgencyNames(query: string, agencyStaff: AgencyStaffVM): boolean {
+  const roles: AgencyRoleVM[] = agencyStaff.agencyRoles;
 
   return (
     roles.filter(role => role.agencyName.toLowerCase().includes(query)).length >
@@ -37,8 +37,11 @@ function searchAgencyNames(query: string, agencyStaff: AgencyStaff): boolean {
   );
 }
 
-function searchPrimaryAgent(query: string, agencyStaff: AgencyStaff): boolean {
-  const roles: AgentRole[] = agencyStaff.agentRoles;
+function searchPrimaryAgent(
+  query: string,
+  agencyStaff: AgencyStaffVM
+): boolean {
+  const roles: AgencyRoleVM[] = agencyStaff.agencyRoles;
 
   return (
     roles.filter(role => {

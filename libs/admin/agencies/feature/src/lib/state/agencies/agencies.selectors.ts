@@ -6,10 +6,12 @@ import {
   AgenciesPartialState,
   agenciesAdapter,
 } from './agencies.reducer';
+import { AgencyStaffPartialState } from '../agency-staff/agency-staff.reducer';
+import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 
 // Lookup the 'Agencies' feature state managed by NgRx
 export const getAgenciesState = createFeatureSelector<
-  AgenciesPartialState,
+  AgenciesPartialState & AgencyStaffPartialState & PrimaryAgentsPartialState,
   State
 >(AGENCIES_FEATURE_KEY);
 
