@@ -4,6 +4,7 @@ import {
   mockAgencyProfile,
   mockPrimaryAgent,
   mockManyAgencyStaff,
+  mockPrimaryAgentStaffRole,
 } from './agency.mock';
 
 export interface ApprovedAgencyWithStaff {
@@ -18,10 +19,11 @@ export function mockAgencyWithStaff(
   const primaryAgent = mockPrimaryAgent(agencyProfileId);
   const agency = mockAgencyProfile(agencyProfileId);
   const agencyStaff = mockManyAgencyStaff(agencyProfileId);
+  const primaryAgentStaffRole = mockPrimaryAgentStaffRole(primaryAgent);
 
   return {
     primaryAgent,
     agency,
-    agencyStaff,
+    agencyStaff: [primaryAgentStaffRole, ...agencyStaff],
   };
 }

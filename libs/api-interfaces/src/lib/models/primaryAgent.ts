@@ -11,4 +11,5 @@ export interface PrimaryAgent {
   last_name: string;
   connected_profile_id: string;
   agent_npn: string; // what is the npn?
+  hbx_id: string;
 }

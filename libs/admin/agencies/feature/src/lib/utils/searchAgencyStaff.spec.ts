@@ -1,28 +1,12 @@
 import { mockAgencies } from '@hbx/utils/testing';
 
-import {
-  createStaffVMs,
-  createPrimaryAgencyStaffDictionary,
-} from './createAgencyStaffVM';
-import {
-  isPrimaryGeneralAgencyStaff,
-  isGeneralAgencyStaff,
-  isBrokerAgencyStaff,
-} from './checkStaffType';
 import { searchAgencyStaff } from './searchAgencyStaff';
 
 describe('Search agency staff VMs', () => {
-  const { agencies, agencyStaff } = mockAgencies();
-  const primaryStaff = createPrimaryAgencyStaffDictionary(agencyStaff);
-  const generalAgencyStaff = agencyStaff.filter(isGeneralAgencyStaff);
-  const nonPrimaryStaff = [
-    ...generalAgencyStaff.filter(staff => !isPrimaryGeneralAgencyStaff(staff)),
-    ...agencyStaff.filter(isBrokerAgencyStaff),
-  ];
-  const agencyStaffVM = createStaffVMs(agencies, primaryStaff, nonPrimaryStaff);
+  const { agencies, agencyStaff, primaryAgents } = mockAgencies();
 
   it('should return a full set of results when the search string is empty', () => {
-    const numberOfStaff = nonPrimaryStaff.length;
+    const numberOfStaff = agencyStaff.length;
 
     expect(searchAgencyStaff('', agencyStaffVM)).toHaveLength(numberOfStaff);
   });

@@ -19,6 +19,8 @@ import {
 } from '@hbx/admin/shared/view-models';
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
+import { createAgencyVM } from '../../utils/createAgencyVM';
+import { createAgencyStaffVM } from '../../utils/createAgencyStaffVM';
 
 // Lookup the 'AgencyStaff' feature state managed by NgRx
 export const getAgencyStaffState = createFeatureSelector<
@@ -67,28 +69,9 @@ export const getAgencyVMs = createSelector(
     primaryAgents: Dictionary<PrimaryAgent>
   ): AgencyVM[] => {
     if (Object.getOwnPropertyNames(primaryAgents).length > 0) {
-      return agencyProfiles.map(profile => {
-        const { agency_profile_id } = profile;
-
-        const primaryAgent = primaryAgents[agency_profile_id];
-
-        const primaryAgentVM: PrimaryAgentVM = {
-          firstName: primaryAgent.first_name,
-          lastName: primaryAgent.last_name,
-          npn: primaryAgent.agent_npn,
-          roleId: primaryAgent.connected_profile_id,
-        };
-
-        const agencyVM: AgencyVM = {
-          agencyName: profile.legal_name,
-          orgId: profile.organization_id,
-          profileType: profile.agency_profile_type,
-          primaryAgent: primaryAgentVM,
-          agencyProfileId: primaryAgent.connected_profile_id,
-        };
-
-        return agencyVM;
-      });
+      return agencyProfiles.map(profile =>
+        createAgencyVM(profile, primaryAgents)
+      );
     } else {
       return [];
     }
@@ -115,54 +98,7 @@ export const getAgencyStaffVMs = createSelector(
     agencyVMs: Dictionary<AgencyVM>
   ): AgencyStaffVM[] => {
     if (Object.getOwnPropertyNames(agencyVMs).length > 0) {
-      return agencyStaff.map(staff => {
-        const {
-          _id,
-          first_name,
-          last_name,
-          dob,
-          agency_roles,
-          agent_emails,
-          hbx_id,
-        } = staff;
-
-        const agencyRoles: AgencyRoleVM[] = agency_roles.map(role => {
-          const {
-            orgId,
-            profileType,
-            primaryAgent,
-            agencyProfileId,
-            agencyName,
-          } = agencyVMs[role.agency_profile_id];
-
-          const agencyRole: AgencyRoleVM = {
-            agencyName,
-            currentState: role.aasm_state,
-            orgId,
-            primaryAgent,
-            agencyProfileId,
-            profileType,
-          };
-
-          return agencyRole;
-        });
-
-        const emails: EmailVM[] = agent_emails.map(email => {
-          return { id: email.id, address: email.address, kind: email.kind };
-        });
-
-        const agencyStaffVM: AgencyStaffVM = {
-          agencyRoles,
-          emails,
-          firstName: first_name,
-          lastName: last_name,
-          dob: new Date(dob),
-          hbxId: hbx_id,
-          personId: _id,
-        };
-
-        return agencyStaffVM;
-      });
+      return agencyStaff.map(staff => createAgencyStaffVM(staff, agencyVMs));
     } else {
       return [];
     }

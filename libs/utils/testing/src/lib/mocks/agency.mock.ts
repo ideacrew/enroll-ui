@@ -34,6 +34,7 @@ export function mockPrimaryAgent(agencyProfileId: string): PrimaryAgent {
     agent_npn: faker.random
       .number({ min: 111111111, max: 999999999 })
       .toString(),
+    hbx_id: faker.random.uuid(),
   };
 
   return primaryAgent;
@@ -46,6 +47,35 @@ export function mockManyAgencyStaff(
   return Array.from({ length: totalStaff }, () =>
     mockOneAgencyStaff(agencyProfileId)
   );
+}
+
+export function mockPrimaryAgentStaffRole(
+  primaryAgent: PrimaryAgent
+): AgencyStaff {
+  const { first_name, connected_profile_id, last_name, hbx_id } = primaryAgent;
+
+  const agencyStaff: AgencyStaff = {
+    _id: faker.random.uuid(),
+    first_name,
+    last_name,
+    hbx_id,
+    agency_roles: [
+      {
+        agency_profile_id: connected_profile_id,
+        aasm_state: 'active',
+      },
+    ],
+    agent_emails: [
+      {
+        address: faker.internet.email(),
+        kind: EmailKind.Home,
+        id: faker.random.uuid(),
+      },
+    ],
+    dob: faker.date.past(40).toISOString(),
+  };
+
+  return agencyStaff;
 }
 
 export function mockOneAgencyStaff(agencyProfileId: string): AgencyStaff {

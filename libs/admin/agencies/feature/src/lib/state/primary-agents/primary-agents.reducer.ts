@@ -41,13 +41,11 @@ const primaryAgentsReducer = createReducer(
   })),
   on(
     PrimaryAgentsActions.loadPrimaryAgentsSuccess,
-    (state, { primaryAgents }) => {
-      console.log('reducer', { primaryAgents });
-      return primaryAgentsAdapter.setAll(primaryAgents, {
+    (state, { primaryAgents }) =>
+      primaryAgentsAdapter.setAll(primaryAgents, {
         ...state,
         loaded: true,
-      });
-    }
+      })
   ),
   on(PrimaryAgentsActions.loadPrimaryAgentsFailure, (state, { error }) => ({
     ...state,

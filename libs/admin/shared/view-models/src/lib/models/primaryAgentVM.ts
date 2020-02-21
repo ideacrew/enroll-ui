@@ -3,4 +3,5 @@ export interface PrimaryAgentVM {
   firstName: string;
   lastName: string;
   npn: string;
+  hbxId: string;
 }
