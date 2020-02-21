@@ -5,7 +5,7 @@ import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
 import { AgencyVM } from '@hbx/admin/shared/view-models';
 
-import { createAgencyVM } from './createAgencyVM';
+import { createSingleAgencyVM } from './createAgencyVM';
 
 describe('Agency VM Creation', () => {
   let agency: AgencyProfile;
@@ -46,6 +46,6 @@ describe('Agency VM Creation', () => {
       },
     };
 
-    expect(createAgencyVM(agency, primaryAgents)).toEqual(agencyVM);
+    expect(createSingleAgencyVM(agency, primaryAgents)).toEqual(agencyVM);
   });
 });

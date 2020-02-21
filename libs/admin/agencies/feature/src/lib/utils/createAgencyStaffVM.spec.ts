@@ -5,7 +5,10 @@ import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
 import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
 
-import { createAgencyVM, createAgencyVMDictionary } from './createAgencyVM';
+import {
+  createSingleAgencyVM,
+  createAgencyVMDictionary,
+} from './createAgencyVM';
 import {
   createSingleAgencyStaffVM,
   createAllAgencyStaffVMs,
@@ -29,7 +32,7 @@ describe('Agency VM Creation', () => {
       [mockPrimaryAgent.connected_profile_id]: mockPrimaryAgent,
     };
 
-    agencyVM = createAgencyVM(mockAgencyProfile, primaryAgents);
+    agencyVM = createSingleAgencyVM(mockAgencyProfile, primaryAgents);
     agencyDictionary = createAgencyVMDictionary([agencyVM]);
   });
 

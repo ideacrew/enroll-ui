@@ -19,7 +19,10 @@ import {
 } from '@hbx/admin/shared/view-models';
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
-import { createAgencyVM } from '../../utils/createAgencyVM';
+import {
+  createSingleAgencyVM,
+  createAllAgencyVMs,
+} from '../../utils/createAgencyVM';
 import {
   createSingleAgencyStaffVM,
   createAllAgencyStaffVMs,
@@ -72,9 +75,7 @@ export const getAgencyVMs = createSelector(
     primaryAgents: Dictionary<PrimaryAgent>
   ): AgencyVM[] => {
     if (Object.getOwnPropertyNames(primaryAgents).length > 0) {
-      return agencyProfiles.map(profile =>
-        createAgencyVM(profile, primaryAgents)
-      );
+      return createAllAgencyVMs(agencyProfiles, primaryAgents);
     } else {
       return [];
     }

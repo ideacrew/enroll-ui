@@ -6,7 +6,7 @@ import {
   AgencyRoleVM,
   EmailVM,
 } from '@hbx/admin/shared/view-models';
-import { AgencyStaff, AgencyRole } from '@hbx/api-interfaces';
+import { AgencyStaff, AgencyRole, PrimaryAgent } from '@hbx/api-interfaces';
 
 export function createSingleAgencyStaffVM(
   staff: AgencyStaff,
@@ -80,4 +80,20 @@ export function createAllAgencyStaffVMs(
   return agencyStaff
     .map(staff => createSingleAgencyStaffVM(staff, agencies))
     .filter(filterAgencyStaffWithNoRoles);
+}
+
+export function createPrimaryAgentDictionary(
+  primaryAgents: PrimaryAgent[]
+): Dictionary<PrimaryAgent> {
+  const primaryAgentDictionary: Dictionary<PrimaryAgent> = primaryAgents.reduce(
+    (dictionary, agent) => {
+      return {
+        ...dictionary,
+        [agent.connected_profile_id]: agent,
+      };
+    },
+    {}
+  );
+
+  return primaryAgentDictionary;
 }

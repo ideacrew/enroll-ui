@@ -3,7 +3,7 @@ import { Dictionary } from '@ngrx/entity';
 import { AgencyProfile, PrimaryAgent } from '@hbx/api-interfaces';
 import { PrimaryAgentVM, AgencyVM } from '@hbx/admin/shared/view-models';
 
-export function createAgencyVM(
+export function createSingleAgencyVM(
   profile: AgencyProfile,
   primaryAgents: Dictionary<PrimaryAgent>
 ): AgencyVM {
@@ -39,4 +39,13 @@ export function createAgencyVMDictionary(
       [agency.agencyProfileId]: agency,
     };
   }, {});
+}
+
+export function createAllAgencyVMs(
+  agencyProfiles: AgencyProfile[],
+  primaryAgents: Dictionary<PrimaryAgent>
+): AgencyVM[] {
+  return agencyProfiles.map(profile =>
+    createSingleAgencyVM(profile, primaryAgents)
+  );
 }
