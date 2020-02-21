@@ -15,7 +15,7 @@ export function createAgencyVM(
     firstName: primaryAgent.first_name,
     lastName: primaryAgent.last_name,
     npn: primaryAgent.agent_npn,
-    roleId: primaryAgent.connected_profile_id,
+    roleId: primaryAgent.agency_role_id,
     hbxId: primaryAgent.hbx_id,
   };
 
@@ -28,4 +28,15 @@ export function createAgencyVM(
   };
 
   return agencyVM;
+}
+
+export function createAgencyVMDictionary(
+  agencies: AgencyVM[]
+): Dictionary<AgencyVM> {
+  return agencies.reduce((dictionary, agency) => {
+    return {
+      ...dictionary,
+      [agency.agencyProfileId]: agency,
+    };
+  }, {});
 }
