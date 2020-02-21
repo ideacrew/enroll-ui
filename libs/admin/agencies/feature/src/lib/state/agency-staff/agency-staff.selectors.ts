@@ -20,7 +20,10 @@ import {
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
 import { createAgencyVM } from '../../utils/createAgencyVM';
-import { createAgencyStaffVM } from '../../utils/createAgencyStaffVM';
+import {
+  createSingleAgencyStaffVM,
+  createAllAgencyStaffVMs,
+} from '../../utils/createAgencyStaffVM';
 
 // Lookup the 'AgencyStaff' feature state managed by NgRx
 export const getAgencyStaffState = createFeatureSelector<
@@ -98,7 +101,7 @@ export const getAgencyStaffVMs = createSelector(
     agencyVMs: Dictionary<AgencyVM>
   ): AgencyStaffVM[] => {
     if (Object.getOwnPropertyNames(agencyVMs).length > 0) {
-      return agencyStaff.map(staff => createAgencyStaffVM(staff, agencyVMs));
+      return createAllAgencyStaffVMs(agencyStaff, agencyVMs);
     } else {
       return [];
     }

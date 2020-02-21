@@ -14,17 +14,28 @@ describe('Agency Staff', () => {
     cy.server();
     cy.route('**/agencies', [agency]).as('agencies');
     cy.route('**/agencies/agency_staff', agencyStaff).as('agencyStaff');
-    cy.route('**/agencies/primary_agents', [primaryAgent]).as('agencyStaff');
+    cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
+      'primaryAgents'
+    );
     cy.visit('/');
   });
 
   it('display a complete list of agency staff', () => {
+    const numberOfPrimaryAgents = 1;
+    const numberOfAgencyStaff = agencyStaff.length;
+    const numberOfRealAgencyStaff = numberOfAgencyStaff - numberOfPrimaryAgents;
+
+    cy.wait('@agencies');
     cy.wait('@agencyStaff');
-    cy.get('hbx-staff-container').should('have.length', 25);
+    cy.wait('@primaryAgents');
+    cy.get('hbx-staff-container').should(
+      'have.length',
+      numberOfRealAgencyStaff
+    );
   });
 
   it('should return one result if an agent name is used for the search', () => {
-    const [agencyStaffOne] = agencyStaff;
+    const [_primaryAgent, agencyStaffOne] = agencyStaff;
 
     getSearchBox().type(agencyStaffOne.first_name);
 
@@ -32,7 +43,7 @@ describe('Agency Staff', () => {
 
     getSearchBox().clear();
 
-    getStaffList().should('have.length', 25);
+    getStaffList().should('have.length', 5);
   });
 
   it('should show a helpful message if the search query returns no results', () => {

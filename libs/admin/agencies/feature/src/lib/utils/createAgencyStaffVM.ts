@@ -8,7 +8,7 @@ import {
 } from '@hbx/admin/shared/view-models';
 import { AgencyStaff, AgencyRole } from '@hbx/api-interfaces';
 
-export function createAgencyStaffVM(
+export function createSingleAgencyStaffVM(
   staff: AgencyStaff,
   agencyVMs: Dictionary<AgencyVM>
 ): AgencyStaffVM {
@@ -65,4 +65,19 @@ export function createAgencyStaffVM(
   };
 
   return agencyStaffVM;
+}
+
+export function filterAgencyStaffWithNoRoles(
+  agencyStaff: AgencyStaffVM
+): boolean {
+  return agencyStaff.agencyRoles.length > 0;
+}
+
+export function createAllAgencyStaffVMs(
+  agencyStaff: AgencyStaff[],
+  agencies: Dictionary<AgencyVM>
+): AgencyStaffVM[] {
+  return agencyStaff
+    .map(staff => createSingleAgencyStaffVM(staff, agencies))
+    .filter(filterAgencyStaffWithNoRoles);
 }

@@ -6,7 +6,10 @@ import { mockAgencyWithStaff } from '@hbx/utils/testing';
 import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
 
 import { createAgencyVM, createAgencyVMDictionary } from './createAgencyVM';
-import { createAgencyStaffVM } from './createAgencyStaffVM';
+import {
+  createSingleAgencyStaffVM,
+  createAllAgencyStaffVMs,
+} from './createAgencyStaffVM';
 
 describe('Agency VM Creation', () => {
   let mockAgencyProfile: AgencyProfile;
@@ -78,11 +81,54 @@ describe('Agency VM Creation', () => {
       ],
     };
 
-    const testAgencyStaffVM = createAgencyStaffVM(
+    const testAgencyStaffVM = createSingleAgencyStaffVM(
       mockAgentTwo,
       agencyDictionary
     );
 
     expect(testAgencyStaffVM).toEqual(expectedAgencyStaffVM);
+  });
+
+  it('should create an agency staff view model with no roles because the staff is a primary agent', () => {
+    // This is the primary agent's agency staff profile
+    const mockAgentOne = mockAgencyStaff[0];
+
+    const {
+      _id,
+      first_name,
+      last_name,
+      dob,
+      agent_emails,
+      hbx_id,
+    } = mockAgentOne;
+
+    const expectedAgencyStaffVM: AgencyStaffVM = {
+      personId: _id,
+      dob: new Date(dob),
+      emails: [
+        {
+          id: agent_emails[0].id,
+          address: agent_emails[0].address,
+          kind: agent_emails[0].kind,
+        },
+      ],
+      firstName: first_name,
+      lastName: last_name,
+      hbxId: hbx_id,
+      agencyRoles: [],
+    };
+
+    const testAgencyStaffVM = createSingleAgencyStaffVM(
+      mockAgentOne,
+      agencyDictionary
+    );
+
+    expect(testAgencyStaffVM).toEqual(expectedAgencyStaffVM);
+  });
+
+  it('should create a final list of 5 agent staff VMs', () => {
+    expect(
+      createAllAgencyStaffVMs(mockAgencyStaff, agencyDictionary)
+    ).toHaveLength(5);
   });
 });
