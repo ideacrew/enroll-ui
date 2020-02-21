@@ -10,6 +10,7 @@ import {
 } from '@ngrx/router-store';
 import { NxModule } from '@nrwl/angular';
 import { AdminShellComponent } from './admin-shell/admin-shell.component';
+import { authInterceptorInit } from '@hbx/auth';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { AdminShellComponent } from './admin-shell/admin-shell.component';
       serializer: DefaultRouterStateSerializer,
     }),
   ],
+  providers: [authInterceptorInit],
   declarations: [AdminShellComponent],
   exports: [AdminShellComponent],
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import {
@@ -17,7 +17,7 @@ import { searchAgencyStaff } from '../utils';
   styleUrls: ['./agency-staff.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgencyStaffComponent implements OnInit {
+export class AgencyStaffComponent {
   globalSearch: FormControl = new FormControl();
 
   globalSearch$: Observable<string> = this.globalSearch.valueChanges.pipe(
@@ -36,10 +36,4 @@ export class AgencyStaffComponent implements OnInit {
   );
 
   constructor(private agencyStaffFacade: AgencyStaffFacade) {}
-
-  ngOnInit(): void {}
-
-  logChange(event: any): void {
-    console.log(event);
-  }
 }

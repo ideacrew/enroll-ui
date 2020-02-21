@@ -13,7 +13,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-    // "strictNullChecks": true,
     "importHelpers": true,
     "preserveConstEnums": true,
     "target": "es2015",
@@ -39,7 +38,8 @@
       "@hbx/utils/testing": ["libs/utils/testing/src/index.ts"],
       "@hbx/admin/shared/ui-components": [
         "libs/admin/shared/ui-components/src/index.ts"
-      ]
+      ],
+      "@hbx/auth": ["libs/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"],

@@ -50,6 +50,9 @@
     },
     "admin-shared-ui-components": {
       "tags": ["type:ui", "scope:admin"]
+    },
+    "auth": {
+      "tags": ["scope:shared", "type:data-access"]
     }
   }
 }

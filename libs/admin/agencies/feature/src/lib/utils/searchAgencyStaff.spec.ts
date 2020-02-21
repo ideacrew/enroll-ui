@@ -33,7 +33,7 @@ describe('Search agency staff VMs', () => {
   // When performing queries, pass in a trimmed, lowercase string
   it('should return one result when the full name of an agent is used to search', () => {
     const [agent] = agencyStaffVMs;
-    const query = agent.firstName.toLowerCase();
+    const query = `${agent.firstName.toLowerCase()} ${agent.lastName.toLowerCase()}`;
 
     expect(searchAgencyStaff(query, agencyStaffVMs)).toHaveLength(1);
   });
@@ -62,14 +62,23 @@ describe('Search agency staff VMs', () => {
   });
 
   it('should return multiple results when the primary agent name is used to search', () => {
-    const [agent] = agencyStaffVMs;
-    const query = agent.agencyRoles[0].primaryAgent.firstName.toLowerCase();
+    const [mockAgent] = agencyStaffVMs;
+    const [mockAgencyRole] = mockAgent.agencyRoles;
+    const { firstName, lastName } = mockAgencyRole.primaryAgent;
+
+    const query = `${firstName.toLowerCase()} ${lastName.toLowerCase()}`;
 
     // Grab total number of agencyStaffVMs that have an association with that Primary Agent
     const numberOfStaffWithPrimaryAgent = agencyStaffVMs.filter(staff =>
-      staff.agencyRoles.some(agency =>
-        agency.primaryAgent.firstName.toLowerCase().includes(query)
-      )
+      staff.agencyRoles.some(agencyRole => {
+        const {
+          firstName: pmFirstName,
+          lastName: pmLastName,
+        } = agencyRole.primaryAgent;
+        const fullName = `${pmFirstName.toLowerCase()} ${pmLastName.toLowerCase()}`;
+
+        return fullName.includes(query);
+      })
     ).length;
 
     expect(searchAgencyStaff(query, agencyStaffVMs)).toHaveLength(
