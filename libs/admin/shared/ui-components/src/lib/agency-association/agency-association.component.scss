@@ -31,6 +31,12 @@
   padding: var(--s-4) var(--s-2);
   border-radius: var(--s1);
   user-select: none;
+
+  &.terminated {
+    --state-background-color: var(--neutral-010);
+    --state-border-color: var(--neutral-030);
+    --state-text-color: var(--neutral-090);
+  }
 }
 
 .state-and-action {

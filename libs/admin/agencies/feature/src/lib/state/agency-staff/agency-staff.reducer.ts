@@ -1,8 +1,15 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import {
+  EntityState,
+  EntityAdapter,
+  createEntityAdapter,
+  Update,
+} from '@ngrx/entity';
 
 import { AgencyStaffEntity } from './agency-staff.models';
 import * as AgencyStaffActions from './agency-staff.actions';
+import { changeAgencyRoleStatus } from '../../utils/changeAgencyRoleStatus';
+import { AgencyStaff } from '@hbx/api-interfaces';
 
 export const AGENCYSTAFF_FEATURE_KEY = 'agencyStaff';
 
@@ -11,7 +18,12 @@ function selectAgencyStaffId(a: AgencyStaffEntity): string {
   return a._id;
 }
 
+// Sort by last name first, then first name
 function sortStaff(a: AgencyStaffEntity, b: AgencyStaffEntity): number {
+  if (a.last_name.localeCompare(b.last_name) === 0 ) {
+    return a.first_name.localeCompare(b.first_name);
+  }
+
   return a.last_name.localeCompare(b.last_name);
 }
 
@@ -50,7 +62,17 @@ const agencyStaffReducer = createReducer(
   on(AgencyStaffActions.loadAgencyStaffFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(AgencyStaffActions.terminateAgencyRole, (state, { request }) => {
+    const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
+      state.entities,
+      request
+    );
+
+    console.log({ updatedStaff });
+
+    return agencyStaffAdapter.updateOne(updatedStaff, state);
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {

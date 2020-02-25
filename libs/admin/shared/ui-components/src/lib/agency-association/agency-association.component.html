@@ -9,10 +9,10 @@
     {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
   </div>
   <div class="state-and-action">
-    <div class="association-state">
+    <div class="association-state" [className]="role.currentState">
       {{ role.currentState }}
     </div>
-    <button
+    <button *ngIf="role.currentState === 'active'"
       type="button"
       class="hbx-button terminate-action"
       (click)="editing = true"
@@ -38,7 +38,7 @@
     <button
       type="button"
       class="hbx-button outline terminate-action terminating"
-      (click)="editing = false"
+      (click)="terminateAgencyRole()"
     >
       <span>Terminate</span>
       <svg class="svg-icon editing" viewBox="0 0 32 32">

@@ -8,9 +8,12 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 
-import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import { TerminationRequest } from '@hbx/admin/shared/ui-components';
+
+import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { searchAgencyStaff } from '../utils';
+import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
 
 @Component({
   templateUrl: './agency-staff.component.html',
@@ -36,4 +39,10 @@ export class AgencyStaffComponent {
   );
 
   constructor(private agencyStaffFacade: AgencyStaffFacade) {}
+
+  terminateAgencyRole(request: TerminationRequest): void {
+    this.agencyStaffFacade.dispatch(
+      AgencyStaffActions.terminateAgencyRole({ request })
+    );
+  }
 }

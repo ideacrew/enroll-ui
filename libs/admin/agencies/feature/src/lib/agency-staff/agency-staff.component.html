@@ -29,6 +29,7 @@
     ><hbx-staff-container
       *ngFor="let staff of agencyStaff"
       [staff]="staff"
+      (terminateRole)="terminateAgencyRole($event)"
     ></hbx-staff-container
   ></ng-container>
 </ng-container>

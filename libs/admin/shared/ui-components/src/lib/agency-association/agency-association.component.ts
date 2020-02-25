@@ -12,10 +12,7 @@ import {
   AgencyType,
 } from '@hbx/admin/shared/view-models';
 
-export interface TerminationRequest {
-  personId: string;
-  agencyProfileId: string;
-}
+import { TerminationRequest } from '../interfaces/terminationRequest';
 
 @Component({
   selector: 'hbx-agency-association',
@@ -33,4 +30,11 @@ export class AgencyAssociationComponent {
   @Output() terminateRole: EventEmitter<TerminationRequest> = new EventEmitter<
     TerminationRequest
   >();
+
+  terminateAgencyRole(): void {
+    this.terminateRole.emit({
+      agencyProfileId: this.role.agencyProfileId,
+      agencyStaffId: this.agencyStaff.personId,
+    });
+  }
 }

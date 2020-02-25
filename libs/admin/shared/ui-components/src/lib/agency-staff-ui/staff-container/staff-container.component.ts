@@ -1,6 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import { TerminationRequest } from '../../interfaces/terminationRequest';
 
 @Component({
   selector: 'hbx-staff-container',
@@ -10,4 +17,8 @@ import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
 })
 export class StaffContainerComponent {
   @Input() staff: AgencyStaffVM;
+
+  @Output() terminateRole: EventEmitter<TerminationRequest> = new EventEmitter<
+    TerminationRequest
+  >();
 }

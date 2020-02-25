@@ -27,10 +27,6 @@
     width: var(--content-height);
   }
 
-  &.outline {
-    border: 1px solid var(--outline-color);
-  }
-
   &.terminating {
     --background-color: var(--red-010);
     --outline-color: var(--red-070);
