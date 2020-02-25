@@ -1,9 +1,18 @@
 import * as faker from 'faker';
 import { Dictionary } from '@ngrx/entity';
 
-import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
+import {
+  AgencyProfile,
+  AgencyStaff,
+  PrimaryAgent,
+  AgencyProfileType,
+} from '@hbx/api-interfaces';
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
-import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import {
+  AgencyVM,
+  AgencyStaffVM,
+  AgencyType,
+} from '@hbx/admin/shared/view-models';
 
 import {
   createSingleAgencyVM,
@@ -79,7 +88,10 @@ describe('Agency VM Creation', () => {
             npn: mockPrimaryAgent.agent_npn,
             roleId: mockPrimaryAgent.agency_role_id,
           },
-          profileType: mockAgencyProfile.agency_profile_type,
+          profileType:
+            mockAgencyProfile.agency_profile_type === AgencyProfileType.Broker
+              ? AgencyType.Broker
+              : AgencyType.General,
         },
       ],
     };
