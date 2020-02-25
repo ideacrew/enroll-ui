@@ -2,7 +2,11 @@ import * as faker from 'faker/locale/en_US';
 
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
 
-import { getSearchBox, getStaffList } from '../support/agency-staff.po';
+import {
+  getSearchBox,
+  getStaffList,
+  getFirstAssociation,
+} from '../support/agency-staff.po';
 
 describe('Agency Staff', () => {
   const agencyProfileId = faker.random.uuid();
@@ -51,5 +55,23 @@ describe('Agency Staff', () => {
 
     getStaffList().should('have.length', 0);
     cy.get('.no-results-container').should('exist');
+  });
+
+  it('should allow a staff role to be terminated', () => {
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('active');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button'
+    ).click();
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button.terminating'
+    ).click();
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('terminated');
   });
 });
