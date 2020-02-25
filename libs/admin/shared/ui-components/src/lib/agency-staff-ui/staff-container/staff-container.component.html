@@ -5,6 +5,10 @@
   <span class="hbx-id">{{ staff.hbxId }}</span>
 </div>
 <div class="agency-associations">
-  <hbx-agency-association *ngFor="let role of staff.agencyRoles" [role]="role">
+  <hbx-agency-association
+    *ngFor="let role of staff.agencyRoles"
+    [role]="role"
+    [agencyStaff]="staff"
+  >
   </hbx-agency-association>
 </div>

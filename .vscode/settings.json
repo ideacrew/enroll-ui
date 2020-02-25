@@ -28,5 +28,7 @@
   ],
   "css.validate": false,
   "scss.validate": false,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "html.format.wrapAttributes": "force-aligned"
 }

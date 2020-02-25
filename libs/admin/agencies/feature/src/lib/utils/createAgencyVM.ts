@@ -1,7 +1,11 @@
 import { Dictionary } from '@ngrx/entity';
 
-import { AgencyProfile, PrimaryAgent } from '@hbx/api-interfaces';
-import { PrimaryAgentVM, AgencyVM } from '@hbx/admin/shared/view-models';
+import { AgencyProfile, PrimaryAgent, AgencyProfileType } from '@hbx/api-interfaces';
+import {
+  PrimaryAgentVM,
+  AgencyVM,
+  AgencyType,
+} from '@hbx/admin/shared/view-models';
 
 export function createSingleAgencyVM(
   profile: AgencyProfile,
@@ -22,7 +26,10 @@ export function createSingleAgencyVM(
   const agencyVM: AgencyVM = {
     agencyName: profile.legal_name,
     orgId: profile.organization_id,
-    profileType: profile.agency_profile_type,
+    profileType:
+      profile.agency_profile_type === AgencyProfileType.Broker
+        ? AgencyType.Broker
+        : AgencyType.General,
     primaryAgent: primaryAgentVM,
     agencyProfileId: primaryAgent.connected_profile_id,
   };

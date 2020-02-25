@@ -15,7 +15,6 @@ import { authInterceptorInit } from '@hbx/auth';
 @NgModule({
   imports: [
     CommonModule,
-
     // Routing
     RouterModule.forRoot(
       [

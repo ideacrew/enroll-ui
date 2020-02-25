@@ -3,7 +3,7 @@ export interface AgencyProfile {
   agency_profile_id: string;
   legal_name: string;
   dba?: string;
-  agency_profile_type: string;
+  agency_profile_type: AgencyProfileType;
 }
 
 /**
@@ -14,7 +14,7 @@ export interface AgencyProfile {
  * Is there a more generic name? This may influence the `AgencyPosition` enum
  */
 
-export enum AgencyType {
+export enum AgencyProfileType {
   Broker = 'BenefitSponsors::Organizations::BrokerAgencyProfile',
   General = 'BenefitSponsors::Organizations::GeneralAgencyProfile',
 }

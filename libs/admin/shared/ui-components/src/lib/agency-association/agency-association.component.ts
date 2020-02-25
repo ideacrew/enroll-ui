@@ -1,5 +1,9 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { AgencyRoleVM } from '@hbx/admin/shared/view-models';
+import {
+  AgencyRoleVM,
+  AgencyStaffVM,
+  AgencyType,
+} from '@hbx/admin/shared/view-models';
 
 @Component({
   selector: 'hbx-agency-association',
@@ -9,4 +13,7 @@ import { AgencyRoleVM } from '@hbx/admin/shared/view-models';
 })
 export class AgencyAssociationComponent {
   @Input() role: AgencyRoleVM;
+  @Input() agencyStaff: AgencyStaffVM;
+
+  AgencyType = AgencyType;
 }

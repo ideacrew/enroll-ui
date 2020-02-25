@@ -19,5 +19,7 @@
 }
 
 .agency-associations {
-  display: flex;
+  display: grid;
+  gap: var(--s0);
+  grid-template-columns: repeat(6, minmax(auto, max-content));
 }

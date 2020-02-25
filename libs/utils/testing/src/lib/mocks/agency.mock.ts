@@ -3,7 +3,7 @@ import * as faker from 'faker/locale/en_US';
 import {
   AgencyProfile,
   PrimaryAgent,
-  AgencyType,
+  AgencyProfileType,
   AgencyStaff,
   EmailKind,
 } from '@hbx/api-interfaces';
@@ -17,7 +17,7 @@ export function mockAgencyProfile(agencyProfileId: string): AgencyProfile {
     dba: faker.company.companyName(),
     legal_name: faker.company.companyName(),
     agency_profile_type:
-      faker.random.number(10) > 2 ? AgencyType.Broker : AgencyType.General,
+      faker.random.number(10) > 2 ? AgencyProfileType.Broker : AgencyProfileType.General,
   };
 
   return agency;

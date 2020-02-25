@@ -1,8 +1,8 @@
 <div class="hbx-body agency-name">
   {{ role.agencyName }}
-  <!-- <span class="agency-type" *ngIf="role.agencyType === AgencyType.General"
+  <span class="agency-type" *ngIf="role.profileType === AgencyType.General"
     >GA</span
-  > -->
+  >
 </div>
 <div class="hbx-body-s primary-agent">
   {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
