@@ -7,6 +7,11 @@
 
 .primary-agent {
   color: var(--neutral-070);
+
+  &.editing {
+    color: var(--red-070);
+    font-weight: 600;
+  }
 }
 
 .association-state {
@@ -32,11 +37,19 @@
   display: flex;
   margin-top: var(--s-2);
   justify-content: space-between;
+
+  &.action-only {
+    justify-content: flex-end;
+  }
 }
 
 .agency-name {
   display: flex;
   align-items: center;
+
+  &.editing {
+    color: var(--neutral-070);
+  }
 }
 
 .agency-type {

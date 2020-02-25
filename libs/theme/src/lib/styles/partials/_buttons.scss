@@ -1,20 +1,21 @@
 .hbx-button {
   --content-height: var(--s-1);
   --content-color: var(--neutral-070);
+  --background-color: var(--neutral-010);
+  --outline-color: transparent;
 
   line-height: 1;
   -webkit-appearance: none;
   padding: var(--s-4) var(--s-2);
   text-transform: uppercase;
-  background-color: var(--neutral-010);
+  background-color: var(--background-color);
   color: var(--content-color);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--content-height);
   border-radius: 2px;
-  margin-left: var(--s1);
-  border: 0;
+  border: 1px solid var(--outline-color);
 
   > * + * {
     margin-left: 4px;
@@ -27,6 +28,12 @@
   }
 
   &.outline {
-    border: 1px solid var(--neutral-40);
+    border: 1px solid var(--outline-color);
+  }
+
+  &.terminating {
+    --background-color: var(--red-010);
+    --outline-color: var(--red-070);
+    --content-color: var(--red-070);
   }
 }

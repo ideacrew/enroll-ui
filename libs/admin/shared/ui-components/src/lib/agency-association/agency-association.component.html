@@ -1,20 +1,49 @@
-<div class="hbx-body agency-name">
-  {{ role.agencyName }}
-  <span class="agency-type" *ngIf="role.profileType === AgencyType.General"
-    >GA</span
-  >
-</div>
-<div class="hbx-body-s primary-agent">
-  {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
-</div>
-<div class="state-and-action">
-  <div class="association-state">
-    {{ role.currentState }}
+<ng-container *ngIf="editing === false; else editRole"
+  ><div class="hbx-body agency-name">
+    {{ role.agencyName }}
+    <span class="agency-type" *ngIf="role.profileType === AgencyType.General"
+      >GA</span
+    >
   </div>
-  <button type="button" class="hbx-button terminate-action">
-    <span>Terminate</span>
-    <svg class="svg-icon" viewBox="0 0 32 32">
-      <use href="assets/icons/hbx-icons.svg#unlink"></use>
-    </svg>
-  </button>
-</div>
+  <div class="hbx-body-s primary-agent">
+    {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
+  </div>
+  <div class="state-and-action">
+    <div class="association-state">
+      {{ role.currentState }}
+    </div>
+    <button
+      type="button"
+      class="hbx-button terminate-action"
+      (click)="editing = true"
+    >
+      <span>Terminate</span>
+      <svg class="svg-icon" viewBox="0 0 32 32">
+        <use href="assets/icons/hbx-icons.svg#unlink"></use>
+      </svg>
+    </button></div
+></ng-container>
+
+<ng-template #editRole>
+  <div class="hbx-body agency-name editing">
+    {{ role.agencyName }}
+    <span class="agency-type" *ngIf="role.profileType === AgencyType.General"
+      >GA</span
+    >
+  </div>
+  <div class="hbx-body-s primary-agent editing">
+    Terminate {{ agencyStaff.firstName }} {{ agencyStaff.lastName }}?
+  </div>
+  <div class="state-and-action action-only">
+    <button
+      type="button"
+      class="hbx-button outline terminate-action terminating"
+      (click)="editing = false"
+    >
+      <span>Terminate</span>
+      <svg class="svg-icon editing" viewBox="0 0 32 32">
+        <use href="assets/icons/hbx-icons.svg#unlink"></use>
+      </svg>
+    </button>
+  </div>
+</ng-template>
