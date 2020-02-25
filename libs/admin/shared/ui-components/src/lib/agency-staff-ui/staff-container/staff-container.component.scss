@@ -21,5 +21,5 @@
 .agency-associations {
   display: grid;
   gap: var(--s0);
-  grid-template-columns: repeat(6, minmax(auto, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
 }
