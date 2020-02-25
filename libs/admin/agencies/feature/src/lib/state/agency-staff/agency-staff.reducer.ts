@@ -20,7 +20,7 @@ function selectAgencyStaffId(a: AgencyStaffEntity): string {
 
 // Sort by last name first, then first name
 function sortStaff(a: AgencyStaffEntity, b: AgencyStaffEntity): number {
-  if (a.last_name.localeCompare(b.last_name) === 0 ) {
+  if (a.last_name.localeCompare(b.last_name) === 0) {
     return a.first_name.localeCompare(b.first_name);
   }
 
@@ -63,13 +63,19 @@ const agencyStaffReducer = createReducer(
     ...state,
     error,
   })),
-  on(AgencyStaffActions.terminateAgencyRole, (state, { request }) => {
+  on(AgencyStaffActions.changeAgencyRole, (state, { request }) => {
     const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
       state.entities,
       request
     );
 
-    console.log({ updatedStaff });
+    return agencyStaffAdapter.updateOne(updatedStaff, state);
+  }),
+  on(AgencyStaffActions.changeAgencyRoleFailure, (state, { request }) => {
+    const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
+      state.entities,
+      request
+    );
 
     return agencyStaffAdapter.updateOne(updatedStaff, state);
   })

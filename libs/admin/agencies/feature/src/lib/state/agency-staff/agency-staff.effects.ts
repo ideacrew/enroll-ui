@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { createEffect } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 
 import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffActions from './agency-staff.actions';
+import { RoleChangeRequest } from '@hbx/api-interfaces';
 
 @Injectable()
 export class AgencyStaffEffects {
@@ -30,6 +32,37 @@ export class AgencyStaffEffects {
       ) => {
         console.error('Error', error);
         return AgencyStaffActions.loadAgencyStaffFailure({ error });
+      },
+    })
+  );
+
+  terminateAgentRole$ = createEffect(() =>
+    this.dataPersistence.optimisticUpdate(AgencyStaffActions.changeAgencyRole, {
+      run: (
+        action: ReturnType<typeof AgencyStaffActions.changeAgencyRole>,
+        _state
+      ) => {
+        return this.agenciesApiService
+          .terminateAgencyRole(action.request)
+          .pipe(switchMap(() => of<any>()));
+      },
+      undoAction: (
+        action: ReturnType<typeof AgencyStaffActions.changeAgencyRole>,
+        _state
+      ) => {
+        console.log('UNDOING ROLE TERMINATION');
+        const { from, to } = action.request;
+
+        // Switch to and from in the change request
+        const undoRequest: RoleChangeRequest = {
+          ...action.request,
+          from: to,
+          to: from,
+        };
+
+        return AgencyStaffActions.changeAgencyRoleFailure({
+          request: undoRequest,
+        });
       },
     })
   );

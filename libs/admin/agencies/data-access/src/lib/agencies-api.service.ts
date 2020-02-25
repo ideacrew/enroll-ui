@@ -36,4 +36,22 @@ export class AgenciesApiService {
       `${this.api}/agencies/primary_agency_staff`
     );
   }
+
+  /**
+   * Terminates the targeted role on the staff
+   * @param agencyStaffId The id of the person being changed
+   * @param agencyRoleId The id of the role being terminated
+   */
+  terminateAgencyRole({
+    agencyStaffId,
+    agencyRoleId,
+  }: {
+    agencyStaffId: string;
+    agencyRoleId: string;
+  }): Observable<any> {
+    return this.http.post(
+      `${this.api}/agencies/agency_staff/${agencyStaffId}/terminate/${agencyRoleId}`,
+      {}
+    );
+  }
 }

@@ -77,6 +77,7 @@ describe('Agency VM Creation', () => {
       hbxId: hbx_id,
       agencyRoles: [
         {
+          roleId: agencyRole.agency_role_id,
           agencyName: mockAgencyProfile.legal_name,
           agencyProfileId: mockAgencyProfile.agency_profile_id,
           currentState: agencyRole.aasm_state,

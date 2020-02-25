@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
-import { TerminationRequest } from '../../interfaces/terminationRequest';
+import { RoleChangeRequest } from '@hbx/api-interfaces';
 
 @Component({
   selector: 'hbx-staff-container',
@@ -18,7 +18,7 @@ import { TerminationRequest } from '../../interfaces/terminationRequest';
 export class StaffContainerComponent {
   @Input() staff: AgencyStaffVM;
 
-  @Output() terminateRole: EventEmitter<TerminationRequest> = new EventEmitter<
-    TerminationRequest
+  @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
+    RoleChangeRequest
   >();
 }

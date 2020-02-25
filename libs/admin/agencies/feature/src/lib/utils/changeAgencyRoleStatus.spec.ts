@@ -1,8 +1,11 @@
 import { Update } from '@ngrx/entity';
 
+import {
+  AgencyStaff,
+  RoleChangeRequest,
+  AgencyRoleState,
+} from '@hbx/api-interfaces';
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
-import { TerminationRequest } from '@hbx/admin/shared/ui-components';
-import { AgencyStaff } from '@hbx/api-interfaces';
 
 import { changeAgencyRoleStatus } from './changeAgencyRoleStatus';
 
@@ -12,9 +15,14 @@ describe('Change Agency Role status', () => {
 
     const [_primaryAgent, agencyStaffOne] = agency.agencyStaff;
 
-    const request: TerminationRequest = {
-      agencyProfileId: '1234',
+    // Just use first (and only) role
+    const [role] = agencyStaffOne.agency_roles;
+
+    const request: RoleChangeRequest = {
+      agencyRoleId: role.agency_role_id,
       agencyStaffId: agencyStaffOne._id,
+      from: role.aasm_state,
+      to: AgencyRoleState.Terminated,
     };
 
     const agencyStaffDictionary = {
@@ -26,8 +34,8 @@ describe('Change Agency Role status', () => {
       changes: {
         agency_roles: [
           {
-            aasm_state: 'terminated',
-            agency_profile_id: '1234',
+            ...role,
+            aasm_state: request.to,
           },
         ],
       },

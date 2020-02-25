@@ -2,11 +2,7 @@ import * as faker from 'faker/locale/en_US';
 
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
 
-import {
-  getSearchBox,
-  getStaffList,
-  getFirstAssociation,
-} from '../support/agency-staff.po';
+import { getSearchBox, getStaffList } from '../support/agency-staff.po';
 
 describe('Agency Staff', () => {
   const agencyProfileId = faker.random.uuid();
@@ -21,6 +17,10 @@ describe('Agency Staff', () => {
     cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
       'primaryAgents'
     );
+    // cy.route({
+    //   method: 'POST',
+    //   url: '**/agencies/agency_staff/**',
+    // }).as('terminateRole');
     cy.visit('/');
   });
 
@@ -58,6 +58,8 @@ describe('Agency Staff', () => {
   });
 
   it('should allow a staff role to be terminated', () => {
+    cy.route('post', '**/terminate/**', {}).as('terminateRole');
+
     cy.get(
       'hbx-staff-container:first hbx-agency-association .association-state'
     ).contains('active');
@@ -70,8 +72,37 @@ describe('Agency Staff', () => {
       'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button.terminating'
     ).click();
 
+    cy.wait('@terminateRole');
+
     cy.get(
       'hbx-staff-container:first hbx-agency-association .association-state'
     ).contains('terminated');
+  });
+
+  it('should revert a termination request if the server returns an error', () => {
+    cy.route({
+      method: 'post',
+      url: '**/terminate/**',
+      response: {},
+      status: 500,
+    }).as('terminateRole');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('active');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button'
+    ).click();
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button.terminating'
+    ).click();
+
+    cy.wait('@terminateRole');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('active');
   });
 });

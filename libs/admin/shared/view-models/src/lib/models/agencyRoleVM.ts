@@ -1,4 +1,5 @@
 import { PrimaryAgentVM } from './primaryAgentVM';
+import { AgencyRoleState } from '@hbx/api-interfaces';
 
 export interface AgencyRoleVM {
   orgId: string;
@@ -6,5 +7,6 @@ export interface AgencyRoleVM {
   agencyName: string;
   profileType: string;
   primaryAgent: PrimaryAgentVM;
-  currentState: string;
+  currentState: AgencyRoleState;
+  roleId: string;
 }

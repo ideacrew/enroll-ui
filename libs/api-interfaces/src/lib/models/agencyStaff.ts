@@ -14,6 +14,7 @@ export interface AgencyStaff {
 }
 
 export interface AgencyRole {
+  agency_role_id: string;
   /**
    * ### Needed to terminate the link between agent and agency
    *
@@ -28,15 +29,19 @@ export interface AgencyRole {
   /**
    * The current state of the role with the Agency
    */
-  aasm_state: string; // aasm_state
+  aasm_state: AgencyRoleState; // aasm_state
   type?: string;
 }
 
 export const enum AgencyRoleState {
-  Pending = 'Pending',
-  Active = 'Active',
-  Terminated = 'Terminated',
-  Other = 'Other',
+  BAPending = 'broker_agency_pending',
+  BATerminated = 'broker_agency_terminated',
+  GAPending = 'general_agency_pending',
+  GATerminated = 'general_agency_terminated',
+
+  Terminated = 'terminated',
+  Pending = 'pending',
+  Active = 'active',
 }
 
 export interface ChangeHistory<T> {

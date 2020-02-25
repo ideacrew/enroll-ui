@@ -1,4 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Dictionary } from '@ngrx/entity';
+
+import { AgencyStaff, AgencyProfile, PrimaryAgent } from '@hbx/api-interfaces';
+import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
 
 import {
   AGENCYSTAFF_FEATURE_KEY,
@@ -8,15 +12,6 @@ import {
 } from './agency-staff.reducer';
 import { getAllAgencies } from '../agencies/agencies.selectors';
 import { AgenciesPartialState } from '../agencies/agencies.reducer';
-import { AgencyStaff, AgencyProfile, PrimaryAgent } from '@hbx/api-interfaces';
-import { Dictionary } from '@ngrx/entity';
-import {
-  AgencyVM,
-  AgencyRoleVM,
-  AgencyStaffVM,
-  EmailVM,
-  PrimaryAgentVM,
-} from '@hbx/admin/shared/view-models';
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
 import {

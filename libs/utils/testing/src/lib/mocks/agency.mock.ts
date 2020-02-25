@@ -1,4 +1,4 @@
-import * as faker from 'faker/locale/en_US';
+import * as faker from 'faker';
 
 import {
   AgencyProfile,
@@ -6,6 +6,7 @@ import {
   AgencyProfileType,
   AgencyStaff,
   EmailKind,
+  AgencyRoleState,
 } from '@hbx/api-interfaces';
 
 const DEFAULT_STAFF = 5;
@@ -17,7 +18,9 @@ export function mockAgencyProfile(agencyProfileId: string): AgencyProfile {
     dba: faker.company.companyName(),
     legal_name: faker.company.companyName(),
     agency_profile_type:
-      faker.random.number(10) > 2 ? AgencyProfileType.Broker : AgencyProfileType.General,
+      faker.random.number(10) > 2
+        ? AgencyProfileType.Broker
+        : AgencyProfileType.General,
   };
 
   return agency;
@@ -61,8 +64,9 @@ export function mockPrimaryAgentStaffRole(
     hbx_id,
     agency_roles: [
       {
+        agency_role_id: faker.random.uuid(),
         agency_profile_id: connected_profile_id,
-        aasm_state: 'active',
+        aasm_state: AgencyRoleState.Active,
       },
     ],
     agent_emails: [
@@ -88,8 +92,9 @@ export function mockOneAgencyStaff(agencyProfileId: string): AgencyStaff {
     hbx_id: faker.random.uuid(),
     agency_roles: [
       {
+        agency_role_id: faker.random.uuid(),
         agency_profile_id: agencyProfileId,
-        aasm_state: 'active',
+        aasm_state: AgencyRoleState.Active,
       },
     ],
     agent_emails: [

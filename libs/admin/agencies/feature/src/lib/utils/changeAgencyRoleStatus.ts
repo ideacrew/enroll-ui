@@ -1,21 +1,26 @@
-import { AgencyStaff } from '@hbx/api-interfaces';
+import {
+  AgencyStaff,
+  RoleChangeRequest,
+  AgencyRole,
+} from '@hbx/api-interfaces';
 import { Dictionary, Update } from '@ngrx/entity';
-import { TerminationRequest } from '@hbx/admin/shared/ui-components';
 
 export function changeAgencyRoleStatus(
   agencyStaff: Dictionary<AgencyStaff>,
-  request: TerminationRequest
+  request: RoleChangeRequest
 ): Update<AgencyStaff> {
-  const { agencyProfileId, agencyStaffId } = request;
+  const { agencyRoleId, agencyStaffId } = request;
 
   const agent = agencyStaff[agencyStaffId];
 
-  const newRoles = agent.agency_roles.map(role => {
-    if (role.agency_profile_id === agencyProfileId) {
-      return {
+  const newRoles: AgencyRole[] = agent.agency_roles.map(role => {
+    if (role.agency_role_id === agencyRoleId) {
+      const newRole: AgencyRole = {
         ...role,
-        aasm_state: 'terminated',
+        aasm_state: request.to,
       };
+
+      return newRole;
     } else {
       return role;
     }

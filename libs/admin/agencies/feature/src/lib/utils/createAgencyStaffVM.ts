@@ -41,6 +41,7 @@ export function createSingleAgencyStaffVM(
     const agencyRole: AgencyRoleVM = {
       agencyName,
       currentState: role.aasm_state,
+      roleId: role.agency_role_id,
       orgId,
       primaryAgent,
       agencyProfileId,

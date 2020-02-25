@@ -11,8 +11,7 @@ import {
   AgencyStaffVM,
   AgencyType,
 } from '@hbx/admin/shared/view-models';
-
-import { TerminationRequest } from '../interfaces/terminationRequest';
+import { RoleChangeRequest, AgencyRoleState } from '@hbx/api-interfaces';
 
 @Component({
   selector: 'hbx-agency-association',
@@ -27,14 +26,16 @@ export class AgencyAssociationComponent {
   @Input() role: AgencyRoleVM;
   @Input() agencyStaff: AgencyStaffVM;
 
-  @Output() terminateRole: EventEmitter<TerminationRequest> = new EventEmitter<
-    TerminationRequest
+  @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
+    RoleChangeRequest
   >();
 
   terminateAgencyRole(): void {
     this.terminateRole.emit({
-      agencyProfileId: this.role.agencyProfileId,
+      agencyRoleId: this.role.roleId,
       agencyStaffId: this.agencyStaff.personId,
+      from: this.role.currentState,
+      to: AgencyRoleState.Terminated,
     });
   }
 }

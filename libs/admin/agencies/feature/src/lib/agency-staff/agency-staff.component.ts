@@ -9,7 +9,7 @@ import {
 } from 'rxjs/operators';
 
 import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
-import { TerminationRequest } from '@hbx/admin/shared/ui-components';
+import { RoleChangeRequest } from '@hbx/api-interfaces';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { searchAgencyStaff } from '../utils';
@@ -40,9 +40,9 @@ export class AgencyStaffComponent {
 
   constructor(private agencyStaffFacade: AgencyStaffFacade) {}
 
-  terminateAgencyRole(request: TerminationRequest): void {
+  terminateAgencyRole(request: RoleChangeRequest): void {
     this.agencyStaffFacade.dispatch(
-      AgencyStaffActions.terminateAgencyRole({ request })
+      AgencyStaffActions.changeAgencyRole({ request })
     );
   }
 }
