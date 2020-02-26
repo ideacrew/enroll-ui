@@ -70,7 +70,6 @@
     "@types/faker": "^4.1.9",
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
-    "@types/uuid": "^3.4.7",
     "codelyzer": "^5.1.2",
     "core-js": "^3.6.4",
     "cypress": "^4.0.2",
