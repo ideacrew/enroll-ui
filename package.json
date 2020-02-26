@@ -11,6 +11,7 @@
     "build:admin": "ng build --project=admin --configuration=production",
     "test": "ng test",
     "lint": "npx stylelint \"**/*.scss\" && nx workspace-lint && ng lint",
+    "lint:fix": "npx stylelint \"**/*.scss\" --fix && nx workspace-lint --fix && ng lint --fix",
     "e2e": "ng e2e",
     "e2e:admin": "ng e2e --project=admin-e2e -- --watch",
     "e2e:admin:ci": "ng e2e --project=admin-e2e --headless",
@@ -30,7 +31,9 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod --delete",
+    "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets"
   },
   "engines": {
     "node": ">=12"
