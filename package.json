@@ -33,6 +33,7 @@
     "help": "nx help",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod/admin --delete",
+    "deploy:hotfix": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-hotfix --delete",
     "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets"
   },
   "engines": {
@@ -67,7 +68,7 @@
     "@nrwl/cypress": "9.0.4",
     "@nrwl/jest": "9.0.4",
     "@nrwl/workspace": "9.0.4",
-    "@types/faker": "^4.1.9",
+    "@types/faker": "^4.1.10",
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
