@@ -37,6 +37,12 @@
     --state-border-color: var(--neutral-030);
     --state-text-color: var(--neutral-090);
   }
+
+  &.pending {
+    --state-background-color: var(--yellow-010);
+    --state-border-color: var(--yellow-030);
+    --state-text-color: var(--yellow-090);
+  }
 }
 
 .state-and-action {

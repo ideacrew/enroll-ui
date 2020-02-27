@@ -1,6 +1,10 @@
 import { Dictionary } from '@ngrx/entity';
 
-import { AgencyProfile, PrimaryAgent, AgencyProfileType } from '@hbx/api-interfaces';
+import {
+  AgencyProfile,
+  PrimaryAgent,
+  AgencyProfileType,
+} from '@hbx/api-interfaces';
 import {
   PrimaryAgentVM,
   AgencyVM,
@@ -15,13 +19,30 @@ export function createSingleAgencyVM(
 
   const primaryAgent = primaryAgents[agency_profile_id];
 
-  const primaryAgentVM: PrimaryAgentVM = {
-    firstName: primaryAgent.first_name,
-    lastName: primaryAgent.last_name,
-    npn: primaryAgent.agent_npn,
-    roleId: primaryAgent.agency_role_id,
-    hbxId: primaryAgent.hbx_id,
-  };
+  let primaryAgentVM: PrimaryAgentVM;
+  let agencyProfileId: string;
+
+  if (primaryAgent !== undefined) {
+    primaryAgentVM = {
+      firstName: primaryAgent.first_name,
+      lastName: primaryAgent.last_name,
+      npn: primaryAgent.agent_npn,
+      roleId: primaryAgent.agency_role_id,
+      hbxId: primaryAgent.hbx_id,
+    };
+
+    agencyProfileId = primaryAgent.connected_profile_id;
+  } else {
+    primaryAgentVM = {
+      firstName: 'Idea',
+      lastName: 'Crew',
+      npn: '1234567890',
+      roleId: 'fake',
+      hbxId: 'fakeAsWell',
+    };
+
+    agencyProfileId = 'fakeProfileId';
+  }
 
   const agencyVM: AgencyVM = {
     agencyName: profile.legal_name,
@@ -31,7 +52,7 @@ export function createSingleAgencyVM(
         ? AgencyType.Broker
         : AgencyType.General,
     primaryAgent: primaryAgentVM,
-    agencyProfileId: primaryAgent.connected_profile_id,
+    agencyProfileId,
   };
 
   return agencyVM;

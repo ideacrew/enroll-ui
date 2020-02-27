@@ -5,8 +5,14 @@ import {
   AgencyVM,
   AgencyRoleVM,
   EmailVM,
+  PrimaryAgentVM,
 } from '@hbx/admin/shared/view-models';
-import { AgencyStaff, AgencyRole, PrimaryAgent } from '@hbx/api-interfaces';
+import {
+  AgencyStaff,
+  AgencyRole,
+  PrimaryAgent,
+  AgencyRoleState,
+} from '@hbx/api-interfaces';
 
 export function createSingleAgencyStaffVM(
   staff: AgencyStaff,
@@ -23,10 +29,19 @@ export function createSingleAgencyStaffVM(
   } = staff;
 
   // Filter out roles where the agency staff role is held by the primary agent
+  // or where the agency doesn't exit?
   const filteredRoles: AgencyRole[] = agency_roles.filter(role => {
-    const { primaryAgent } = agencyVMs[role.agency_profile_id];
+    let agencyVM: AgencyVM;
+    let primaryAgent: PrimaryAgentVM;
 
-    return hbx_id !== primaryAgent.hbxId;
+    agencyVM = agencyVMs[role.agency_profile_id];
+
+    if (agencyVM !== undefined) {
+      primaryAgent = agencyVM.primaryAgent;
+      return hbx_id !== primaryAgent.hbxId;
+    } else {
+      return false;
+    }
   });
 
   const agencyRoles: AgencyRoleVM[] = filteredRoles.map(role => {
@@ -40,7 +55,7 @@ export function createSingleAgencyStaffVM(
 
     const agencyRole: AgencyRoleVM = {
       agencyName,
-      currentState: role.aasm_state,
+      currentState: convertAasmState(role.aasm_state),
       roleId: role.agency_role_id,
       orgId,
       primaryAgent,
@@ -97,4 +112,22 @@ export function createPrimaryAgentDictionary(
   );
 
   return primaryAgentDictionary;
+}
+
+export function convertAasmState(aasm_state: AgencyRoleState): AgencyRoleState {
+  if (
+    aasm_state === AgencyRoleState.GATerminated ||
+    aasm_state === AgencyRoleState.BATerminated
+  ) {
+    return AgencyRoleState.Terminated;
+  }
+
+  if (
+    aasm_state === AgencyRoleState.GAPending ||
+    aasm_state === AgencyRoleState.BAPending
+  ) {
+    return AgencyRoleState.Pending;
+  }
+
+  return aasm_state;
 }
