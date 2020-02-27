@@ -12,7 +12,8 @@
     <div class="association-state" [className]="role.currentState">
       {{ role.currentState }}
     </div>
-    <button *ngIf="role.currentState === 'active'"
+    <button
+      *ngIf="role.currentState === 'active'"
       type="button"
       class="hbx-button terminate-action"
       (click)="editing = true"
