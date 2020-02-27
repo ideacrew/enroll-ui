@@ -8,7 +8,7 @@ import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
   providedIn: 'root',
 })
 export class AgenciesApiService {
-  private api = 'api/v1';
+  private api = 'https://hotfix-3-enroll.dchbx.org/api/v1';
 
   constructor(private http: HttpClient) {}
 
