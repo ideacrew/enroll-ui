@@ -12,7 +12,9 @@ export class AdminShellComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.setToken(this.getTokenFromUrl());
+    this.authService.setToken(
+      this.getTokenFromUrl() || this.getTokenFromLocalStorage()
+    );
   }
 
   getTokenFromUrl(): string {
@@ -24,6 +26,14 @@ export class AdminShellComponent implements OnInit {
       // Find the equals sign, take what's after it
       const equalsIndex = search.indexOf('=');
       return search.substring(equalsIndex + 1);
+    }
+
+    return null;
+  }
+
+  getTokenFromLocalStorage(): string {
+    if (localStorage.getItem('token') !== undefined) {
+      return localStorage.getItem('token');
     }
 
     return null;
