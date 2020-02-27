@@ -12,7 +12,8 @@ export function searchAgencyStaff(
         searchAgentName(query, agencyStaff) ||
         searchAgencyNames(query, agencyStaff) ||
         searchHBXId(query, agencyStaff) ||
-        searchPrimaryAgent(query, agencyStaff)
+        searchPrimaryAgent(query, agencyStaff) ||
+        searchRoleState(query, agencyStaff)
       );
     });
   }
@@ -47,6 +48,16 @@ function searchPrimaryAgent(
     roles.filter(role => {
       const fullName = `${role.primaryAgent.firstName} ${role.primaryAgent.lastName}`;
       return fullName.toLowerCase().includes(query);
+    }).length > 0
+  );
+}
+
+function searchRoleState(query: string, agencyStaff: AgencyStaffVM): boolean {
+  const roles: AgencyRoleVM[] = agencyStaff.agencyRoles;
+
+  return (
+    roles.filter(role => {
+      return role.currentState.toLowerCase().includes(query);
     }).length > 0
   );
 }
