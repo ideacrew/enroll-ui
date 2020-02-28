@@ -27,12 +27,12 @@
               {
                 "glob": "**/*",
                 "input": "libs/theme/src/lib/assets/fonts",
-                "output": "/assets/fonts"
+                "output": "/ng-assets/fonts"
               },
               {
                 "glob": "**/*",
                 "input": "libs/theme/src/lib/assets/icons",
-                "output": "/assets/icons"
+                "output": "/ng-assets/icons"
               }
             ],
             "styles": [
