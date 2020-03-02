@@ -38,6 +38,13 @@
   <div class="state-and-action action-only">
     <button
       type="button"
+      class="hbx-button text-only"
+      (click)="editing = false"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
       class="hbx-button outline terminate-action terminating"
       (click)="terminateAgencyRole()"
     >

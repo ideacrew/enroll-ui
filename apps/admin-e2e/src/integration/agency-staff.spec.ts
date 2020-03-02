@@ -17,10 +17,6 @@ describe('Agency Staff', () => {
     cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
       'primaryAgents'
     );
-    // cy.route({
-    //   method: 'POST',
-    //   url: '**/agencies/agency_staff/**',
-    // }).as('terminateRole');
     cy.visit('/');
   });
 
@@ -100,6 +96,24 @@ describe('Agency Staff', () => {
     ).click();
 
     cy.wait('@terminateRole');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('active');
+  });
+
+  it('should allow the user to cancel a termination request before confirmation', () => {
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .association-state'
+    ).contains('active');
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button'
+    ).click();
+
+    cy.get(
+      'hbx-staff-container:first hbx-agency-association .state-and-action > .hbx-button.text-only'
+    ).click();
 
     cy.get(
       'hbx-staff-container:first hbx-agency-association .association-state'

@@ -32,4 +32,8 @@
     --outline-color: var(--red-070);
     --content-color: var(--red-070);
   }
+
+  &.text-only {
+    --background-color: transparent;
+  }
 }
