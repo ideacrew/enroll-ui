@@ -77,7 +77,7 @@ describe('Agency VM Creation', () => {
       hbxId: hbx_id,
       agencyRoles: [
         {
-          roleId: agencyRole.agency_role_id,
+          roleId: agencyRole.role_id,
           agencyName: mockAgencyProfile.legal_name,
           agencyProfileId: mockAgencyProfile.agency_profile_id,
           currentState: agencyRole.aasm_state,
@@ -87,7 +87,7 @@ describe('Agency VM Creation', () => {
             hbxId: mockPrimaryAgent.hbx_id,
             lastName: mockPrimaryAgent.last_name,
             npn: mockPrimaryAgent.agent_npn,
-            roleId: mockPrimaryAgent.agency_role_id,
+            roleId: mockPrimaryAgent.agent_role_id,
           },
           profileType:
             mockAgencyProfile.agency_profile_type === AgencyProfileType.Broker

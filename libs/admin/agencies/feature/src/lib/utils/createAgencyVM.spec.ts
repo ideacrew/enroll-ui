@@ -49,7 +49,7 @@ describe('Agency VM Creation', () => {
         firstName: primaryAgent.first_name,
         lastName: primaryAgent.last_name,
         npn: primaryAgent.agent_npn,
-        roleId: primaryAgent.agency_role_id,
+        roleId: primaryAgent.agent_role_id,
         hbxId: primaryAgent.hbx_id,
       },
     };

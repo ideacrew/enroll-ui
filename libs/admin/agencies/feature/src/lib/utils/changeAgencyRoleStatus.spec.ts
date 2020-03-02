@@ -19,7 +19,7 @@ describe('Change Agency Role status', () => {
     const [role] = agencyStaffOne.agency_roles;
 
     const request: RoleChangeRequest = {
-      agencyRoleId: role.agency_role_id,
+      agencyRoleId: role.role_id,
       agencyStaffId: agencyStaffOne._id,
       from: role.aasm_state,
       to: AgencyRoleState.Terminated,
