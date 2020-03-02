@@ -14,7 +14,7 @@ export interface AgencyStaff {
 }
 
 export interface AgencyRole {
-  agency_role_id: string;
+  role_id: string;
   /**
    * ### Needed to terminate the link between agent and agency
    *

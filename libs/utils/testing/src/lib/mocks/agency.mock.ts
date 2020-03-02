@@ -30,7 +30,7 @@ export function mockPrimaryAgent(agencyProfileId: string): PrimaryAgent {
   const genderNumber = faker.random.number(1);
 
   const primaryAgent: PrimaryAgent = {
-    agency_role_id: faker.random.uuid(),
+    agent_role_id: faker.random.uuid(),
     connected_profile_id: agencyProfileId,
     first_name: faker.name.firstName(genderNumber),
     last_name: faker.name.lastName(),
@@ -64,7 +64,7 @@ export function mockPrimaryAgentStaffRole(
     hbx_id,
     agency_roles: [
       {
-        agency_role_id: faker.random.uuid(),
+        role_id: faker.random.uuid(),
         agency_profile_id: connected_profile_id,
         aasm_state: AgencyRoleState.Active,
       },
@@ -92,7 +92,7 @@ export function mockOneAgencyStaff(agencyProfileId: string): AgencyStaff {
     hbx_id: faker.random.uuid(),
     agency_roles: [
       {
-        agency_role_id: faker.random.uuid(),
+        role_id: faker.random.uuid(),
         agency_profile_id: agencyProfileId,
         aasm_state: AgencyRoleState.Active,
       },
