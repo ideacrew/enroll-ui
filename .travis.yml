@@ -1,15 +1,13 @@
 language: node_js
 node_js:
   - '12'
+install:
+  - npm install
 cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
-  npm: true
   directories:
+    - 'node_modules'
     # we also need to cache folder with Cypress binary
     - ~/.cache
-install:
-  - npm ci
 script:
   - npx stylelint "**/*.scss"
   - npm run affected:lint -- --base=origin/master --parallel
