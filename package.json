@@ -34,7 +34,8 @@
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod/admin --delete",
     "deploy:hotfix": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-hotfix --delete",
-    "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets"
+    "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets",
+    "before-commit": "npx stylelint \"**/*.scss\" && npm run affected:lint -- --base=origin/master --parallel && npm run affected:test -- --base=origin/master --parallel && npm run affected:e2e -- --base=origin/master --headless --parallel"
   },
   "engines": {
     "node": ">=12"
