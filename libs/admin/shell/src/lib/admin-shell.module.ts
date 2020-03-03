@@ -25,11 +25,11 @@ import { authInterceptorInit } from '@hbx/auth';
               module => module.AdminAgenciesFeatureModule
             ),
         },
-        {
-          path: '',
-          redirectTo: 'agencies',
-          pathMatch: 'full',
-        },
+        // {
+        //   path: '',
+        //   redirectTo: 'agencies',
+        //   pathMatch: 'full',
+        // },
       ],
       { initialNavigation: 'enabled' }
     ),

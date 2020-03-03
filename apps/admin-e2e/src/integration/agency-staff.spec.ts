@@ -17,7 +17,7 @@ describe('Agency Staff', () => {
     cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
       'primaryAgents'
     );
-    cy.visit('/');
+    cy.visit('/agencies/agency-staff');
   });
 
   it('display a complete list of agency staff', () => {
