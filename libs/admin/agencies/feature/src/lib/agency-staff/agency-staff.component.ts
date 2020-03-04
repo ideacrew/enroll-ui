@@ -14,6 +14,13 @@ import { RoleChangeRequest } from '@hbx/api-interfaces';
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { searchAgencyStaff } from '../utils';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
+import { AgenciesFacade } from '../state/agencies/agencies.facade';
+import { PrimaryAgentsFacade } from '../state/primary-agents/primary-agents.facade';
+
+interface AgencyStaffListVM {
+  agencyStaff: AgencyStaffVM[];
+  loaded: boolean;
+}
 
 @Component({
   templateUrl: './agency-staff.component.html',
@@ -28,7 +35,21 @@ export class AgencyStaffComponent {
     map((query: string) => query.trim().toLowerCase())
   );
 
-  agencyStaffVM$: Observable<AgencyStaffVM[]> = combineLatest([
+  entitiesLoaded$: Observable<boolean> = combineLatest([
+    this.agencyStaffFacade.loaded$,
+    this.agenciesFacade.loaded$,
+    this.primaryStaffFacade.loaded$,
+  ]).pipe(
+    map(
+      ([agencyStaffLoaded, agenciesLoaded, primaryStaffLoaded]: [
+        boolean,
+        boolean,
+        boolean
+      ]) => agencyStaffLoaded && agenciesLoaded && primaryStaffLoaded
+    )
+  );
+
+  filteredStaff$: Observable<AgencyStaffVM[]> = combineLatest([
     this.globalSearch$.pipe(startWith('')),
     this.agencyStaffFacade.allAgencyStaff$,
   ]).pipe(
@@ -38,7 +59,24 @@ export class AgencyStaffComponent {
     })
   );
 
-  constructor(private agencyStaffFacade: AgencyStaffFacade) {}
+  agencyStaffVM$: Observable<AgencyStaffListVM> = combineLatest([
+    this.filteredStaff$,
+    this.entitiesLoaded$,
+  ]).pipe(
+    distinctUntilChanged(),
+    map(([agencyStaffVMs, entitiesLoaded]: [AgencyStaffVM[], boolean]) => {
+      return {
+        agencyStaff: agencyStaffVMs,
+        loaded: entitiesLoaded,
+      };
+    })
+  );
+
+  constructor(
+    private agencyStaffFacade: AgencyStaffFacade,
+    private agenciesFacade: AgenciesFacade,
+    private primaryStaffFacade: PrimaryAgentsFacade
+  ) {}
 
   terminateAgencyRole(request: RoleChangeRequest): void {
     this.agencyStaffFacade.dispatch(

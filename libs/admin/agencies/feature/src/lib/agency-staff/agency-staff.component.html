@@ -1,44 +1,43 @@
 <h1 class="hbx-heading-xl">Agency Staff</h1>
-<div class="toolbar">
-  <input
-    [formControl]="globalSearch"
-    type="text"
-    name="global-search"
-    id="global-search"
-    class="search-box"
-  />
-  <label class="search-label" for="global-search"
-    >Search <span class="visually-hidden">for Agents or Agencies</span></label
-  >
-</div>
 
-<!-- <div *ngFor="let agency of agencyVMs$ | async">
-  <h2 class="hbx-heading-small">
-    {{ agency.agencyName }} - {{ agency.agencyType }}
-  </h2>
-  <div>Primary Agent: {{ agency.primaryAgent.fullName }}</div>
+<ng-container *ngIf="agencyStaffVM$ | async as vm">
+  <div class="toolbar">
+    <input
+      [formControl]="globalSearch"
+      type="text"
+      name="global-search"
+      id="global-search"
+      class="search-box"
+    />
+    <label class="search-label" for="global-search"
+      >Search <span class="visually-hidden">for Agents or Agencies</span></label
+    >
+  </div>
+  <ng-container *ngIf="vm.loaded === false; else loaded">
+    <hbx-agency-staff-skeleton></hbx-agency-staff-skeleton>
+    <hbx-agency-staff-skeleton></hbx-agency-staff-skeleton>
+    <hbx-agency-staff-skeleton></hbx-agency-staff-skeleton>
+    <hbx-agency-staff-skeleton></hbx-agency-staff-skeleton>
+  </ng-container>
 
-  <pre
-    >{{ agency | json }}
-  </pre>
-  <hr />
-</div> -->
-
-<ng-container *ngIf="agencyStaffVM$ | async as agencyStaff">
-  <ng-container *ngIf="agencyStaff && agencyStaff.length > 0; else noResults"
-    ><hbx-staff-container
-      *ngFor="let staff of agencyStaff"
-      [staff]="staff"
-      (terminateRole)="terminateAgencyRole($event)"
-    ></hbx-staff-container
-  ></ng-container>
+  <ng-template #loaded>
+    <ng-container
+      *ngIf="vm.agencyStaff && vm.agencyStaff.length > 0; else noResults"
+      ><hbx-staff-container
+        *ngFor="let staff of vm.agencyStaff"
+        [staff]="staff"
+        (terminateRole)="terminateAgencyRole($event)"
+      ></hbx-staff-container
+    ></ng-container>
+  </ng-template>
 </ng-container>
 
 <ng-template #noResults
   ><div class="no-results-container">
     <h2 class="hbx-heading-small">No results</h2>
     <p>
-      You can search by Staff Name, HBX ID, Agency Name, or Writing Agent
+      You can search by Staff Name, HBX ID, Agency Name, Writing Agent, or
+      Current Status
     </p>
   </div>
 </ng-template>

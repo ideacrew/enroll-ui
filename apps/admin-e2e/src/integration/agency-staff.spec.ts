@@ -120,3 +120,28 @@ describe('Agency Staff', () => {
     ).contains('active');
   });
 });
+
+describe('Agency Staff with delay', () => {
+  const agencyProfileId = faker.random.uuid();
+  const { agency, agencyStaff, primaryAgent } = mockAgencyWithStaff(
+    agencyProfileId
+  );
+
+  beforeEach(() => {
+    cy.server();
+    cy.route({ url: '**/agencies', response: [agency], delay: 1000 }).as(
+      'agencies'
+    );
+    cy.route('**/agencies/agency_staff', agencyStaff).as('agencyStaff');
+    cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
+      'primaryAgents'
+    );
+    cy.visit('/agencies/agency-staff');
+  });
+
+  it('should show a loading indicator when the entities have not finished loading', () => {
+    cy.get('hbx-agency-staff-skeleton').should('exist');
+    cy.wait('@agencies');
+    cy.get('hbx-agency-staff-skeleton').should('not.exist');
+  });
+});
