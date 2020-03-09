@@ -1,0 +1,30 @@
+.association-state {
+  --state-background-color: var(--green-010);
+  --state-border-color: var(--green-030);
+  --state-text-color: var(--green-090);
+
+  font-size: var(--s-1);
+  line-height: 1;
+  color: var(--state-text-color);
+  border: 1px solid var(--state-border-color);
+  background-color: var(--state-background-color);
+  text-transform: uppercase;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--s-4) var(--s-2);
+  border-radius: var(--s1);
+  user-select: none;
+
+  &.terminated {
+    --state-background-color: var(--neutral-010);
+    --state-border-color: var(--neutral-030);
+    --state-text-color: var(--neutral-090);
+  }
+
+  &.pending {
+    --state-background-color: var(--yellow-010);
+    --state-border-color: var(--yellow-030);
+    --state-text-color: var(--yellow-090);
+  }
+}

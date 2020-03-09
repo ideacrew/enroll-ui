@@ -9,4 +9,11 @@ export interface AgencyRoleVM {
   primaryAgent: PrimaryAgentVM;
   currentState: AgencyRoleState;
   roleId: string;
+  changeHistory?: ChangeHistory<AgencyRoleState>[];
+}
+
+export interface ChangeHistory<T> {
+  changedFrom: T;
+  changedTo: T;
+  changedAt: Date; // will be converted to Date object
 }

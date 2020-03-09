@@ -9,7 +9,7 @@ import {
 import { AgencyStaffEntity } from './agency-staff.models';
 import * as AgencyStaffActions from './agency-staff.actions';
 import { changeAgencyRoleStatus } from '../../utils/changeAgencyRoleStatus';
-import { AgencyStaff } from '@hbx/api-interfaces';
+import { AgencyStaff, AgencyStaffWithDetail } from '@hbx/api-interfaces';
 
 export const AGENCYSTAFF_FEATURE_KEY = 'agencyStaff';
 
@@ -31,6 +31,7 @@ export interface State extends EntityState<AgencyStaffEntity> {
   selectedId?: string | number; // which AgencyStaff record has been selected
   loaded: boolean; // has the AgencyStaff list been loaded
   error?: string | null; // last none error (if any)
+  agencyStaffDetail?: AgencyStaffWithDetail;
 }
 
 export interface AgencyStaffPartialState {
@@ -78,7 +79,15 @@ const agencyStaffReducer = createReducer(
     );
 
     return agencyStaffAdapter.updateOne(updatedStaff, state);
-  })
+  }),
+  on(
+    AgencyStaffActions.loadAgencyStaffDetailSuccess,
+    (state, { agencyStaff }) => ({ ...state, agencyStaffDetail: agencyStaff })
+  ),
+  on(AgencyStaffActions.loadAgencyStaffDetailFailure, (state, { error }) => ({
+    ...state,
+    error,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

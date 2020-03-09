@@ -31,11 +31,18 @@ import { PrimaryAgentsFacade } from './state/primary-agents/primary-agents.facad
                 m => m.AgencyStaffModule
               ),
           },
-          // {
-          //   path: '',
-          //   pathMatch: 'full',
-          //   redirectTo: 'agency-staff',
-          // },
+          {
+            path: 'agency-staff/:personId',
+            loadChildren: () =>
+              import('./agency-staff-detail/agency-staff-detail.module').then(
+                m => m.AgencyStaffDetailModule
+              ),
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'agency-staff',
+          },
         ],
       },
     ]),

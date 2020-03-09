@@ -5,9 +5,9 @@ import {
   PrimaryAgent,
   AgencyProfileType,
   AgencyStaff,
-  EmailKind,
   AgencyRoleState,
 } from '@hbx/api-interfaces';
+import { mockOnePartialAgencyStaff } from './agencyStaff.mock';
 
 const DEFAULT_STAFF = 5;
 
@@ -26,29 +26,12 @@ export function mockAgencyProfile(agencyProfileId: string): AgencyProfile {
   return agency;
 }
 
-export function mockPrimaryAgent(agencyProfileId: string): PrimaryAgent {
-  const genderNumber = faker.random.number(1);
-
-  const primaryAgent: PrimaryAgent = {
-    agent_role_id: faker.random.uuid(),
-    connected_profile_id: agencyProfileId,
-    first_name: faker.name.firstName(genderNumber),
-    last_name: faker.name.lastName(),
-    agent_npn: faker.random
-      .number({ min: 111111111, max: 999999999 })
-      .toString(),
-    hbx_id: faker.random.uuid(),
-  };
-
-  return primaryAgent;
-}
-
 export function mockManyAgencyStaff(
   agencyProfileId: string,
   totalStaff: number = DEFAULT_STAFF
 ): AgencyStaff[] {
   return Array.from({ length: totalStaff }, () =>
-    mockOneAgencyStaff(agencyProfileId)
+    mockOnePartialAgencyStaff(agencyProfileId)
   );
 }
 
@@ -69,42 +52,6 @@ export function mockPrimaryAgentStaffRole(
         aasm_state: AgencyRoleState.Active,
       },
     ],
-    agent_emails: [
-      {
-        address: faker.internet.email(),
-        kind: EmailKind.Home,
-        id: faker.random.uuid(),
-      },
-    ],
-    dob: faker.date.past(40).toISOString(),
-  };
-
-  return agencyStaff;
-}
-
-export function mockOneAgencyStaff(agencyProfileId: string): AgencyStaff {
-  const genderNumber = faker.random.number(1);
-
-  const agencyStaff: AgencyStaff = {
-    _id: faker.random.uuid(),
-    first_name: faker.name.firstName(genderNumber),
-    last_name: faker.name.lastName(),
-    hbx_id: faker.random.uuid(),
-    agency_roles: [
-      {
-        role_id: faker.random.uuid(),
-        agency_profile_id: agencyProfileId,
-        aasm_state: AgencyRoleState.Active,
-      },
-    ],
-    agent_emails: [
-      {
-        address: faker.internet.email(),
-        kind: EmailKind.Home,
-        id: faker.random.uuid(),
-      },
-    ],
-    dob: faker.date.past(40).toISOString(),
   };
 
   return agencyStaff;

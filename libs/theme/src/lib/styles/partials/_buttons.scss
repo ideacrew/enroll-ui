@@ -3,6 +3,7 @@
   --content-color: var(--neutral-070);
   --background-color: var(--neutral-010);
   --outline-color: transparent;
+  --focus-color: var(--content-color);
 
   line-height: 1;
   -webkit-appearance: none;
@@ -19,6 +20,10 @@
 
   > * + * {
     margin-left: 4px;
+  }
+
+  &:focus {
+    outline-color: var(--focus-color);
   }
 
   .svg-icon {

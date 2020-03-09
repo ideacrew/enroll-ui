@@ -1,8 +1,17 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 
-import { AgencyStaff, AgencyProfile, PrimaryAgent } from '@hbx/api-interfaces';
-import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import {
+  AgencyStaff,
+  AgencyProfile,
+  PrimaryAgent,
+  AgencyStaffWithDetail,
+} from '@hbx/api-interfaces';
+import {
+  AgencyVM,
+  AgencyStaffVM,
+  AgencyStaffDetailVM,
+} from '@hbx/admin/shared/view-models';
 
 import {
   AGENCYSTAFF_FEATURE_KEY,
@@ -14,13 +23,10 @@ import { getAllAgencies } from '../agencies/agencies.selectors';
 import { AgenciesPartialState } from '../agencies/agencies.reducer';
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
+import { createAllAgencyVMs } from '../../utils/createAgencyVM';
 import {
-  createSingleAgencyVM,
-  createAllAgencyVMs,
-} from '../../utils/createAgencyVM';
-import {
-  createSingleAgencyStaffVM,
   createAllAgencyStaffVMs,
+  createSingleAgencyStaffDetailVM,
 } from '../../utils/createAgencyStaffVM';
 
 // Lookup the 'AgencyStaff' feature state managed by NgRx
@@ -39,6 +45,11 @@ export const getAgencyStaffLoaded = createSelector(
 export const getAgencyStaffError = createSelector(
   getAgencyStaffState,
   (state: State) => state.error
+);
+
+export const selectedAgentDetail = createSelector(
+  getAgencyStaffState,
+  (state: State) => state.agencyStaffDetail
 );
 
 export const getAllAgencyStaff = createSelector(
@@ -100,6 +111,29 @@ export const getAgencyStaffVMs = createSelector(
       return createAllAgencyStaffVMs(agencyStaff, agencyVMs);
     } else {
       return [];
+    }
+  }
+);
+
+const getAgencyStaffVMDictionary = createSelector(
+  getAgencyStaffVMs,
+  (agencyStaff: AgencyStaffVM[]): Dictionary<AgencyStaffVM> =>
+    agencyStaff.reduce((dictionary, staff) => {
+      return {
+        ...dictionary,
+        [staff.personId]: staff,
+      };
+    }, {})
+);
+
+export const selectedAgencyStaffVM = createSelector(
+  selectedAgentDetail,
+  getAgencyVMEntities,
+  (agent: AgencyStaffWithDetail, agencies: Dictionary<AgencyVM>) => {
+    if (agent !== undefined) {
+      return createSingleAgencyStaffDetailVM(agent, agencies);
+    } else {
+      return null;
     }
   }
 );

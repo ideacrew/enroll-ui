@@ -6,7 +6,11 @@ export interface AgencyStaffVM {
   firstName: string;
   lastName: string;
   hbxId: string;
-  emails: EmailVM[];
   agencyRoles: AgencyRoleVM[];
+}
+
+export interface AgencyStaffDetailVM extends AgencyStaffVM {
   dob: Date;
+  email: EmailVM;
+  ssn: string;
 }

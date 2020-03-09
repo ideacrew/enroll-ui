@@ -9,6 +9,8 @@ import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffActions from './agency-staff.actions';
 import { RoleChangeRequest } from '@hbx/api-interfaces';
+import { AgencyStaffDetailComponent } from '../../agency-staff-detail/agency-staff-detail.component';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class AgencyStaffEffects {
@@ -32,6 +34,26 @@ export class AgencyStaffEffects {
       ) => {
         console.error('Error', error);
         return AgencyStaffActions.loadAgencyStaffFailure({ error });
+      },
+    })
+  );
+
+  loadAgencyStaffDetail$ = createEffect(() =>
+    this.dataPersistence.navigation(AgencyStaffDetailComponent, {
+      run: (a: ActivatedRouteSnapshot) => {
+        const personId = a.paramMap.get('personId');
+
+        return this.agenciesApiService
+          .getStaffDetail(personId)
+          .pipe(
+            map(agencyStaff =>
+              AgencyStaffActions.loadAgencyStaffDetailSuccess({ agencyStaff })
+            )
+          );
+      },
+      onError: (a: ActivatedRouteSnapshot, error: any) => {
+        console.error('Error', error);
+        return AgencyStaffActions.loadAgencyStaffDetailFailure({ error });
       },
     })
   );

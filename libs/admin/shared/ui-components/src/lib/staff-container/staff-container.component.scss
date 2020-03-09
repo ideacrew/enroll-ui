@@ -23,3 +23,7 @@
   gap: var(--s0);
   grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
 }
+
+.staff-detail-link {
+  --link-color: var(--neutral-100);
+}

@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AgencyProfile, AgencyStaff, PrimaryAgent } from '@hbx/api-interfaces';
+import {
+  AgencyProfile,
+  AgencyStaff,
+  PrimaryAgent,
+  AgencyStaffWithDetail,
+} from '@hbx/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgenciesApiService {
-  private api = 'https://hotfix-3-enroll.dchbx.org/api/v1';
+  private api = 'api/v1';
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +39,12 @@ export class AgenciesApiService {
   getAllPrimaryAgents(): Observable<PrimaryAgent[]> {
     return this.http.get<PrimaryAgent[]>(
       `${this.api}/agencies/primary_agency_staff`
+    );
+  }
+
+  getStaffDetail(personId: string): Observable<AgencyStaffWithDetail> {
+    return this.http.get<AgencyStaffWithDetail>(
+      `${this.api}/agencies/agency_staff/${personId}`
     );
   }
 

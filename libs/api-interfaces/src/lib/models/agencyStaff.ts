@@ -1,16 +1,17 @@
-export interface AgencyStaff {
-  // Likely needed to update demographic information
-  _id: string;
+import { WorkflowStateTransition } from './workflowStateTransition';
 
-  // Needed for Agency Staff List View
+export interface AgencyStaff {
+  _id: string;
   first_name: string;
   last_name: string;
   hbx_id: string;
   agency_roles: AgencyRole[];
+}
 
-  // Demographic Information
+export interface AgencyStaffWithDetail extends AgencyStaff {
   agent_emails: AgentEmail[];
   dob: string; // will be converted to date object
+  ssn: string;
 }
 
 export interface AgencyRole {
@@ -31,9 +32,12 @@ export interface AgencyRole {
    */
   aasm_state: AgencyRoleState; // aasm_state
   type?: string;
+  workflow_state_transitions?: WorkflowStateTransition<AgencyRoleState>[];
 }
 
-export const enum AgencyRoleState {
+export enum AgencyRoleState {
+  Applicant = 'applicant',
+
   BAPending = 'broker_agency_pending',
   BATerminated = 'broker_agency_terminated',
   GAPending = 'general_agency_pending',
@@ -42,12 +46,6 @@ export const enum AgencyRoleState {
   Terminated = 'terminated',
   Pending = 'pending',
   Active = 'active',
-}
-
-export interface ChangeHistory<T> {
-  changedFrom: T;
-  changedTo: T;
-  changedAt: string; // will be converted to Date object
 }
 
 export interface AgentEmail {

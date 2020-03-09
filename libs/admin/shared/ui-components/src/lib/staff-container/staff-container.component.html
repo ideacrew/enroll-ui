@@ -1,6 +1,8 @@
 <div class="staff-detail-container">
   <h2 class="hbx-heading-s staff-name">
-    {{ staff.firstName }} {{ staff.lastName }}
+    <a class="staff-detail-link hbx-link" [routerLink]="staff.personId"
+      >{{ staff.firstName }} {{ staff.lastName }}</a
+    >
   </h2>
   <span class="hbx-id">{{ staff.hbxId }}</span>
 </div>

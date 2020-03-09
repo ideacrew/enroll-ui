@@ -1,6 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 
-import { AgencyStaff, RoleChangeRequest } from '@hbx/api-interfaces';
+import {
+  AgencyStaff,
+  RoleChangeRequest,
+  AgencyStaffWithDetail,
+} from '@hbx/api-interfaces';
 
 export const loadAgencyStaff = createAction('[AgencyStaff] Load AgencyStaff');
 
@@ -24,4 +28,14 @@ export const changeAgencyRole = createAction(
 export const changeAgencyRoleFailure = createAction(
   '[AgencyStaff] Terminate Agency Role Failure',
   props<{ request: RoleChangeRequest }>()
+);
+
+export const loadAgencyStaffDetailSuccess = createAction(
+  '[AgencyStaff] Load Agency Staff Detail Success',
+  props<{ agencyStaff: AgencyStaffWithDetail }>()
+);
+
+export const loadAgencyStaffDetailFailure = createAction(
+  '[AgencyStaff] Load Agency Staff Detail Failure',
+  props<{ error: any }>()
 );

@@ -2,10 +2,10 @@ import { AgencyProfile, PrimaryAgent, AgencyStaff } from '@hbx/api-interfaces';
 
 import {
   mockAgencyProfile,
-  mockPrimaryAgent,
   mockManyAgencyStaff,
   mockPrimaryAgentStaffRole,
 } from './agency.mock';
+import { mockPrimaryAgent } from './agencyStaff.mock';
 
 export interface ApprovedAgencyWithStaff {
   agency: AgencyProfile;
