@@ -50,7 +50,7 @@ export function mockOneFullAgencyStaff(
 
   const agency_role: AgencyRole = {
     ...role,
-    workflow_state_transitions: transitions,
+    history: transitions,
   };
 
   const agencyStaff: AgencyStaffWithDetail = {

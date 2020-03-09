@@ -61,14 +61,6 @@ describe('Agency VM Creation', () => {
 
     const expectedAgencyStaffVM: AgencyStaffVM = {
       personId: _id,
-      // dob: new Date(dob),
-      // emails: [
-      //   {
-      //     id: agent_emails[0].id,
-      //     address: agent_emails[0].address,
-      //     kind: agent_emails[0].kind,
-      //   },
-      // ],
       firstName: first_name,
       lastName: last_name,
       hbxId: hbx_id,
@@ -151,10 +143,10 @@ describe('Agency VM Creation', () => {
               : AgencyType.General,
           changeHistory: [
             {
-              changedFrom: agencyRole.workflow_state_transitions[0].from_state,
-              changedTo: agencyRole.workflow_state_transitions[0].to_state,
+              changedFrom: agencyRole.history[0].from_state,
+              changedTo: agencyRole.history[0].to_state,
               changedAt: new Date(
-                agencyRole.workflow_state_transitions[0].transition_at
+                agencyRole.history[0].transition_at
               ),
             },
           ],

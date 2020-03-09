@@ -32,7 +32,7 @@ export interface AgencyRole {
    */
   aasm_state: AgencyRoleState; // aasm_state
   type?: string;
-  workflow_state_transitions?: WorkflowStateTransition<AgencyRoleState>[];
+  history?: WorkflowStateTransition<AgencyRoleState>[];
 }
 
 export enum AgencyRoleState {

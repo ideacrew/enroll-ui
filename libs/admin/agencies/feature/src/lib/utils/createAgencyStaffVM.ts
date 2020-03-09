@@ -90,7 +90,7 @@ export function createSingleAgencyStaffDetailVM(
   } = staff;
 
   // Filter out roles where the agency staff role is held by the primary agent
-  // or where the agency doesn't exit?
+  // or where the agency doesn't exist?
   const filteredRoles: AgencyRole[] = agency_roles.filter(role => {
     let agencyVM: AgencyVM;
     let primaryAgent: PrimaryAgentVM;
@@ -114,15 +114,15 @@ export function createSingleAgencyStaffDetailVM(
       agencyName,
     } = agencyVMs[role.agency_profile_id];
 
-    const changeHistory: ChangeHistory<
-      AgencyRoleState
-    >[] = role.workflow_state_transitions.map(transition => {
-      return {
-        changedFrom: transition.from_state,
-        changedTo: transition.to_state,
-        changedAt: new Date(transition.transition_at),
-      };
-    });
+    const changeHistory: ChangeHistory<AgencyRoleState>[] = role.history
+      .map(transition => {
+        return {
+          changedFrom: convertAasmState(transition.from_state),
+          changedTo: convertAasmState(transition.to_state),
+          changedAt: new Date(transition.transition_at),
+        };
+      })
+      .sort((a, b) => a.changedAt.getTime() - b.changedAt.getTime());
 
     const agencyRole: AgencyRoleVM = {
       agencyName,

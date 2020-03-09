@@ -24,10 +24,6 @@
           <span>{{ vm.agent.dob | date }}</span>
         </div>
         <div class="input-group">
-          <h3 class="hbx-body-s">SSN</h3>
-          <span>{{ vm.agent.ssn }}</span>
-        </div>
-        <div class="input-group">
           <h3 class="hbx-body-s">Work Email</h3>
           <span>{{ vm.agent.email.address }}</span>
         </div>
@@ -55,12 +51,17 @@
             {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
           </div>
 
-          <div *ngFor="let change of role.changeHistory" class="status-change">
-            {{ change.changedAt | date: 'short' }}
-            <span class="association-state" [ngClass]="change.changedTo">{{
-              change.changedTo
-            }}</span>
-          </div>
+          <ng-container *ngIf="role.changeHistory.length > 0; else noChanges"
+            ><div
+              *ngFor="let change of role.changeHistory"
+              class="status-change"
+            >
+              {{ change.changedAt | date: 'short' }}
+              <span class="association-state" [ngClass]="change.changedTo">{{
+                change.changedTo
+              }}</span>
+            </div></ng-container
+          >
         </div>
       </div>
     </section></ng-container
@@ -89,3 +90,9 @@
     />
   </form>
 </ng-template>
+
+<ng-template #noChanges
+  ><p class="hbx-body-s">
+    <em>This agent has had no status changes with this agency.</em>
+  </p></ng-template
+>
