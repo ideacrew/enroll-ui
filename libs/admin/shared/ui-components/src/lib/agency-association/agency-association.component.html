@@ -9,7 +9,7 @@
     {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
   </div>
   <div class="state-and-action">
-    <div class="association-state" [className]="role.currentState">
+    <div class="association-state" [ngClass]="role.currentState">
       {{ role.currentState }}
     </div>
     <button
