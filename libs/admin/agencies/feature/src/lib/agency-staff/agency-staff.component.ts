@@ -16,10 +16,13 @@ import { searchAgencyStaff } from '../utils';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
 import { AgenciesFacade } from '../state/agencies/agencies.facade';
 import { PrimaryAgentsFacade } from '../state/primary-agents/primary-agents.facade';
+import { ActivatedRoute, Params } from '@angular/router';
+import { filterRoleStatus } from '../utils/filterRoleStatus';
 
 interface AgencyStaffListVM {
   agencyStaff: AgencyStaffVM[];
   loaded: boolean;
+  status: string;
 }
 
 @Component({
@@ -33,6 +36,10 @@ export class AgencyStaffComponent {
   globalSearch$: Observable<string> = this.globalSearch.valueChanges.pipe(
     debounceTime(200),
     map((query: string) => query.trim().toLowerCase())
+  );
+
+  statusFilter$: Observable<string> = this.route.queryParams.pipe(
+    map((params: Params) => params['status'] || 'all')
   );
 
   entitiesLoaded$: Observable<boolean> = combineLatest([
@@ -49,9 +56,18 @@ export class AgencyStaffComponent {
     )
   );
 
-  filteredStaff$: Observable<AgencyStaffVM[]> = combineLatest([
-    this.globalSearch$.pipe(startWith('')),
+  staffFilteredByStatus$: Observable<AgencyStaffVM[]> = combineLatest([
+    this.statusFilter$,
     this.agencyStaffFacade.allAgencyStaff$,
+  ]).pipe(
+    map(([status, agencyStaff]: [string, AgencyStaffVM[]]) =>
+      filterRoleStatus(status, agencyStaff)
+    )
+  );
+
+  staffFilteredBySearch$: Observable<AgencyStaffVM[]> = combineLatest([
+    this.globalSearch$.pipe(startWith('')),
+    this.staffFilteredByStatus$,
   ]).pipe(
     distinctUntilChanged(),
     map(([searchQuery, agencyStaffVMs]: [string, AgencyStaffVM[]]) => {
@@ -60,22 +76,31 @@ export class AgencyStaffComponent {
   );
 
   agencyStaffVM$: Observable<AgencyStaffListVM> = combineLatest([
-    this.filteredStaff$,
+    this.statusFilter$,
+    this.staffFilteredBySearch$,
     this.entitiesLoaded$,
   ]).pipe(
     distinctUntilChanged(),
-    map(([agencyStaffVMs, entitiesLoaded]: [AgencyStaffVM[], boolean]) => {
-      return {
-        agencyStaff: agencyStaffVMs,
-        loaded: entitiesLoaded,
-      };
-    })
+    map(
+      ([status, agencyStaffVMs, entitiesLoaded]: [
+        string,
+        AgencyStaffVM[],
+        boolean
+      ]) => {
+        return {
+          status,
+          agencyStaff: agencyStaffVMs,
+          loaded: entitiesLoaded,
+        };
+      }
+    )
   );
 
   constructor(
     private agencyStaffFacade: AgencyStaffFacade,
     private agenciesFacade: AgenciesFacade,
-    private primaryStaffFacade: PrimaryAgentsFacade
+    private primaryStaffFacade: PrimaryAgentsFacade,
+    private route: ActivatedRoute
   ) {}
 
   terminateAgencyRole(request: RoleChangeRequest): void {

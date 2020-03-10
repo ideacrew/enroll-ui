@@ -1,10 +1,38 @@
 .toolbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
   margin-bottom: var(--s0);
 }
 
+.filter-bar {
+  border-bottom: 2px solid var(--blue-020);
+  padding: var(--s-3) 0;
+
+  > * + * {
+    margin-left: var(--s1);
+  }
+
+  .status-link {
+    font-size: var(--s-1);
+    padding-bottom: var(--s-2);
+
+    &:visited {
+      color: inherit;
+    }
+
+    &.active {
+      border-bottom: 2px solid var(--blue-070);
+    }
+  }
+}
+
 .search-box {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-input {
   border: 1px solid var(--neutral-040);
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;

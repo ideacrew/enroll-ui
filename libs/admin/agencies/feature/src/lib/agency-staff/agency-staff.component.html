@@ -2,16 +2,49 @@
 
 <ng-container *ngIf="agencyStaffVM$ | async as vm">
   <div class="toolbar">
-    <input
-      [formControl]="globalSearch"
-      type="text"
-      name="global-search"
-      id="global-search"
-      class="search-box"
-    />
-    <label class="search-label" for="global-search"
-      >Search <span class="visually-hidden">for Agents or Agencies</span></label
-    >
+    <div class="filter-bar">
+      <a
+        class="hbx-link status-link"
+        [routerLink]="['/agencies/agency-staff']"
+        [queryParams]="{ status: 'all' }"
+        [ngClass]="{ active: vm.status === 'all' }"
+        >All</a
+      >
+      <a
+        class="hbx-link status-link"
+        [routerLink]="['/agencies/agency-staff']"
+        [queryParams]="{ status: 'pending' }"
+        routerLinkActive="active"
+        >Pending</a
+      >
+      <a
+        class="hbx-link status-link"
+        [routerLink]="['/agencies/agency-staff']"
+        [queryParams]="{ status: 'active' }"
+        routerLinkActive="active"
+        >Active</a
+      >
+      <a
+        class="hbx-link status-link"
+        [routerLink]="['/agencies/agency-staff']"
+        [queryParams]="{ status: 'terminated' }"
+        routerLinkActive="active"
+        >Terminated</a
+      >
+    </div>
+    <div class="search-box">
+      <input
+        [formControl]="globalSearch"
+        type="text"
+        name="global-search"
+        id="global-search"
+        class="search-input"
+      />
+      <label class="search-label" for="global-search"
+        >Search
+        <span class="visually-hidden">for Agents or Agencies</span></label
+      >
+    </div>
   </div>
   <ng-container *ngIf="vm.loaded === false; else loaded">
     <hbx-agency-staff-skeleton></hbx-agency-staff-skeleton>
@@ -36,8 +69,7 @@
   ><div class="no-results-container">
     <h2 class="hbx-heading-small">No results</h2>
     <p>
-      You can search by Staff Name, HBX ID, Agency Name, Writing Agent, or
-      Current Status
+      You can search by Staff Name, HBX ID, Agency Name, or Writing Agent
     </p>
   </div>
 </ng-template>
