@@ -23,11 +23,11 @@ import { getAllAgencies } from '../agencies/agencies.selectors';
 import { AgenciesPartialState } from '../agencies/agencies.reducer';
 import { PrimaryAgentsPartialState } from '../primary-agents/primary-agents.reducer';
 import { getPrimaryAgentsEntities } from '../primary-agents/primary-agents.selectors';
-import { createAllAgencyVMs } from '../../utils/createAgencyVM';
 import {
+  createAllAgencyVMs,
   createAllAgencyStaffVMs,
   createSingleAgencyStaffDetailVM,
-} from '../../utils/createAgencyStaffVM';
+} from '../../utils';
 
 // Lookup the 'AgencyStaff' feature state managed by NgRx
 export const getAgencyStaffState = createFeatureSelector<
