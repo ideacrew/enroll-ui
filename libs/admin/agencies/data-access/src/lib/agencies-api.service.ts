@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class AgenciesApiService {
-  private api = 'api/v1';
+  private api = `//${window.location.host}/api/v1`;
 
   constructor(private http: HttpClient) {}
 
