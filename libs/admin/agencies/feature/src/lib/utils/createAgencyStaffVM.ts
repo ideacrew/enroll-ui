@@ -17,7 +17,6 @@ import {
   AgencyStaffWithDetail,
   EmailKind,
 } from '@hbx/api-interfaces';
-import { ɵConsole } from '@angular/core';
 
 export function createSingleAgencyStaffVM(
   staff: AgencyStaff,
@@ -223,5 +222,5 @@ export function convertAasmState(aasm_state: AgencyRoleState): AgencyRoleState {
 export function isStaffWithDetail(
   staff: AgencyStaff | AgencyStaffWithDetail
 ): staff is AgencyStaffWithDetail {
-  return (staff as AgencyStaffWithDetail).dob !== undefined;
+  return (staff as AgencyStaffWithDetail).agent_emails !== undefined;
 }
