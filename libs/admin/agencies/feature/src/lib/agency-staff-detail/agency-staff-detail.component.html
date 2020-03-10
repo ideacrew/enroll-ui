@@ -51,17 +51,19 @@
             {{ role.primaryAgent.firstName }} {{ role.primaryAgent.lastName }}
           </div>
 
-          <ng-container *ngIf="role.changeHistory.length > 0; else noChanges"
-            ><div
-              *ngFor="let change of role.changeHistory"
-              class="status-change"
-            >
-              {{ change.changedAt | date: 'short' }}
+          <div
+            class="status-changes"
+            *ngIf="role.changeHistory.length > 0; else noChanges"
+          >
+            <ng-container *ngFor="let change of role.changeHistory">
+              <span class="changed-at hbx-body-s">{{
+                change.changedAt | date: 'short'
+              }}</span>
               <span class="association-state" [ngClass]="change.changedTo">{{
                 change.changedTo
               }}</span>
-            </div></ng-container
-          >
+            </ng-container>
+          </div>
         </div>
       </div>
     </section></ng-container
