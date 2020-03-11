@@ -4,8 +4,10 @@ import { combineLatest, Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 
 import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
+import { RoleChangeRequest } from '@hbx/api-interfaces';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
+import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
 
 interface DetailVM {
   agent: AgencyStaffDetailVM;
@@ -48,4 +50,10 @@ export class AgencyStaffDetailComponent {
     private agencyStaffFacade: AgencyStaffFacade,
     private fb: FormBuilder
   ) {}
+
+  terminateAgencyRole(request: RoleChangeRequest): void {
+    this.agencyStaffFacade.dispatch(
+      AgencyStaffActions.terminateAgencyRoleDetailPage({ request })
+    );
+  }
 }

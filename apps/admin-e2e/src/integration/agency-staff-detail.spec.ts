@@ -14,7 +14,7 @@ describe('Agency Staff', () => {
   const [primAgent, agent] = agencyStaff;
 
   const agentWithDetail = mockOneFullAgencyStaff(agent);
-  const { first_name, last_name, _id } = agentWithDetail; 
+  const { first_name, last_name, _id } = agentWithDetail;
 
   beforeEach(() => {
     cy.server();
@@ -30,12 +30,55 @@ describe('Agency Staff', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  it('display a complete list of agency staff', () => {
+  it('display a detailed view of the agent', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
     cy.wait('@agentDetail');
 
     cy.contains(`${first_name} ${last_name}`);
+  });
+
+  it('should allow for termination of staff role', () => {
+    cy.route('post', '**/terminate/**', {}).as('terminateRole');
+
+    cy.get(
+      'hbx-agency-association:first .state-and-action > .hbx-button'
+    ).click();
+
+    cy.get(
+      'hbx-agency-association:first .state-and-action > .hbx-button.terminating'
+    ).click();
+
+    cy.wait('@terminateRole');
+
+    cy.get('hbx-agency-association:first .association-state').contains(
+      'terminated'
+    );
+
+    cy.get('.change-history .status-changes').contains('terminated');
+  });
+
+  it('should revert change on api fail', () => {
+    cy.route({
+      method: 'post',
+      url: '**/terminate/**',
+      response: {},
+      status: 500,
+    }).as('terminateRole');
+
+    cy.get(
+      'hbx-agency-association:first .state-and-action > .hbx-button'
+    ).click();
+
+    cy.get(
+      'hbx-agency-association:first .state-and-action > .hbx-button.terminating'
+    ).click();
+
+    cy.wait('@terminateRole');
+
+    cy.get(
+      '.change-history .status-changes .association-state.terminated'
+    ).should('not.exist');
   });
 });

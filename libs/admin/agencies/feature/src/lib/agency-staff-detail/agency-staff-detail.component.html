@@ -36,6 +36,7 @@
           *ngFor="let role of vm.agent.agencyRoles"
           [role]="role"
           [agencyStaff]="vm.agent"
+          (terminateRole)="terminateAgencyRole($event)"
         >
         </hbx-agency-association>
       </div>

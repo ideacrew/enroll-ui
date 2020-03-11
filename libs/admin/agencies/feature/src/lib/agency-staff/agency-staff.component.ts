@@ -105,7 +105,7 @@ export class AgencyStaffComponent {
 
   terminateAgencyRole(request: RoleChangeRequest): void {
     this.agencyStaffFacade.dispatch(
-      AgencyStaffActions.changeAgencyRole({ request })
+      AgencyStaffActions.terminateAgencyRole({ request })
     );
   }
 }

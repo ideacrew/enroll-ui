@@ -6,10 +6,15 @@ import {
   Update,
 } from '@ngrx/entity';
 
+import { AgencyStaff, AgencyStaffWithDetail } from '@hbx/api-interfaces';
+
 import { AgencyStaffEntity } from './agency-staff.models';
 import * as AgencyStaffActions from './agency-staff.actions';
-import { changeAgencyRoleStatus } from '../../utils/changeAgencyRoleStatus';
-import { AgencyStaff, AgencyStaffWithDetail } from '@hbx/api-interfaces';
+import {
+  changeAgencyRoleStatus,
+  changeAgencyRoleStatusDetail,
+  undoAgencyRoleStatusDetailChange,
+} from '../../utils/changeAgencyRoleStatus';
 
 export const AGENCYSTAFF_FEATURE_KEY = 'agencyStaff';
 
@@ -64,7 +69,7 @@ const agencyStaffReducer = createReducer(
     ...state,
     error,
   })),
-  on(AgencyStaffActions.changeAgencyRole, (state, { request }) => {
+  on(AgencyStaffActions.terminateAgencyRole, (state, { request }) => {
     const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
       state.entities,
       request
@@ -72,7 +77,7 @@ const agencyStaffReducer = createReducer(
 
     return agencyStaffAdapter.updateOne(updatedStaff, state);
   }),
-  on(AgencyStaffActions.changeAgencyRoleFailure, (state, { request }) => {
+  on(AgencyStaffActions.terminateAgencyRoleFailure, (state, { request }) => {
     const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
       state.entities,
       request
@@ -80,6 +85,41 @@ const agencyStaffReducer = createReducer(
 
     return agencyStaffAdapter.updateOne(updatedStaff, state);
   }),
+  on(AgencyStaffActions.terminateAgencyRoleDetailPage, (state, { request }) => {
+    const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
+      state.entities,
+      request
+    );
+
+    const updatedStaffDetail: AgencyStaffWithDetail = changeAgencyRoleStatusDetail(
+      state.agencyStaffDetail,
+      request
+    );
+
+    return agencyStaffAdapter.updateOne(updatedStaff, {
+      ...state,
+      agencyStaffDetail: updatedStaffDetail,
+    });
+  }),
+  on(
+    AgencyStaffActions.terminateAgencyRoleDetailPageFailure,
+    (state, { request }) => {
+      const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
+        state.entities,
+        request
+      );
+
+      const updatedStaffDetail: AgencyStaffWithDetail = undoAgencyRoleStatusDetailChange(
+        state.agencyStaffDetail,
+        request
+      );
+
+      return agencyStaffAdapter.updateOne(updatedStaff, {
+        ...state,
+        agencyStaffDetail: updatedStaffDetail,
+      });
+    }
+  ),
   on(
     AgencyStaffActions.loadAgencyStaffDetailSuccess,
     (state, { agencyStaff }) => ({ ...state, agencyStaffDetail: agencyStaff })

@@ -59,34 +59,73 @@ export class AgencyStaffEffects {
   );
 
   terminateAgentRole$ = createEffect(() =>
-    this.dataPersistence.optimisticUpdate(AgencyStaffActions.changeAgencyRole, {
-      run: (
-        action: ReturnType<typeof AgencyStaffActions.changeAgencyRole>,
-        _state
-      ) => {
-        return this.agenciesApiService
-          .terminateAgencyRole(action.request)
-          .pipe(switchMap(() => of<any>()));
-      },
-      undoAction: (
-        action: ReturnType<typeof AgencyStaffActions.changeAgencyRole>,
-        _state
-      ) => {
-        console.log('UNDOING ROLE TERMINATION');
-        const { from, to } = action.request;
+    this.dataPersistence.optimisticUpdate(
+      AgencyStaffActions.terminateAgencyRole,
+      {
+        run: (
+          action: ReturnType<typeof AgencyStaffActions.terminateAgencyRole>,
+          _state
+        ) => {
+          return this.agenciesApiService
+            .terminateAgencyRole(action.request)
+            .pipe(switchMap(() => of<any>()));
+        },
+        undoAction: (
+          action: ReturnType<typeof AgencyStaffActions.terminateAgencyRole>,
+          _state
+        ) => {
+          console.log('UNDOING ROLE TERMINATION');
+          const { from, to } = action.request;
 
-        // Switch to and from in the change request
-        const undoRequest: RoleChangeRequest = {
-          ...action.request,
-          from: to,
-          to: from,
-        };
+          // Switch to and from in the change request
+          const undoRequest: RoleChangeRequest = {
+            ...action.request,
+            from: to,
+            to: from,
+          };
 
-        return AgencyStaffActions.changeAgencyRoleFailure({
-          request: undoRequest,
-        });
-      },
-    })
+          return AgencyStaffActions.terminateAgencyRoleFailure({
+            request: undoRequest,
+          });
+        },
+      }
+    )
+  );
+
+  terminateAgentRoleDetailPage$ = createEffect(() =>
+    this.dataPersistence.optimisticUpdate(
+      AgencyStaffActions.terminateAgencyRoleDetailPage,
+      {
+        run: (
+          action: ReturnType<
+            typeof AgencyStaffActions.terminateAgencyRoleDetailPage
+          >
+        ) => {
+          return this.agenciesApiService
+            .terminateAgencyRole(action.request)
+            .pipe(switchMap(() => of<any>()));
+        },
+        undoAction: (
+          action: ReturnType<
+            typeof AgencyStaffActions.terminateAgencyRoleDetailPage
+          >
+        ) => {
+          console.log('UNDOING ROLE TERMINATION');
+          const { from, to } = action.request;
+
+          // Switch to and from in the change request
+          const undoRequest: RoleChangeRequest = {
+            ...action.request,
+            from: to,
+            to: from,
+          };
+
+          return AgencyStaffActions.terminateAgencyRoleDetailPageFailure({
+            request: undoRequest,
+          });
+        },
+      }
+    )
   );
 
   constructor(
