@@ -10,6 +10,7 @@ import {
   AgencyRoleVM,
   AgencyStaffVM,
   AgencyType,
+  AgencyStaffDetailVM,
 } from '@hbx/admin/shared/view-models';
 import { RoleChangeRequest, AgencyRoleState } from '@hbx/api-interfaces';
 
@@ -24,7 +25,7 @@ export class AgencyAssociationComponent {
   editing = false;
 
   @Input() role: AgencyRoleVM;
-  @Input() agencyStaff: AgencyStaffVM;
+  @Input() agencyStaff: AgencyStaffVM | AgencyStaffDetailVM;
 
   @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
     RoleChangeRequest

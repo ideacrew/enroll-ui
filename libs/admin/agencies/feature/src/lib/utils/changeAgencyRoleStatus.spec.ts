@@ -16,7 +16,6 @@ import {
   changeAgencyRoleStatus,
   changeAgencyRoleStatusDetail,
 } from './changeAgencyRoleStatus';
-import { ChangeHistory } from '@hbx/admin/shared/view-models';
 
 describe('Change Agency Role status', () => {
   it('should change the status of a specific role', () => {
