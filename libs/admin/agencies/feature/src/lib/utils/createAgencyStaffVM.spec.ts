@@ -114,12 +114,23 @@ describe('Agency VM Creation', () => {
     const expectedAgencyStaffDetailVM: AgencyStaffDetailVM = {
       personId: _id,
       dob: new Date(dob),
-      email: {
-        id: agent_emails[0].id,
-        address: agent_emails[0].address,
-        kind: agent_emails[0].kind,
-      },
-
+      email: [
+        {
+          id: agent_emails[0].id,
+          address: agent_emails[0].address,
+          kind: agent_emails[0].kind,
+        },
+        {
+          id: agent_emails[1].id,
+          address: agent_emails[1].address,
+          kind: agent_emails[1].kind,
+        },
+        {
+          id: agent_emails[2].id,
+          address: agent_emails[2].address,
+          kind: agent_emails[2].kind,
+        },
+      ],
       firstName: first_name,
       lastName: last_name,
       hbxId: hbx_id,
@@ -145,9 +156,7 @@ describe('Agency VM Creation', () => {
             {
               changedFrom: agencyRole.history[0].from_state,
               changedTo: agencyRole.history[0].to_state,
-              changedAt: new Date(
-                agencyRole.history[0].transition_at
-              ),
+              changedAt: new Date(agencyRole.history[0].transition_at),
             },
           ],
         },

@@ -61,6 +61,16 @@ export function mockOneFullAgencyStaff(
         kind: EmailKind.Work,
         id: faker.random.uuid(),
       },
+      {
+        address: faker.internet.email(),
+        kind: EmailKind.Work,
+        id: faker.random.uuid(),
+      },
+      {
+        address: faker.internet.email(),
+        kind: EmailKind.Work,
+        id: faker.random.uuid(),
+      },
     ],
     dob: faker.date.past(20, 'Jan 1, 1980').toISOString(),
     ssn: faker.random.number({ min: 111111111, max: 999999999 }).toString(),

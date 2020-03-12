@@ -25,7 +25,9 @@
         </div>
         <div class="input-group">
           <h3 class="hbx-body-s">Work Email</h3>
-          <span>{{ vm.agent.email.address }}</span>
+          <ng-container *ngFor="let email of vm.agent.email">
+            <div>{{ email.address }}</div>
+          </ng-container>
         </div>
       </div>
     </section>

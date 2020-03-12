@@ -11,6 +11,6 @@ export interface AgencyStaffVM {
 
 export interface AgencyStaffDetailVM extends AgencyStaffVM {
   dob: Date;
-  email: EmailVM;
+  email: EmailVM[];
   ssn: string;
 }
