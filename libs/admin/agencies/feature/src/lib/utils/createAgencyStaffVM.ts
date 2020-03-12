@@ -137,11 +137,24 @@ export function createSingleAgencyStaffDetailVM(
     return agencyRole;
   });
 
-  const [workEmail] = agent_emails
-    .filter(email => email.kind === EmailKind.Work)
-    .map(email => {
-      return { id: email.id, address: email.address, kind: email.kind };
+  const workEmail = agent_emails
+    .filter(personEmail => personEmail.kind === EmailKind.Work)
+    .map(personEmail => {
+      return {
+        id: personEmail.id,
+        address: personEmail.address,
+        kind: personEmail.kind,
+      };
     });
+
+  const email =
+    workEmail.length > 0
+      ? workEmail[0]
+      : {
+          id: 'no-work-email',
+          address: 'No work email set',
+          kind: EmailKind.Work,
+        };
 
   const agencyStaffVM: AgencyStaffDetailVM = {
     agencyRoles,
@@ -150,7 +163,7 @@ export function createSingleAgencyStaffDetailVM(
     hbxId: hbx_id,
     personId: _id,
     dob: new Date(dob),
-    email: workEmail,
+    email,
     ssn,
   };
 
