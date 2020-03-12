@@ -127,6 +127,10 @@ const agencyStaffReducer = createReducer(
   on(AgencyStaffActions.loadAgencyStaffDetailFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(AgencyStaffActions.clearCurrentlySelectedAgent, state => ({
+    ...state,
+    agencyStaffDetail: undefined,
   }))
 );
 

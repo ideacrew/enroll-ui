@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import {
@@ -30,7 +30,7 @@ interface AgencyStaffListVM {
   styleUrls: ['./agency-staff.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgencyStaffComponent {
+export class AgencyStaffComponent implements OnInit {
   globalSearch: FormControl = new FormControl();
 
   globalSearch$: Observable<string> = this.globalSearch.valueChanges.pipe(
@@ -102,6 +102,12 @@ export class AgencyStaffComponent {
     private primaryStaffFacade: PrimaryAgentsFacade,
     private route: ActivatedRoute
   ) {}
+
+  ngOnInit(): void {
+    this.agencyStaffFacade.dispatch(
+      AgencyStaffActions.clearCurrentlySelectedAgent()
+    );
+  }
 
   terminateAgencyRole(request: RoleChangeRequest): void {
     this.agencyStaffFacade.dispatch(
