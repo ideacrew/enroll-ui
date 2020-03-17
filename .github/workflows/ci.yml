@@ -26,8 +26,10 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Stylelint
+        run: npx stylelint "**/*.scss"
       - name: Test
-        run: npm run affected:lint
+        run: npm run affected:lint -- --base=origin/master --parallel
         env:
           CI: true
 
@@ -53,7 +55,33 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
-        run: npm run affected:test
+        run: npm run affected:test -- --base=origin/master --parallel --bail=1
+        env:
+          CI: true
+
+  e2e:
+    name: e2e
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Use Node.js v12
+        uses: actions/actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Test
+        run: npm run affected:e2e -- --base=origin/master --headless --parallel
         env:
           CI: true
 
