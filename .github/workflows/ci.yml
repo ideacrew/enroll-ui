@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.0.0
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1
+        uses: actions/actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -39,9 +39,9 @@ jobs:
     needs: lint
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.0.0
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1
+        uses: actions/actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -65,9 +65,9 @@ jobs:
     needs: test
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.0.0
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1
+        uses: actions/actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -91,9 +91,9 @@ jobs:
     needs: [test, lint]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.0.0
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1
+        uses: actions/actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
