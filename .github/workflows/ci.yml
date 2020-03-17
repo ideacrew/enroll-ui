@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v2
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1.1.0
+        uses: actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -32,16 +32,15 @@ jobs:
         run: npm run affected:lint -- --base=origin/master --parallel
         env:
           CI: true
-
   test:
     name: Test
     runs-on: ubuntu-latest
     needs: lint
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v2
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1.1.0
+        uses: actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -58,16 +57,15 @@ jobs:
         run: npm run affected:test -- --base=origin/master --parallel --bail=1
         env:
           CI: true
-
   e2e:
     name: e2e
     runs-on: ubuntu-latest
     needs: test
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v2
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1.1.0
+        uses: actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
@@ -84,16 +82,15 @@ jobs:
         run: npm run affected:e2e -- --base=origin/master --headless --parallel
         env:
           CI: true
-
   build:
     name: Build
     runs-on: ubuntu-latest
     needs: [test, lint]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v2
       - name: Use Node.js v12
-        uses: actions/actions/setup-node@v1.1.0
+        uses: actions/setup-node@v1.1.0
         with:
           node-version: '12.x'
       - name: Cache node modules
