@@ -1,6 +1,6 @@
 # Hbx
 
-![Build Status](https://github.com/dchbx/enroll-ui/workflows/Node%20CI/badge.svg)
+![Test, Lint, Build](https://github.com/dchbx/enroll-ui/workflows/Test,%20Lint,%20Build/badge.svg)
 
 This project was generated using [Nx](https://nx.dev).
 
