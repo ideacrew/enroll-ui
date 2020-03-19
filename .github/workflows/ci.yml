@@ -27,6 +27,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit == 'false'
         run: npm i
+      - name: Print files
+        run: ls
       - name: Stylelint
         run: npm run stylelint:ci
       - name: Lint
