@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'false'
+        if: steps.cache.outputs.cache-hit == 'false'
         run: npm i
       - name: Stylelint
         run: npx stylelint "**/*.scss"
