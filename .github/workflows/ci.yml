@@ -6,150 +6,150 @@ on:
       - master
 
 jobs:
-  one:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Stylelint
-        run: npx stylelint "**/*.scss"
-      - name: Test
-        run: npm run affected:lint -- --base=origin/master --parallel
-      - name: The job has failed
-        if: failure()
-        run: echo "The linting job has failed!"
-        env:
-          CI: true
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    # needs: lint
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Test
-        run: npm run affected:test -- --base=origin/master --parallel --bail=1
-      - name: The job has failed
-        if: failure()
-        run: echo "The testing job has failed!"
-        env:
-          CI: true
-  e2e:
-    name: e2e
-    runs-on: ubuntu-latest
-    # needs: test
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Test
-        run: npm run affected:e2e -- --base=origin/master --headless --parallel
-      - name: The job has failed
-        if: failure()
-        run: echo "The e2e job has failed!"
-        env:
-          CI: true
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    # needs: [test, lint]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Build Application
-        run: npm run build:admin
-      - name: The job has failed
-        if: failure()
-        run: echo "The build job has failed!"
-        env:
-          CI: true
+  # one:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Dump GitHub context
+  #       env:
+  #         GITHUB_CONTEXT: ${{ toJson(github) }}
+  #       run: echo "$GITHUB_CONTEXT"
+  #     - name: Dump job context
+  #       env:
+  #         JOB_CONTEXT: ${{ toJson(job) }}
+  #       run: echo "$JOB_CONTEXT"
+  #     - name: Dump steps context
+  #       env:
+  #         STEPS_CONTEXT: ${{ toJson(steps) }}
+  #       run: echo "$STEPS_CONTEXT"
+  #     - name: Dump runner context
+  #       env:
+  #         RUNNER_CONTEXT: ${{ toJson(runner) }}
+  #       run: echo "$RUNNER_CONTEXT"
+  #     - name: Dump strategy context
+  #       env:
+  #         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+  #       run: echo "$STRATEGY_CONTEXT"
+  #     - name: Dump matrix context
+  #       env:
+  #         MATRIX_CONTEXT: ${{ toJson(matrix) }}
+  #       run: echo "$MATRIX_CONTEXT"
+  # lint:
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js v12
+  #       uses: actions/setup-node@v1.1.0
+  #       with:
+  #         node-version: '12.x'
+  #     - name: Cache node modules
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #     - name: Install dependencies
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: Stylelint
+  #       run: npx stylelint "**/*.scss"
+  #     - name: Test
+  #       run: npm run affected:lint -- --base=origin/master --parallel
+  #     - name: The job has failed
+  #       if: failure()
+  #       run: echo "The linting job has failed!"
+  #       env:
+  #         CI: true
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   # needs: lint
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js v12
+  #       uses: actions/setup-node@v1.1.0
+  #       with:
+  #         node-version: '12.x'
+  #     - name: Cache node modules
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #     - name: Install dependencies
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: Test
+  #       run: npm run affected:test -- --base=origin/master --parallel --bail=1
+  #     - name: The job has failed
+  #       if: failure()
+  #       run: echo "The testing job has failed!"
+  #       env:
+  #         CI: true
+  # e2e:
+  #   name: e2e
+  #   runs-on: ubuntu-latest
+  #   # needs: test
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js v12
+  #       uses: actions/setup-node@v1.1.0
+  #       with:
+  #         node-version: '12.x'
+  #     - name: Cache node modules
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #     - name: Install dependencies
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: Test
+  #       run: npm run affected:e2e -- --base=origin/master --headless --parallel
+  #     - name: The job has failed
+  #       if: failure()
+  #       run: echo "The e2e job has failed!"
+  #       env:
+  #         CI: true
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   # needs: [test, lint]
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js v12
+  #       uses: actions/setup-node@v1.1.0
+  #       with:
+  #         node-version: '12.x'
+  #     - name: Cache node modules
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #     - name: Install dependencies
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: Build Application
+  #       run: npm run build:admin
+  #     - name: The job has failed
+  #       if: failure()
+  #       run: echo "The build job has failed!"
+  #       env:
+  #         CI: true
   post_results:
     name: Post Results
     runs-on: ubuntu-latest
-    needs: [test, lint, e2e, build]
+    # needs: [test, lint, e2e, build]
     steps:
       - name: Echo Results
-        run: echo "${{ github.ref }} built successfully!"
+        run: ./post_build_results_ga
