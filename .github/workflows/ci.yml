@@ -157,4 +157,6 @@ jobs:
         env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
           SHA: ${{ github.sha }}
           BRANCH: ${{ github.ref }}
+          YELLR_KEY: ${{ secrets.YELLR_KEY }}
+          YELLR_URL: ${{ secrets.YELLR_URL }}
         run: ./post_build_results_ga.sh
