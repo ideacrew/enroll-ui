@@ -152,4 +152,4 @@ jobs:
     needs: [test, lint, e2e, build]
     steps:
       - name: Echo Results
-        run: echo "$GITHUB_REF built successfully!"
+        run: echo "${{ github.ref }} built successfully!"
