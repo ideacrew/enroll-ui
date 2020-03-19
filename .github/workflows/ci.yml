@@ -121,7 +121,7 @@ jobs:
   post_results:
     name: Post Results
     runs-on: ubuntu-latest
-    # needs: [test, lint, e2e, build]
+    needs: [test, lint, e2e, build]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
