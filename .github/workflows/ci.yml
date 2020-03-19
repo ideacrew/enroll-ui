@@ -28,8 +28,8 @@ jobs:
         if: steps.cache.outputs.cache-hit == 'false'
         run: npm i
       - name: Stylelint
-        run: npx stylelint "**/*.scss"
-      - name: Test
+        run: npm run stylelint:ci
+      - name: Lint
         run: npm run affected:lint -- --base=origin/master --parallel
       - name: The job has failed
         if: failure()
