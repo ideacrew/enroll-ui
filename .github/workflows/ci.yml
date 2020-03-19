@@ -18,7 +18,7 @@ jobs:
           node-version: '12.x'
       - name: Cache node modules
         uses: actions/cache@v1
-        id: cache
+        # id: cache
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -51,7 +51,7 @@ jobs:
           node-version: '12.x'
       - name: Cache node modules
         uses: actions/cache@v1
-        id: cache
+        # id: cache
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -80,7 +80,7 @@ jobs:
           node-version: '12.x'
       - name: Cache node modules
         uses: actions/cache@v1
-        id: cache
+        # id: cache
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -108,7 +108,7 @@ jobs:
           node-version: '12.x'
       - name: Cache node modules
         uses: actions/cache@v1
-        id: cache
+        # id: cache
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
