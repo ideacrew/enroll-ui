@@ -154,7 +154,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Echo Results
-        env:
+        env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
           SHA: ${{ github.sha }}
           BRANCH: ${{ github.ref }}
         run: ./post_build_results_ga.sh
