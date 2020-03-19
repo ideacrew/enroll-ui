@@ -30,6 +30,9 @@ jobs:
         run: npx stylelint "**/*.scss"
       - name: Test
         run: npm run affected:lint -- --base=origin/master --parallel
+      - name: The job has failed
+        if: failure()
+        run: echo "The linting job has failed!"
         env:
           CI: true
   test:
@@ -55,6 +58,9 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run affected:test -- --base=origin/master --parallel --bail=1
+      - name: The job has failed
+        if: failure()
+        run: echo "The testing job has failed!"
         env:
           CI: true
   e2e:
@@ -80,6 +86,9 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run affected:e2e -- --base=origin/master --headless --parallel
+      - name: The job has failed
+        if: failure()
+        run: echo "The e2e job has failed!"
         env:
           CI: true
   build:
@@ -105,5 +114,15 @@ jobs:
         run: npm ci
       - name: Build Application
         run: npm run build:admin
+      - name: The job has failed
+        if: failure()
+        run: echo "The build job has failed!"
         env:
           CI: true
+  post_results:
+    name: Post Results
+    runs-on: ubuntu-latest
+    needs: [test, lint, e2e, build]
+    steps:
+      - name: Echo Results
+        run: echo "$GITHUB_REF built successfully!"
