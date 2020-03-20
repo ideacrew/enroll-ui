@@ -28,17 +28,20 @@ jobs:
         id: npm-cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node12-
       - name: Install dependencies
         # https://github.com/actions/cache/issues/193
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm i
       - name: Print files
-        run: ls
-      - name: Stylelint
-        run: npm run stylelint:ci
+        run: |
+          ls
+          cd node_modules
+          ls
+      # - name: Stylelint
+      #   run: npm run stylelint:ci
       - name: Lint
         run: npm run affected:lint -- --base=origin/master --parallel
       - name: The job has failed
