@@ -52,6 +52,7 @@ export class AgencyStaffDetailComponent {
   ) {}
 
   terminateAgencyRole(request: RoleChangeRequest): void {
+    console.log('Haha!');
     this.agencyStaffFacade.dispatch(
       AgencyStaffActions.terminateAgencyRoleDetailPage({ request })
     );
