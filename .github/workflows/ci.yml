@@ -35,7 +35,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Application
-        run: npm run build:admin
+        run: npm run affected:build -- --base=origin/master~1 --head=origin/master
       - name: The job has failed
         if: failure()
         run: ./post_build_results_ga.sh
@@ -64,7 +64,7 @@ jobs:
       - name: Stylelint
         run: npm run stylelint:ci
       - name: Lint
-        run: npm run affected:lint -- --base=origin/master --parallel
+        run: npm run affected:lint -- --base=origin/master~1 --head=origin/master --parallel
       - name: The job has failed
         if: failure()
         run: ./post_build_results_ga.sh
@@ -92,7 +92,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
-        run: npm run affected:test -- --base=origin/master --parallel --bail=1
+        run: npm run affected:test -- --base=origin/master~1 --head=origin/master --parallel --bail=1
       - name: The job has failed
         if: failure()
         run: ./post_build_results_ga.sh
@@ -119,7 +119,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
-        run: npm run affected:e2e -- --base=origin/master --headless --parallel
+        run: npm run affected:e2e -- --base=origin/master~1 --head=origin/master --headless --parallel
       - name: The job has failed
         if: failure()
         run: ./post_build_results_ga.sh
