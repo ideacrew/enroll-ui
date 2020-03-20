@@ -5,6 +5,13 @@ on:
     branches:
       - master
 
+env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
+  STATUS: failing
+  SHA: ${{ github.sha }}
+  BRANCH: ${{ github.ref }}
+  YELLR_KEY: ${{ secrets.YELLR_KEY }}
+  YELLR_URL: ${{ secrets.YELLR_URL }}
+
 jobs:
   lint:
     name: Lint
@@ -35,9 +42,7 @@ jobs:
         run: npm run affected:lint -- --base=origin/master --parallel
       - name: The job has failed
         if: failure()
-        run: echo "The linting job has failed!"
-        env:
-          CI: true
+        run: ./post_build_results_ga.sh
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -64,9 +69,7 @@ jobs:
         run: npm run affected:test -- --base=origin/master --parallel --bail=1
       - name: The job has failed
         if: failure()
-        run: echo "The testing job has failed!"
-        env:
-          CI: true
+        run: ./post_build_results_ga.sh
   e2e:
     name: e2e
     runs-on: ubuntu-latest
@@ -93,9 +96,7 @@ jobs:
         run: npm run affected:e2e -- --base=origin/master --headless --parallel
       - name: The job has failed
         if: failure()
-        run: echo "The e2e job has failed!"
-        env:
-          CI: true
+        run: ./post_build_results_ga.sh
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -121,9 +122,7 @@ jobs:
         run: npm run build:admin
       - name: The job has failed
         if: failure()
-        run: echo "The build job has failed!"
-        env:
-          CI: true
+        run: ./post_build_results_ga.sh
   post_results:
     name: Post Results
     runs-on: ubuntu-latest
@@ -133,9 +132,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Echo Results
-        env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
-          SHA: ${{ github.sha }}
-          BRANCH: ${{ github.ref }}
-          YELLR_KEY: ${{ secrets.YELLR_KEY }}
-          YELLR_URL: ${{ secrets.YELLR_URL }}
+        env:
+          STATUS: passing
         run: ./post_build_results_ga.sh
