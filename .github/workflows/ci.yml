@@ -126,6 +126,9 @@ jobs:
       - name: Install dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Install Cypress
+        if: steps.npm-cache.outputs.cache-hit == 'true'
+        run: npm i cypress@latest --save-dev
       - name: Test
         run: npm run affected:e2e -- --base=origin/master~1 --head=origin/master --headless --parallel
       - name: The job has failed
