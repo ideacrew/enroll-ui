@@ -79,6 +79,6 @@ describe('Agency Staff', () => {
 
     cy.get(
       '.change-history .status-changes .association-state.terminated'
-    ).should('exist');
+    ).should('not.exist');
   });
 });
