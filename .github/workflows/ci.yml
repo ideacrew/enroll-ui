@@ -13,6 +13,32 @@ env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-acti
   YELLR_URL: ${{ secrets.YELLR_URL }}
 
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Use Node.js v12
+        uses: actions/setup-node@v1.1.0
+        with:
+          node-version: '12.x'
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: npm-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node12-
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build Application
+        run: npm run build:admin
+      - name: The job has failed
+        if: failure()
+        run: ./post_build_results_ga.sh
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -94,32 +120,6 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run affected:e2e -- --base=origin/master --headless --parallel
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node12-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Build Application
-        run: npm run build:admin
       - name: The job has failed
         if: failure()
         run: ./post_build_results_ga.sh
