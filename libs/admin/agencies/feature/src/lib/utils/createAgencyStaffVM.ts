@@ -150,11 +150,13 @@ export function createSingleAgencyStaffDetailVM(
   const email =
     workEmail.length > 0
       ? workEmail
-      : [{
-          id: 'no-work-email',
-          address: 'No work email set',
-          kind: EmailKind.Work,
-        }];
+      : [
+          {
+            id: 'no-work-email',
+            address: 'No work email set',
+            kind: EmailKind.Work,
+          },
+        ];
 
   const agencyStaffVM: AgencyStaffDetailVM = {
     agencyRoles,

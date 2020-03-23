@@ -1,7 +1,4 @@
-import {
-  AgencyStaffVM,
-  AgencyRoleVM,
-} from '@hbx/admin/shared/view-models';
+import { AgencyStaffVM, AgencyRoleVM } from '@hbx/admin/shared/view-models';
 
 export function searchAgencyStaff(
   query: string,
