@@ -11,6 +11,7 @@ env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-acti
   BRANCH: ${{ github.ref }}
   YELLR_KEY: ${{ secrets.YELLR_KEY }}
   YELLR_URL: ${{ secrets.YELLR_URL }}
+  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
 
 jobs:
   build:
