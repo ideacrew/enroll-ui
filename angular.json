@@ -566,6 +566,41 @@
           "styleext": "scss"
         }
       }
+    },
+    "utils-data-transformation": {
+      "projectType": "library",
+      "root": "libs/utils/data-transformation",
+      "sourceRoot": "libs/utils/data-transformation/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/utils/data-transformation/tsconfig.lib.json",
+              "libs/utils/data-transformation/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/utils/data-transformation/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/utils/data-transformation/jest.config.js",
+            "tsConfig": "libs/utils/data-transformation/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/utils/data-transformation/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

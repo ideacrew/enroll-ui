@@ -53,6 +53,9 @@
     },
     "auth": {
       "tags": ["scope:shared", "type:data-access"]
+    },
+    "utils-data-transformation": {
+      "tags": ["scope:shared", "type:util"]
     }
   }
 }

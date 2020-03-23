@@ -39,7 +39,10 @@
       "@hbx/admin/shared/ui-components": [
         "libs/admin/shared/ui-components/src/index.ts"
       ],
-      "@hbx/auth": ["libs/auth/src/index.ts"]
+      "@hbx/auth": ["libs/auth/src/index.ts"],
+      "@hbx/utils/data-transformation": [
+        "libs/utils/data-transformation/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"],
