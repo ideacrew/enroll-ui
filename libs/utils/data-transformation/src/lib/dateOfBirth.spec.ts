@@ -23,9 +23,21 @@ describe('Date of Birth conversion', () => {
     });
   });
 
-  it('should return a date object from a Date of Birth object', () => {
-    expect(createDateFromDob({ year: 1970, month: 1, day: 1 })).toEqual(
-      new Date('1970-01-01T05:00:00.000Z')
-    );
+  it('should convert back and forth regardless of time zone', () => {
+    // Create dob - January 1, 1970 (UTC Timezone 00:00:00)
+    const dob = new Date(1970, 0, 1); // zero-based month index
+
+    // Create Date of Birth
+    const dateOfBirth = getDateOfBirth(dob.toISOString());
+
+    // Convert to Date
+    const dobDate = createDateFromDob(dateOfBirth);
+
+    // Convert back to Date of Birth
+    const convertedDate = getDateOfBirth(dobDate.toISOString());
+
+    expect(dateOfBirth.year).toEqual(convertedDate.year);
+    expect(dateOfBirth.month).toEqual(convertedDate.month);
+    expect(dateOfBirth.day).toEqual(convertedDate.day);
   });
 });
