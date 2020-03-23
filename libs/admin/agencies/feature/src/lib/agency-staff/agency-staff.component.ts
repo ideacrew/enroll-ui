@@ -110,6 +110,7 @@ export class AgencyStaffComponent implements OnInit {
   }
 
   terminateAgencyRole(request: RoleChangeRequest): void {
+    console.log('haha');
     this.agencyStaffFacade.dispatch(
       AgencyStaffActions.terminateAgencyRole({ request })
     );
