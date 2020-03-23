@@ -18,6 +18,10 @@
   border-radius: 2px;
   border: 1px solid var(--outline-color);
 
+  &.large {
+    --content-height: var(--s0);
+  }
+
   > * + * {
     margin-left: 4px;
   }
