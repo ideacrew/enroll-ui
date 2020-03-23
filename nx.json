@@ -57,5 +57,14 @@
     "utils-data-transformation": {
       "tags": ["scope:shared", "type:util"]
     }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "accessToken": "MzIwMTBjZmItZDY0ZC00MzZhLTlkZWUtMzljMzMwYjBkNDJifHJlYWQ=",
+        "cacheableOperations": ["build", "test", "lint"]
+      }
+    }
   }
 }
