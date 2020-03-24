@@ -30,7 +30,7 @@ describe('Agency Staff Detail Page', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  xit('display a detailed view of the agent', () => {
+  it('display a detailed view of the agent', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
@@ -39,7 +39,7 @@ describe('Agency Staff Detail Page', () => {
     cy.contains(`${first_name} ${last_name}`);
   });
 
-  xit('should allow for termination of staff role', () => {
+  it('should allow for termination of staff role', () => {
     cy.route('post', '**/terminate/**', {}).as('terminateRole');
 
     cy.get(
@@ -59,7 +59,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('.change-history .status-changes').contains('terminated');
   });
 
-  xit('should revert change on api fail', () => {
+  it('should revert change on api fail', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
@@ -82,7 +82,7 @@ describe('Agency Staff Detail Page', () => {
     ).should('not.exist');
   });
 
-  xit('should allow for changing demographic information', () => {
+  it('should allow for changing demographic information', () => {
     cy.route('PATCH', `**/${_id}`, { status: 'success' }).as(
       'changeDemographics'
     );
