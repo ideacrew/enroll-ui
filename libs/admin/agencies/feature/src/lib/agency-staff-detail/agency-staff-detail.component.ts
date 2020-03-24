@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { combineLatest, Observable } from 'rxjs';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 
-import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
-import { RoleChangeRequest } from '@hbx/api-interfaces';
+import { AgencyStaffDetailVM, EmailVM } from '@hbx/admin/shared/view-models';
+import { RoleChangeRequest, DemographicsUpdate } from '@hbx/api-interfaces';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -21,8 +21,14 @@ interface DetailVM {
 })
 export class AgencyStaffDetailComponent {
   editingDemographics = false;
+  editingContactInfo = false;
+
+  formSubscription: Subscription;
 
   demographicsForm: FormGroup;
+  contactForm: FormGroup;
+
+  agencyStaff: AgencyStaffDetailVM;
 
   detailVM$: Observable<DetailVM> = combineLatest([
     this.agencyStaffFacade.loaded$,
@@ -34,14 +40,22 @@ export class AgencyStaffDetailComponent {
     })),
     filter(detailVM => detailVM.agent !== null),
     tap((detailVM: DetailVM) => {
-      const { firstName, lastName, dob, ssn, email } = detailVM.agent;
+      this.agencyStaff = detailVM.agent;
+
+      const { firstName, lastName, dob, email } = detailVM.agent;
 
       this.demographicsForm = this.fb.group({
         firstName,
         lastName,
-        dob,
-        ssn,
-        email,
+        dob: this.fb.group({
+          year: dob.editing.year,
+          month: dob.editing.month,
+          day: dob.editing.day,
+        }),
+      });
+
+      this.contactForm = this.fb.group({
+        emails: this.createEmailArray(email),
       });
     })
   );
@@ -55,5 +69,66 @@ export class AgencyStaffDetailComponent {
     this.agencyStaffFacade.dispatch(
       AgencyStaffActions.terminateAgencyRoleDetailPage({ request })
     );
+  }
+
+  createUpdateFromForm(demographicsForm: FormGroup): DemographicsUpdate {
+    const { firstName, lastName, dob } = demographicsForm.value;
+
+    const update: DemographicsUpdate = {
+      first_name: firstName,
+      last_name: lastName,
+      dob: `${dob.year}-${dob.month}-${dob.day}`,
+    };
+
+    return update;
+  }
+
+  updateDemographics(): void {
+    this.editingDemographics = false;
+
+    const update = this.createUpdateFromForm(this.demographicsForm);
+
+    if (this.demographicsChanged() === true) {
+      this.agencyStaffFacade.dispatch(
+        AgencyStaffActions.updateStaffDemographics({
+          agencyStaff: this.agencyStaff,
+          update,
+        })
+      );
+    }
+  }
+
+  demographicsChanged(): boolean {
+    const { firstName, lastName, dob } = this.agencyStaff;
+    const update = this.createUpdateFromForm(this.demographicsForm);
+
+    const sameFirstName = firstName !== update.first_name.trim();
+    const sameLastName = lastName !== update.last_name.trim();
+
+    const { year, day, month } = dob.editing;
+    const agencyStaffDob = `${year}-${month}-${day}`;
+
+    const sameDob = agencyStaffDob !== update.dob;
+
+    return sameFirstName || sameLastName || sameDob;
+  }
+
+  createEmailArray(emails: EmailVM[]): FormArray {
+    const emailFormArray: FormArray = this.fb.array([]);
+
+    for (const email of emails) {
+      emailFormArray.push(
+        this.fb.group({
+          id: email.id,
+          address: email.address,
+        })
+      );
+    }
+
+    return emailFormArray;
+  }
+
+  get contactEmails(): FormArray {
+    return this.contactForm.get('emails') as FormArray;
   }
 }

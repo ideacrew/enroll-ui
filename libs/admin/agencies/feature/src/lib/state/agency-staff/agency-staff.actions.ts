@@ -4,7 +4,9 @@ import {
   AgencyStaff,
   RoleChangeRequest,
   AgencyStaffWithDetail,
+  DemographicsUpdate,
 } from '@hbx/api-interfaces';
+import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
 
 export const loadAgencyStaff = createAction('[Agency Staff] Load AgencyStaff');
 
@@ -52,4 +54,14 @@ export const loadAgencyStaffDetailSuccess = createAction(
 export const loadAgencyStaffDetailFailure = createAction(
   '[Agency Staff Detail] Load Agency Staff Detail Failure',
   props<{ error: any }>()
+);
+
+export const updateStaffDemographics = createAction(
+  '[Agency Staff Detail] Update Staff Demographics',
+  props<{ agencyStaff: AgencyStaffDetailVM; update: DemographicsUpdate }>()
+);
+
+export const updateStaffDemographicsFailure = createAction(
+  '[Agency Staff Detail] Update Staff Demographics Failure',
+  props<{ agencyStaff: AgencyStaffDetailVM; update: DemographicsUpdate }>()
 );

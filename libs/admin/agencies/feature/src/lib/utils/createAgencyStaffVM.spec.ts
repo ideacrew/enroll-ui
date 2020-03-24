@@ -1,6 +1,8 @@
 import * as faker from 'faker';
 import { Dictionary } from '@ngrx/entity';
 
+import { getDateOfBirth } from '@hbx/utils/data-transformation';
+
 import {
   AgencyProfile,
   AgencyStaff,
@@ -26,6 +28,7 @@ import {
   createSingleAgencyStaffVM,
   createAllAgencyStaffVMs,
   createSingleAgencyStaffDetailVM,
+  createDobVM,
 } from './createAgencyStaffVM';
 
 describe('Agency VM Creation', () => {
@@ -113,7 +116,7 @@ describe('Agency VM Creation', () => {
 
     const expectedAgencyStaffDetailVM: AgencyStaffDetailVM = {
       personId: _id,
-      dob: new Date(dob),
+      dob: createDobVM(dob),
       email: [
         {
           id: agent_emails[0].id,

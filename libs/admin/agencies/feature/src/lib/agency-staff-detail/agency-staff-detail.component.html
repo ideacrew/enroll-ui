@@ -1,36 +1,112 @@
 <ng-container *ngIf="detailVM$ | async as vm">
   <ng-container *ngIf="vm.loaded">
-    <!-- <pre>
-      {{ vm.agent | json }}
-    </pre> -->
     <section>
       <h1 class="hbx-heading-xl">
         {{ vm.agent.firstName }} {{ vm.agent.lastName }}
       </h1>
       <p class="hbx-body-s hbx-id">{{ vm.agent.hbxId }}</p>
     </section>
+
+    <!-- Staff Demographics -->
     <section>
-      <h2 class="hbx-heading-l heading-light">Staff Demographics</h2>
-      <div
-        *ngIf="editingDemographics === false; else editing"
-        class="content-container demographics-container"
-      >
-        <div class="input-group">
-          <h3 class="hbx-body-s">Name</h3>
-          <span>{{ vm.agent.firstName }} {{ vm.agent.lastName }}</span>
+      <div class="heading-and-action">
+        <h2 class="hbx-heading-l heading-light">Staff Demographics</h2>
+        <div class="action-buttons">
+          <button
+            *ngIf="editingDemographics === false"
+            type="button"
+            class="hbx-button large outline"
+            (click)="editingDemographics = true"
+          >
+            <span>Edit</span>
+            <svg class="svg-icon" viewBox="0 0 32 32">
+              <use href="ng-assets/icons/hbx-icons.svg#edit"></use>
+            </svg>
+          </button>
+          <div class="button-group" *ngIf="editingDemographics === true">
+            <button
+              type="button"
+              class="hbx-button text-only"
+              (click)="editingDemographics = false"
+            >
+              <span>Cancel</span>
+            </button>
+            <button
+              [disabled]="demographicsChanged() === false"
+              type="button"
+              class="hbx-button large outline"
+              (click)="updateDemographics()"
+            >
+              <span>Save</span>
+              <svg class="svg-icon" viewBox="0 0 32 32">
+                <use href="ng-assets/icons/hbx-icons.svg#checkmark"></use>
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="input-group">
-          <h3 class="hbx-body-s">Date of Birth</h3>
-          <span>{{ vm.agent.dob | date }}</span>
-        </div>
-        <div class="input-group">
-          <h3 class="hbx-body-s">Work Email</h3>
-          <ng-container *ngFor="let email of vm.agent.email">
-            <div>{{ email.address }}</div>
-          </ng-container>
+      </div>
+      <div class="content-container">
+        <div
+          *ngIf="editingDemographics === false; else editModeDemographics"
+          class="view-only-information demographics-container"
+        >
+          <div class="input-group">
+            <h3 class="hbx-body-s">Name</h3>
+            <span>{{ vm.agent.firstName }} {{ vm.agent.lastName }}</span>
+          </div>
+          <div class="input-group">
+            <h3 class="hbx-body-s">Date of Birth</h3>
+            <span>{{ vm.agent.dob.display | date }}</span>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Staff Contact Information -->
+    <section>
+      <div class="heading-and-action">
+        <h2 class="hbx-heading-l heading-light">Staff Contact Information</h2>
+        <div class="action-buttons">
+          <!-- <button
+            *ngIf="editingContactInfo === false"
+            type="button"
+            class="hbx-button large outline"
+            (click)="editingContactInfo = true"
+          >
+            <span>Edit</span>
+            <svg class="svg-icon" viewBox="0 0 32 32">
+              <use href="ng-assets/icons/hbx-icons.svg#edit"></use>
+            </svg>
+          </button>
+          <button
+            *ngIf="editingContactInfo === true"
+            type="button"
+            class="hbx-button large outline"
+            (click)="editingContactInfo = false"
+          >
+            <span>Save</span>
+            <svg class="svg-icon" viewBox="0 0 32 32">
+              <use href="ng-assets/icons/hbx-icons.svg#checkmark"></use>
+            </svg>
+          </button> -->
+        </div>
+      </div>
+      <div class="content-container">
+        <div
+          *ngIf="editingContactInfo === false; else editModeContactInfo"
+          class="view-only-information contact-info-container"
+        >
+          <div class="input-group">
+            <h3 class="hbx-body-s">Work Email</h3>
+            <ng-container *ngFor="let email of vm.agent.email">
+              <div>{{ email.address }}</div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Current Agency Associations -->
     <section>
       <h2 class="hbx-heading-l heading-light">Current Agency Associations</h2>
       <div class="content-container associations">
@@ -43,6 +119,8 @@
         </hbx-agency-association>
       </div>
     </section>
+
+    <!-- History of Changes -->
     <section>
       <h2 class="hbx-heading-l heading-light">History of Changes</h2>
       <div class="content-container history-container">
@@ -73,26 +151,83 @@
   >
 </ng-container>
 
-<ng-template #editing>
+<ng-template #editModeDemographics>
   <form [formGroup]="demographicsForm" class="demographic-form">
-    <label class="input-group" for="first-name">
-      First name
-    </label>
-    <input
-      type="text"
-      name="first-name"
-      id="first-name"
-      formControlName="firstName"
-    />
-    <label class="input-group" for="first-name">
-      Last name
-    </label>
-    <input
-      type="text"
-      name="last-name"
-      id="last-name"
-      formControlName="lastName"
-    />
+    <div class="input-group">
+      <label class="hbx-input-label" for="first-name">
+        First name
+      </label>
+      <input
+        type="text"
+        name="first-name"
+        id="first-name"
+        formControlName="firstName"
+      />
+    </div>
+    <div class="input-group">
+      <label class="hbx-input-label" for="last-name">
+        Last name
+      </label>
+      <input
+        type="text"
+        name="last-name"
+        id="last-name"
+        formControlName="lastName"
+      />
+    </div>
+    <div formGroupName="dob" class="dob-group">
+      <div class="input-group">
+        <label class="hbx-input-label" for="dob-month">
+          Month
+        </label>
+        <input
+          class="dob-input"
+          type="text"
+          inputmode="numeric"
+          name="dob-month"
+          id="dob-month"
+          formControlName="month"
+        />
+      </div>
+      <div class="input-group">
+        <label class="hbx-input-label" for="dob-day">
+          Day
+        </label>
+        <input
+          class="dob-input"
+          type="text"
+          inputmode="numeric"
+          name="dob-day"
+          id="dob-day"
+          formControlName="day"
+        />
+      </div>
+      <div class="input-group">
+        <label class="hbx-input-label" for="dob-year">
+          Year
+        </label>
+        <input
+          class="dob-input"
+          type="text"
+          inputmode="numeric"
+          name="dob-year"
+          id="dob-year"
+          formControlName="year"
+        />
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #editModeContactInfo>
+  <form [formGroup]="contactForm" class="contact-form">
+    <div formArrayName="emails">
+      <div *ngFor="let email of contactEmails.controls; let i = index">
+        <div [formGroupName]="i">
+          {{ email.value | json }}
+        </div>
+      </div>
+    </div>
   </form>
 </ng-template>
 

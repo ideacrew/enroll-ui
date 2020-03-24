@@ -4,3 +4,12 @@ input[type='text'] {
   color: var(--neutral-100);
   border: 0;
 }
+
+.input-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.hbx-input-label {
+  margin-bottom: var(--s-3);
+}

@@ -7,6 +7,7 @@ import {
   AgencyStaff,
   PrimaryAgent,
   AgencyStaffWithDetail,
+  DemographicsUpdate,
 } from '@hbx/api-interfaces';
 
 @Injectable({
@@ -63,6 +64,13 @@ export class AgenciesApiService {
     return this.http.post(
       `${this.api}/agencies/agency_staff/${agencyStaffId}/terminate/${agencyRoleId}`,
       {}
+    );
+  }
+
+  updateStaffDemographics(personId: string, update: DemographicsUpdate) {
+    return this.http.patch(
+      `${this.api}/agencies/agency_staff/${personId}`,
+      update
     );
   }
 }

@@ -17,6 +17,11 @@ import {
   AgencyStaffWithDetail,
   EmailKind,
 } from '@hbx/api-interfaces';
+import {
+  getDateOfBirth,
+  createDateFromDob,
+  DateOfBirth,
+} from '@hbx/utils/data-transformation';
 
 export function createSingleAgencyStaffVM(
   staff: AgencyStaff,
@@ -164,7 +169,7 @@ export function createSingleAgencyStaffDetailVM(
     lastName: last_name,
     hbxId: hbx_id,
     personId: _id,
-    dob: new Date(dob),
+    dob: createDobVM(dob),
     email,
     ssn,
   };
@@ -238,4 +243,14 @@ export function isStaffWithDetail(
   staff: AgencyStaff | AgencyStaffWithDetail
 ): staff is AgencyStaffWithDetail {
   return (staff as AgencyStaffWithDetail).agent_emails !== undefined;
+}
+
+export function createDobVM(dob: string): { editing: DateOfBirth; display: Date } {
+  const dateOfBirth: DateOfBirth = getDateOfBirth(dob);
+  const displayDob: Date = createDateFromDob(dateOfBirth);
+
+  return {
+    editing: dateOfBirth,
+    display: displayDob,
+  };
 }

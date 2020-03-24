@@ -60,10 +60,36 @@ section {
 
 .demographics-container {
   display: grid;
-  grid-template-columns: repeat(3, minmax(max-content, 1fr));
+  grid-template-columns: repeat(2, minmax(max-content, 1fr));
   grid-gap: var(--s0);
 }
 
 .input-group .hbx-body-s {
   color: var(--neutral-070);
+}
+
+.heading-and-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demographic-form > * + * {
+  margin-left: 4rem;
+}
+
+.dob-input {
+  max-width: 6ch;
+}
+
+.dob-group {
+  display: inline-flex;
+
+  > * + * {
+    margin-left: var(--s0);
+  }
+}
+
+.button-group {
+  display: flex;
 }

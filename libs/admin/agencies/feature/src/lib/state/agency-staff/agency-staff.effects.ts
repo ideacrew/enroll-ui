@@ -8,7 +8,7 @@ import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 
 import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffActions from './agency-staff.actions';
-import { RoleChangeRequest } from '@hbx/api-interfaces';
+import { RoleChangeRequest, DemographicsUpdate } from '@hbx/api-interfaces';
 import { AgencyStaffDetailComponent } from '../../agency-staff-detail/agency-staff-detail.component';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
@@ -122,6 +122,39 @@ export class AgencyStaffEffects {
 
           return AgencyStaffActions.terminateAgencyRoleDetailPageFailure({
             request: undoRequest,
+          });
+        },
+      }
+    )
+  );
+
+  updateStaffDemographics$ = createEffect(() =>
+    this.dataPersistence.optimisticUpdate(
+      AgencyStaffActions.updateStaffDemographics,
+      {
+        run: (
+          action: ReturnType<typeof AgencyStaffActions.updateStaffDemographics>
+        ) => {
+          const { agencyStaff, update } = action;
+
+          return this.agenciesApiService
+            .updateStaffDemographics(agencyStaff.personId, update)
+            .pipe(switchMap(() => of<any>()));
+        },
+        undoAction: (
+          action: ReturnType<typeof AgencyStaffActions.updateStaffDemographics>
+        ) => {
+          const { agencyStaff } = action;
+
+          const update: DemographicsUpdate = {
+            first_name: agencyStaff.firstName,
+            last_name: agencyStaff.lastName,
+            dob: agencyStaff.dob.display.toISOString().slice(0, 10),
+          };
+
+          return AgencyStaffActions.updateStaffDemographicsFailure({
+            agencyStaff,
+            update,
           });
         },
       }
