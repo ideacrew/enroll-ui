@@ -22,10 +22,6 @@
     --content-height: var(--s0);
   }
 
-  &.outline {
-    --border-color: var(--neutral-070);
-  }
-
   > * + * {
     margin-left: 4px;
   }
@@ -48,10 +44,20 @@
 
   &.text-only {
     --background-color: transparent;
+
+    &:hover {
+      --background-color: transparent;
+    }
   }
 
-  &:hover {
+  &:hover:not([disabled]):not(.text-only) {
     --content-color: var(--neutral-100);
+    --border-color: var(--neutral-100);
+    --background-color: var(--neutral-020);
+  }
+
+  &.outline {
+    --border-color: var(--neutral-070);
   }
 
   &[disabled] {

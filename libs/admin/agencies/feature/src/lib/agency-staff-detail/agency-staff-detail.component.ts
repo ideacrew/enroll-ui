@@ -83,6 +83,20 @@ export class AgencyStaffDetailComponent {
     return update;
   }
 
+  cancelEditingDemographics(): void {
+    this.editingDemographics = false;
+    const { firstName, lastName, dob } = this.agencyStaff;
+    this.demographicsForm.patchValue({
+      firstName,
+      lastName,
+      dob: {
+        year: dob.editing.year,
+        month: dob.editing.month,
+        day: dob.editing.day,
+      },
+    });
+  }
+
   updateDemographics(): void {
     this.editingDemographics = false;
 

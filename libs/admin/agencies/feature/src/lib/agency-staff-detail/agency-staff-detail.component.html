@@ -1,18 +1,19 @@
 <ng-container *ngIf="detailVM$ | async as vm">
   <ng-container *ngIf="vm.loaded">
     <section>
-      <h1 class="hbx-heading-xl">
+      <h1 id="staff-name-heading" class="hbx-heading-xl">
         {{ vm.agent.firstName }} {{ vm.agent.lastName }}
       </h1>
       <p class="hbx-body-s hbx-id">{{ vm.agent.hbxId }}</p>
     </section>
 
     <!-- Staff Demographics -->
-    <section>
+    <section class="demographics-section">
       <div class="heading-and-action">
         <h2 class="hbx-heading-l heading-light">Staff Demographics</h2>
         <div class="action-buttons">
           <button
+            id="edit-demographics-button"
             *ngIf="editingDemographics === false"
             type="button"
             class="hbx-button large outline"
@@ -27,11 +28,12 @@
             <button
               type="button"
               class="hbx-button text-only"
-              (click)="editingDemographics = false"
+              (click)="cancelEditingDemographics()"
             >
               <span>Cancel</span>
             </button>
             <button
+              id="save-demographics-button"
               [disabled]="demographicsChanged() === false"
               type="button"
               class="hbx-button large outline"
@@ -56,7 +58,7 @@
           </div>
           <div class="input-group">
             <h3 class="hbx-body-s">Date of Birth</h3>
-            <span>{{ vm.agent.dob.display | date }}</span>
+            <span id="staff-date-of-birth">{{ vm.agent.dob.display | date }}</span>
           </div>
         </div>
       </div>

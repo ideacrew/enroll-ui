@@ -117,7 +117,7 @@ const agencyStaffReducer = createReducer(
       return agencyStaffAdapter.updateOne(updatedStaff, {
         ...state,
         agencyStaffDetail: updatedStaffDetail,
-      });       
+      });
     }
   ),
   on(
@@ -134,6 +134,32 @@ const agencyStaffReducer = createReducer(
   })),
   on(
     AgencyStaffActions.updateStaffDemographics,
+    (state, { agencyStaff, update }) => {
+      const { first_name, last_name, dob } = update;
+
+      const updatedStaff: Update<AgencyStaff> = {
+        id: agencyStaff.personId,
+        changes: {
+          first_name,
+          last_name,
+        },
+      };
+
+      const updatedStaffDetail: AgencyStaffWithDetail = {
+        ...state.agencyStaffDetail,
+        first_name,
+        last_name,
+        dob,
+      };
+
+      return agencyStaffAdapter.updateOne(updatedStaff, {
+        ...state,
+        agencyStaffDetail: updatedStaffDetail,
+      });
+    }
+  ),
+  on(
+    AgencyStaffActions.updateStaffDemographicsFailure,
     (state, { agencyStaff, update }) => {
       const { first_name, last_name, dob } = update;
 
