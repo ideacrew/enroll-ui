@@ -8,6 +8,7 @@ import {
   PrimaryAgent,
   AgencyStaffWithDetail,
   DemographicsUpdate,
+  EmailUpdate,
 } from '@hbx/api-interfaces';
 
 @Injectable({
@@ -70,6 +71,13 @@ export class AgenciesApiService {
   updateStaffDemographics(personId: string, update: DemographicsUpdate) {
     return this.http.patch(
       `${this.api}/agencies/agency_staff/${personId}`,
+      update
+    );
+  }
+
+  updateStaffEmails(personId: string, update: EmailUpdate[]) {
+    return this.http.patch(
+      `${this.api}/agencies/agency_staff/${personId}/email`,
       update
     );
   }
