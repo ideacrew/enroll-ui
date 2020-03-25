@@ -58,7 +58,9 @@
           </div>
           <div class="input-group">
             <h3 class="hbx-body-s">Date of Birth</h3>
-            <span id="staff-date-of-birth">{{ vm.agent.dob.display | date }}</span>
+            <span id="staff-date-of-birth">{{
+              vm.agent.dob.display | date
+            }}</span>
           </div>
         </div>
       </div>
@@ -69,7 +71,8 @@
       <div class="heading-and-action">
         <h2 class="hbx-heading-l heading-light">Staff Contact Information</h2>
         <div class="action-buttons">
-          <!-- <button
+          <button
+            id="edit-email-button"
             *ngIf="editingContactInfo === false"
             type="button"
             class="hbx-button large outline"
@@ -80,29 +83,40 @@
               <use href="ng-assets/icons/hbx-icons.svg#edit"></use>
             </svg>
           </button>
-          <button
-            *ngIf="editingContactInfo === true"
-            type="button"
-            class="hbx-button large outline"
-            (click)="editingContactInfo = false"
-          >
-            <span>Save</span>
-            <svg class="svg-icon" viewBox="0 0 32 32">
-              <use href="ng-assets/icons/hbx-icons.svg#checkmark"></use>
-            </svg>
-          </button> -->
+          <div class="button-group" *ngIf="editingContactInfo === true">
+            <button
+              type="button"
+              class="hbx-button text-only"
+              (click)="cancelEditingEmail()"
+            >
+              <span>Cancel</span>
+            </button>
+            <button
+              [disabled]="contactForm.invalid"
+              id="save-email-button"
+              type="button"
+              class="hbx-button large outline"
+              (click)="updateEmail()"
+            >
+              <span>Save</span>
+              <svg class="svg-icon" viewBox="0 0 32 32">
+                <use href="ng-assets/icons/hbx-icons.svg#checkmark"></use>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
+      <!-- <pre>{{ contactForm.value | json }}</pre> -->
       <div class="content-container">
         <div
           *ngIf="editingContactInfo === false; else editModeContactInfo"
           class="view-only-information contact-info-container"
         >
-          <div class="input-group">
-            <h3 class="hbx-body-s">Work Email</h3>
-            <ng-container *ngFor="let email of vm.agent.email">
-              <div>{{ email.address }}</div>
-            </ng-container>
+          <div class="email-array input-group">
+            <div *ngFor="let email of vm.agent.email; let i = index">
+              <h3 class="hbx-body-s">Work Email {{ i + 1 }}</h3>
+              <div id="email-display-{{ i + 1 }}">{{ email.address }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -223,12 +237,21 @@
 
 <ng-template #editModeContactInfo>
   <form [formGroup]="contactForm" class="contact-form">
-    <div formArrayName="emails">
-      <div *ngFor="let email of contactEmails.controls; let i = index">
-        <div [formGroupName]="i">
-          {{ email.value | json }}
+    <div formArrayName="emails" class="email-array grid">
+      <ng-container *ngFor="let email of contactEmails.controls; let i = index">
+        <div class="input-group" [formGroupName]="i">
+          <label class="hbx-input-label" for="email-input-{{ i + 1 }}">
+            Work Email {{ i + 1 }}
+          </label>
+          <input
+            type="text"
+            inputmode="email"
+            name="email-input-{{ i + 1 }}"
+            id="email-input-{{ i + 1 }}"
+            formControlName="address"
+          />
         </div>
-      </div>
+      </ng-container>
     </div>
   </form>
 </ng-template>

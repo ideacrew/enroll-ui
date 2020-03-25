@@ -10,6 +10,10 @@ input[type='text'] {
   flex-direction: column;
 }
 
+.grid > .input-group {
+  display: flex;
+}
+
 .hbx-input-label {
   margin-bottom: var(--s-3);
 }

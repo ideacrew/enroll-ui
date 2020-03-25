@@ -9,6 +9,8 @@ import {
   RoleChangeRequest,
   DemographicsUpdate,
   EmailUpdate,
+  AgentEmail,
+  EmailKind,
 } from '@hbx/api-interfaces';
 import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 
@@ -168,7 +170,7 @@ export class AgencyStaffEffects {
   updateEmail$ = createEffect(() =>
     this.dataPersistence.optimisticUpdate(AgencyStaffActions.updateStaffEmail, {
       run: (action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>) => {
-        const { agencyStaff, update } = action;
+        const { agencyStaff, newEmails: update } = action;
 
         return this.agenciesApiService
           .updateStaffEmail(agencyStaff.personId, update)
@@ -179,16 +181,17 @@ export class AgencyStaffEffects {
       ) => {
         const { agencyStaff } = action;
 
-        const update: EmailUpdate[] = agencyStaff.email.map(email => {
+        const update: AgentEmail[] = agencyStaff.email.map(email => {
           return {
             address: email.address,
+            kind: EmailKind.Work,
             id: email.id,
           };
         });
 
         return AgencyStaffActions.updateStaffEmailFailure({
           agencyStaff,
-          update,
+          newEmails: update,
         });
       },
     })

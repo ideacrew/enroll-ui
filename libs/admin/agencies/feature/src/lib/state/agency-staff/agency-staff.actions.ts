@@ -5,7 +5,7 @@ import {
   RoleChangeRequest,
   AgencyStaffWithDetail,
   DemographicsUpdate,
-  EmailUpdate,
+  AgentEmail,
 } from '@hbx/api-interfaces';
 import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
 
@@ -69,10 +69,10 @@ export const updateStaffDemographicsFailure = createAction(
 
 export const updateStaffEmail = createAction(
   '[Agency Staff Detail] Update Staff Email',
-  props<{ agencyStaff: AgencyStaffDetailVM; update: EmailUpdate[] }>()
+  props<{ agencyStaff: AgencyStaffDetailVM; newEmails: AgentEmail[] }>()
 );
 
 export const updateStaffEmailFailure = createAction(
   '[Agency Staff Detail] Update Staff Email Failure',
-  props<{ agencyStaff: AgencyStaffDetailVM; update: EmailUpdate[] }>()
+  props<{ agencyStaff: AgencyStaffDetailVM; newEmails: AgentEmail[] }>()
 );

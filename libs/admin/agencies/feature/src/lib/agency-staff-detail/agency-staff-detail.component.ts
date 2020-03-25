@@ -1,10 +1,15 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 
 import { AgencyStaffDetailVM, EmailVM } from '@hbx/admin/shared/view-models';
-import { RoleChangeRequest, DemographicsUpdate } from '@hbx/api-interfaces';
+import {
+  RoleChangeRequest,
+  DemographicsUpdate,
+  AgentEmail,
+  EmailKind,
+} from '@hbx/api-interfaces';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -54,6 +59,8 @@ export class AgencyStaffDetailComponent {
         }),
       });
 
+      const emailFormArray = this.createEmailArray(email);
+
       this.contactForm = this.fb.group({
         emails: this.createEmailArray(email),
       });
@@ -97,6 +104,13 @@ export class AgencyStaffDetailComponent {
     });
   }
 
+  cancelEditingEmail(): void {
+    this.editingContactInfo = false;
+    const { email } = this.agencyStaff;
+
+    this.contactForm.get('emails').setValue(email);
+  }
+
   updateDemographics(): void {
     this.editingDemographics = false;
 
@@ -110,6 +124,19 @@ export class AgencyStaffDetailComponent {
         })
       );
     }
+  }
+
+  updateEmail(): void {
+    this.editingContactInfo = false;
+
+    const newEmails = this.contactForm.get('emails').value as AgentEmail[];
+
+    this.agencyStaffFacade.dispatch(
+      AgencyStaffActions.updateStaffEmail({
+        agencyStaff: this.agencyStaff,
+        newEmails,
+      })
+    );
   }
 
   demographicsChanged(): boolean {
@@ -134,7 +161,8 @@ export class AgencyStaffDetailComponent {
       emailFormArray.push(
         this.fb.group({
           id: email.id,
-          address: email.address,
+          kind: EmailKind.Work,
+          address: [email.address, [Validators.email, Validators.required]],
         })
       );
     }

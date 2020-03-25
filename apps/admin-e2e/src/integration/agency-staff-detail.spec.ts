@@ -30,7 +30,7 @@ describe('Agency Staff Detail Page', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  it('display a detailed view of the agent', () => {
+  xit('display a detailed view of the agent', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
@@ -39,7 +39,7 @@ describe('Agency Staff Detail Page', () => {
     cy.contains(`${first_name} ${last_name}`);
   });
 
-  it('should allow for termination of staff role', () => {
+  xit('should allow for termination of staff role', () => {
     cy.route('post', '**/terminate/**', {}).as('terminateRole');
 
     cy.get(
@@ -59,7 +59,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('.change-history .status-changes').contains('terminated');
   });
 
-  it('should revert change on api fail', () => {
+  xit('should revert change on api fail', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
@@ -82,7 +82,7 @@ describe('Agency Staff Detail Page', () => {
     ).should('not.exist');
   });
 
-  it('should allow for changing demographic information', () => {
+  xit('should allow for changing demographic information', () => {
     cy.route('PATCH', `**/${_id}`, { status: 'success' }).as(
       'changeDemographics'
     );
@@ -100,7 +100,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#staff-date-of-birth').contains('Oct 9, 1981');
   });
 
-  it('should revert change when api fails', () => {
+  xit('should revert change when api fails', () => {
     cy.route({
       method: 'PATCH',
       url: `**/${_id}`,
@@ -113,5 +113,39 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#save-demographics-button').click();
     cy.wait('@changeDemographics');
     cy.get('#staff-name-heading').contains(`${first_name} ${last_name}`);
+  });
+
+  xit('should allow for changing demographic information', () => {
+    cy.route('PATCH', `**/${_id}/email`, { status: 'success' }).as(
+      'changeEmail'
+    );
+
+    cy.get('#edit-email-button').click();
+    cy.get('#email-input-1').clear().type('Ted');
+    cy.get('#save-email-button').should('be.disabled');
+
+    cy.get('#email-input-1').clear().type('ted@example.com');
+    cy.get('#save-email-button').should('not.be.disabled').click();
+    cy.wait('@changeEmail');
+
+    cy.get('#email-display-1').contains('ted@example.com');
+  });
+
+  it('should allow for changing demographic information', () => {
+    const [firstEmail] = agentWithDetail.agent_emails;
+
+    cy.route({
+      method: 'PATCH',
+      url: `**/${_id}/email`,
+      response: { status: 'success' },
+      status: 400,
+    }).as('changeEmail');
+
+    cy.get('#edit-email-button').click();
+    cy.get('#email-input-1').clear().type('ted@example.com');
+    cy.get('#save-email-button').should('not.be.disabled').click();
+    cy.wait('@changeEmail');
+
+    cy.get('#email-display-1').contains(firstEmail.address);
   });
 });

@@ -93,3 +93,10 @@ section {
 .button-group {
   display: flex;
 }
+
+.email-array,
+.demographic-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s0);
+}
