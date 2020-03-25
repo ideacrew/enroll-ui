@@ -1,8 +1,19 @@
 input[type='text'] {
+  --border-color: transparent;
+
   border-radius: 4px;
   padding: var(--s-1) var(--s-2);
   color: var(--neutral-100);
-  border: 0;
+  border: 3px solid var(--border-color);
+
+  &:focus {
+    outline: 0;
+    border: 3px solid var(--blue-070);
+  }
+
+  &.ng-invalid {
+    border: 3px solid var(--red-060);
+  }
 }
 
 .input-group {

@@ -173,4 +173,8 @@ export class AgencyStaffDetailComponent {
   get contactEmails(): FormArray {
     return this.contactForm.get('emails') as FormArray;
   }
+
+  isValidEmail(index: number): boolean {
+    return this.contactEmails.at(index).valid;
+  }
 }

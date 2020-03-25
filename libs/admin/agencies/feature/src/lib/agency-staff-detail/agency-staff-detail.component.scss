@@ -100,3 +100,20 @@ section {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--s0);
 }
+
+.hbx-error-message {
+  display: none;
+  margin-top: var(--s-3);
+  color: var(--red-060);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.email-group.ng-invalid {
+  border-left: 4px solid var(--red-060);
+  padding-left: var(--s-2);
+
+  .hbx-error-message {
+    display: block;
+  }
+}

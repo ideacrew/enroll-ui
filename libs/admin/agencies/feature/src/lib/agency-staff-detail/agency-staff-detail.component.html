@@ -113,7 +113,7 @@
           class="view-only-information contact-info-container"
         >
           <div class="email-array input-group">
-            <div *ngFor="let email of vm.agent.email; let i = index">
+            <div *ngFor="let email of vm.agent.email; index as i">
               <h3 class="hbx-body-s">Work Email {{ i + 1 }}</h3>
               <div id="email-display-{{ i + 1 }}">{{ email.address }}</div>
             </div>
@@ -238,8 +238,12 @@
 <ng-template #editModeContactInfo>
   <form [formGroup]="contactForm" class="contact-form">
     <div formArrayName="emails" class="email-array grid">
-      <ng-container *ngFor="let email of contactEmails.controls; let i = index">
-        <div class="input-group" [formGroupName]="i">
+      <ng-container *ngFor="let email of contactEmails.controls; index as i">
+        <div
+          id="email-group-{{ i + 1 }}"
+          class="email-group input-group"
+          [formGroupName]="i"
+        >
           <label class="hbx-input-label" for="email-input-{{ i + 1 }}">
             Work Email {{ i + 1 }}
           </label>
@@ -250,6 +254,10 @@
             id="email-input-{{ i + 1 }}"
             formControlName="address"
           />
+          <div class="hbx-error-message">
+            <span class="visually-hidden">Error:</span>
+            Enter an email address in the correct format, like name@example.com
+          </div>
         </div>
       </ng-container>
     </div>
