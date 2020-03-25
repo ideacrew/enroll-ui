@@ -3,14 +3,18 @@ import { createEffect } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
+import {
+  RoleChangeRequest,
+  DemographicsUpdate,
+  EmailUpdate,
+} from '@hbx/api-interfaces';
 import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 
 import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffActions from './agency-staff.actions';
-import { RoleChangeRequest, DemographicsUpdate } from '@hbx/api-interfaces';
 import { AgencyStaffDetailComponent } from '../../agency-staff-detail/agency-staff-detail.component';
-import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class AgencyStaffEffects {
@@ -159,6 +163,35 @@ export class AgencyStaffEffects {
         },
       }
     )
+  );
+
+  updateEmail$ = createEffect(() =>
+    this.dataPersistence.optimisticUpdate(AgencyStaffActions.updateStaffEmail, {
+      run: (action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>) => {
+        const { agencyStaff, update } = action;
+
+        return this.agenciesApiService
+          .updateStaffEmail(agencyStaff.personId, update)
+          .pipe(switchMap(() => of<any>()));
+      },
+      undoAction: (
+        action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>
+      ) => {
+        const { agencyStaff } = action;
+
+        const update: EmailUpdate[] = agencyStaff.email.map(email => {
+          return {
+            address: email.address,
+            id: email.id,
+          };
+        });
+
+        return AgencyStaffActions.updateStaffEmailFailure({
+          agencyStaff,
+          update,
+        });
+      },
+    })
   );
 
   constructor(
