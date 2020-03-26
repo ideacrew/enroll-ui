@@ -78,7 +78,7 @@ export class AgenciesApiService {
   updateStaffEmail(personId: string, update: EmailUpdate[]) {
     return this.http.patch(
       `${this.api}/agencies/agency_staff/${personId}/email`,
-      update
+      { emails: update }
     );
   }
 }

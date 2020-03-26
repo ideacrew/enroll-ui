@@ -30,7 +30,7 @@ describe('Agency Staff Detail Page', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  xit('display a detailed view of the agent', () => {
+  it('display a detailed view of the agent', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
@@ -39,7 +39,7 @@ describe('Agency Staff Detail Page', () => {
     cy.contains(`${first_name} ${last_name}`);
   });
 
-  xit('should allow for termination of staff role', () => {
+  it('should allow for termination of staff role', () => {
     cy.route('post', '**/terminate/**', {}).as('terminateRole');
 
     cy.get(
@@ -59,7 +59,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('.change-history .status-changes').contains('terminated');
   });
 
-  xit('should revert change on api fail', () => {
+  it('should revert change on api fail', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
@@ -87,20 +87,50 @@ describe('Agency Staff Detail Page', () => {
       'changeDemographics'
     );
 
+    const newBirthDate = {
+      year: '1980',
+      month: '10',
+      day: '13',
+    };
+
     cy.get('#edit-demographics-button').click();
     cy.get('#save-demographics-button').should('be.disabled');
-    cy.get('#first-name').clear().type('Ted');
-    cy.get('#last-name').clear().type('Crisp');
-    cy.get('#dob-month').clear().type('10');
-    cy.get('#dob-day').clear().type('9');
-    cy.get('#dob-year').clear().type('1981');
+    cy.get('#first-name')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('Ted');
+    cy.get('#last-name')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('Crisp');
+    cy.get('#dob-month')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('13')
+      .should('have.class', 'ng-invalid')
+      .clear()
+      .type(newBirthDate.month);
+    cy.get('#dob-day')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('35')
+      .should('have.class', 'ng-invalid')
+      .clear()
+      .type(newBirthDate.day);
+    cy.get('#dob-year')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('2022')
+      .should('have.class', 'ng-invalid')
+      .clear()
+      .type(newBirthDate.year);
     cy.get('#save-demographics-button').click();
     cy.wait('@changeDemographics');
     cy.get('#staff-name-heading').contains('Ted Crisp');
-    cy.get('#staff-date-of-birth').contains('Oct 9, 1981');
+    cy.get('#staff-date-of-birth').contains('Oct 13, 1980');
   });
 
-  xit('should revert demographics change when api fails', () => {
+  it('should revert demographics change when api fails', () => {
     cy.route({
       method: 'PATCH',
       url: `**/${_id}`,
@@ -109,13 +139,16 @@ describe('Agency Staff Detail Page', () => {
     }).as('changeDemographics');
 
     cy.get('#edit-demographics-button').click();
-    cy.get('#first-name').clear().type('Ted');
+    cy.get('#first-name')
+      .clear()
+      .should('have.class', 'ng-invalid')
+      .type('Ted');
     cy.get('#save-demographics-button').click();
     cy.wait('@changeDemographics');
     cy.get('#staff-name-heading').contains(`${first_name} ${last_name}`);
   });
 
-  xit('should allow for changing email information', () => {
+  it('should allow for changing email information', () => {
     cy.route('PATCH', `**/${_id}/email`, { status: 'success' }).as(
       'changeEmail'
     );
@@ -132,7 +165,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#email-display-1').contains('ted@example.com');
   });
 
-  xit('should revert email change when api fails', () => {
+  it('should revert email change when api fails', () => {
     const [firstEmail] = agentWithDetail.agent_emails;
 
     cy.route({

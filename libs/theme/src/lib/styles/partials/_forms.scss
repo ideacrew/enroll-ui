@@ -16,15 +16,42 @@ input[type='text'] {
   }
 }
 
-.input-group {
-  display: inline-flex;
-  flex-direction: column;
-}
-
-.grid > .input-group {
-  display: flex;
-}
-
 .hbx-input-label {
   margin-bottom: var(--s-3);
+}
+
+.input-group {
+  label {
+    display: block;
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+.input-collection {
+  display: flex;
+
+  > * + * {
+    margin-left: var(--s0);
+  }
+}
+
+.hbx-error-message {
+  display: none;
+  margin-top: var(--s-3);
+  color: var(--red-060);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.form-group.ng-invalid,
+.input-group.ng-invalid {
+  border-left: 4px solid var(--red-060);
+  padding-left: var(--s-2);
+
+  .hbx-error-message {
+    display: block;
+  }
 }

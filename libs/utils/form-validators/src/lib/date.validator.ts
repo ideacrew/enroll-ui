@@ -2,8 +2,8 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 
 export function validDate(control: FormGroup): ValidationErrors | null {
   const day = control.get('day');
-  const month = control.get('day');
-  const year = control.get('day');
+  const month = control.get('month');
+  const year = control.get('year');
 
   const date = {
     day: day.value,
@@ -13,9 +13,7 @@ export function validDate(control: FormGroup): ValidationErrors | null {
 
   const futureDate = isDateInFuture(date);
 
-  return {
-    futureDate,
-  };
+  return futureDate ? { futureDate: true } : null;
 }
 
 export function isDateInFuture(incomingDate: {
@@ -31,9 +29,6 @@ export function isDateInFuture(incomingDate: {
     parseInt(month, 10) - 1,
     parseInt(day, 10)
   );
-
-  // console.log('dateObj', dateObj, dateObj.getTime());
-  // console.log('today', today, today.getTime());
 
   return today.getTime() < dateObj.getTime();
 }

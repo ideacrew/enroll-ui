@@ -55,9 +55,23 @@ export class AgencyStaffDetailComponent {
         lastName: [lastName, [Validators.required]],
         dob: this.fb.group(
           {
-            year: [dob.editing.year, Validators.required],
-            month: [dob.editing.month, Validators.required],
-            day: [dob.editing.day, Validators.required],
+            year: [
+              dob.editing.year,
+              [
+                Validators.required,
+                Validators.min(1900),
+                Validators.max(new Date().getFullYear()),
+              ],
+            ],
+            month: [
+              dob.editing.month,
+
+              [Validators.required, Validators.min(1), Validators.max(12)],
+            ],
+            day: [
+              dob.editing.day,
+              [Validators.required, Validators.min(1), Validators.max(31)],
+            ],
           },
           { validators: validDate }
         ),
@@ -66,7 +80,7 @@ export class AgencyStaffDetailComponent {
       const emailFormArray = this.createEmailArray(email);
 
       this.contactForm = this.fb.group({
-        emails: this.createEmailArray(email),
+        emails: emailFormArray,
       });
     })
   );
@@ -180,5 +194,22 @@ export class AgencyStaffDetailComponent {
 
   isValidEmail(index: number): boolean {
     return this.contactEmails.at(index).valid;
+  }
+
+  getDateError(errorCode: string): boolean {
+    return this.demographicsForm.get('dob').hasError(errorCode);
+  }
+
+  validDemographicsForm(): boolean {
+    return this.demographicsForm.valid && this.demographicsChanged() === true;
+  }
+
+  validDateControl(controlName: string): boolean {
+    const formControl = this.demographicsForm.get('dob').get(controlName);
+
+    return (
+      formControl.hasError('max') === false &&
+      formControl.hasError('required') === false
+    );
   }
 }

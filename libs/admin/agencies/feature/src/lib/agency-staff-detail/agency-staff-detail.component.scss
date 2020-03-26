@@ -74,20 +74,8 @@ section {
   align-items: center;
 }
 
-.demographic-form > * + * {
-  margin-left: 4rem;
-}
-
 .dob-input {
-  max-width: 6ch;
-}
-
-.dob-group {
-  display: inline-flex;
-
-  > * + * {
-    margin-left: var(--s0);
-  }
+  max-width: 5ch;
 }
 
 .button-group {
@@ -97,24 +85,21 @@ section {
 .email-array,
 .demographic-form {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: var(--s0);
 }
 
-.hbx-error-message {
-  display: none;
-  margin-top: var(--s-3);
-  color: var(--red-060);
-  font-weight: 600;
-  font-size: 0.75rem;
+.demographic-form {
+  grid-template-columns: 1fr 1fr max-content;
 }
 
-.dob-group.ng-invalid,
-.email-group.ng-invalid {
-  border-left: 4px solid var(--red-060);
-  padding-left: var(--s-2);
+.email-array {
+  grid-template-columns: repeat(3, 1fr);
+}
 
-  .hbx-error-message {
-    display: block;
+.year-group {
+  width: 8ch;
+
+  .dob-input {
+    max-width: 8ch;
   }
 }

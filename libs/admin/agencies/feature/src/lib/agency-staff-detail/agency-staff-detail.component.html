@@ -34,7 +34,7 @@
             </button>
             <button
               id="save-demographics-button"
-              [disabled]="demographicsChanged() === false"
+              [disabled]="validDemographicsForm() === false"
               type="button"
               class="hbx-button large outline"
               (click)="updateDemographics()"
@@ -169,7 +169,12 @@
 
 <ng-template #editModeDemographics>
   <form [formGroup]="demographicsForm" class="demographic-form">
-    <div class="input-group">
+    <div
+      class="input-group text-input-group"
+      [class.ng-invalid]="
+        demographicsForm.get('firstName').hasError('required')
+      "
+    >
       <label class="hbx-input-label" for="first-name">
         First name
       </label>
@@ -179,8 +184,16 @@
         id="first-name"
         formControlName="firstName"
       />
+      <div class="hbx-error-message">
+        <div *ngIf="demographicsForm.get('firstName').hasError('required')">
+          <span class="visually-hidden">Error:</span> First name is required
+        </div>
+      </div>
     </div>
-    <div class="input-group">
+    <div
+      class="input-group text-input-group"
+      [class.ng-invalid]="demographicsForm.get('lastName').hasError('required')"
+    >
       <label class="hbx-input-label" for="last-name">
         Last name
       </label>
@@ -190,46 +203,70 @@
         id="last-name"
         formControlName="lastName"
       />
+      <div class="hbx-error-message">
+        <div *ngIf="demographicsForm.get('lastName').hasError('required')">
+          <span class="visually-hidden">Error:</span> Last name is required
+        </div>
+      </div>
     </div>
-    <div formGroupName="dob" class="dob-group">
-      <div class="input-group">
-        <label class="hbx-input-label" for="dob-month">
-          Month
-        </label>
-        <input
-          class="dob-input"
-          type="text"
-          inputmode="numeric"
-          name="dob-month"
-          id="dob-month"
-          formControlName="month"
-        />
+
+    <div formGroupName="dob" class="dob-form-group form-group">
+      <div class="dob-group input-collection">
+        <div class="input-group">
+          <label class="hbx-input-label" for="dob-month">
+            Month
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-month"
+            id="dob-month"
+            formControlName="month"
+          />
+        </div>
+        <div class="input-group">
+          <label class="hbx-input-label" for="dob-day">
+            Day
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-day"
+            id="dob-day"
+            formControlName="day"
+          />
+        </div>
+        <div class="input-group year-group">
+          <label class="hbx-input-label" for="dob-year">
+            Year
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-year"
+            id="dob-year"
+            formControlName="year"
+          />
+        </div>
       </div>
-      <div class="input-group">
-        <label class="hbx-input-label" for="dob-day">
-          Day
-        </label>
-        <input
-          class="dob-input"
-          type="text"
-          inputmode="numeric"
-          name="dob-day"
-          id="dob-day"
-          formControlName="day"
-        />
-      </div>
-      <div class="input-group">
-        <label class="hbx-input-label" for="dob-year">
-          Year
-        </label>
-        <input
-          class="dob-input"
-          type="text"
-          inputmode="numeric"
-          name="dob-year"
-          id="dob-year"
-          formControlName="year"
-        />
+      <div class="hbx-error-message">
+        <div *ngIf="getDateError('futureDate')">
+          <span class="visually-hidden">Error:</span> Date of birth must be in
+          the past
+        </div>
+
+        <div *ngIf="validDateControl('day') === false">
+          Please enter a valid day
+        </div>
+        <div *ngIf="validDateControl('month') === false">
+          Please enter a valid month
+        </div>
+        <div *ngIf="validDateControl('year') === false">
+          Please enter a valid year
+        </div>
       </div>
     </div>
   </form>
