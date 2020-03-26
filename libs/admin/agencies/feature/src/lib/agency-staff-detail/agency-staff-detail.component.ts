@@ -10,6 +10,7 @@ import {
   AgentEmail,
   EmailKind,
 } from '@hbx/api-interfaces';
+import { validDate } from '@hbx/utils/form-validators';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -50,13 +51,16 @@ export class AgencyStaffDetailComponent {
       const { firstName, lastName, dob, email } = detailVM.agent;
 
       this.demographicsForm = this.fb.group({
-        firstName,
-        lastName,
-        dob: this.fb.group({
-          year: dob.editing.year,
-          month: dob.editing.month,
-          day: dob.editing.day,
-        }),
+        firstName: [firstName, [Validators.required]],
+        lastName: [lastName, [Validators.required]],
+        dob: this.fb.group(
+          {
+            year: [dob.editing.year, Validators.required],
+            month: [dob.editing.month, Validators.required],
+            day: [dob.editing.day, Validators.required],
+          },
+          { validators: validDate }
+        ),
       });
 
       const emailFormArray = this.createEmailArray(email);
@@ -82,8 +86,8 @@ export class AgencyStaffDetailComponent {
     const { firstName, lastName, dob } = demographicsForm.value;
 
     const update: DemographicsUpdate = {
-      first_name: firstName,
-      last_name: lastName,
+      first_name: firstName.trim(),
+      last_name: lastName.trim(),
       dob: `${dob.year}-${dob.month}-${dob.day}`,
     };
 

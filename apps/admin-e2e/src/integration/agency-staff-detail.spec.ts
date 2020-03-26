@@ -30,7 +30,7 @@ describe('Agency Staff Detail Page', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  it('display a detailed view of the agent', () => {
+  xit('display a detailed view of the agent', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
@@ -39,7 +39,7 @@ describe('Agency Staff Detail Page', () => {
     cy.contains(`${first_name} ${last_name}`);
   });
 
-  it('should allow for termination of staff role', () => {
+  xit('should allow for termination of staff role', () => {
     cy.route('post', '**/terminate/**', {}).as('terminateRole');
 
     cy.get(
@@ -59,7 +59,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('.change-history .status-changes').contains('terminated');
   });
 
-  it('should revert change on api fail', () => {
+  xit('should revert change on api fail', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
@@ -100,7 +100,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#staff-date-of-birth').contains('Oct 9, 1981');
   });
 
-  it('should revert demographics change when api fails', () => {
+  xit('should revert demographics change when api fails', () => {
     cy.route({
       method: 'PATCH',
       url: `**/${_id}`,
@@ -115,7 +115,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#staff-name-heading').contains(`${first_name} ${last_name}`);
   });
 
-  it('should allow for changing email information', () => {
+  xit('should allow for changing email information', () => {
     cy.route('PATCH', `**/${_id}/email`, { status: 'success' }).as(
       'changeEmail'
     );
@@ -132,7 +132,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#email-display-1').contains('ted@example.com');
   });
 
-  it('should revert email change when api fails', () => {
+  xit('should revert email change when api fails', () => {
     const [firstEmail] = agentWithDetail.agent_emails;
 
     cy.route({

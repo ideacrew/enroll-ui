@@ -601,6 +601,38 @@
           "styleext": "scss"
         }
       }
+    },
+    "utils-form-validators": {
+      "projectType": "library",
+      "root": "libs/utils/form-validators",
+      "sourceRoot": "libs/utils/form-validators/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/utils/form-validators/tsconfig.lib.json",
+              "libs/utils/form-validators/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/utils/form-validators/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/utils/form-validators/jest.config.js",
+            "tsConfig": "libs/utils/form-validators/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/utils/form-validators/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

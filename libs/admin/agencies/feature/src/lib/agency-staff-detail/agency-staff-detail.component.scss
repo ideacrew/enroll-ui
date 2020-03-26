@@ -109,6 +109,7 @@ section {
   font-size: 0.75rem;
 }
 
+.dob-group.ng-invalid,
 .email-group.ng-invalid {
   border-left: 4px solid var(--red-060);
   padding-left: var(--s-2);
