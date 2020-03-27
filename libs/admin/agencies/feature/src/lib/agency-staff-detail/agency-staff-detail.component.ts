@@ -10,7 +10,7 @@ import {
   AgentEmail,
   EmailKind,
 } from '@hbx/api-interfaces';
-import { validDate } from '@hbx/utils/form-validators';
+import { futureDate, fakeDate } from '@hbx/utils/form-validators';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -73,7 +73,7 @@ export class AgencyStaffDetailComponent {
               [Validators.required, Validators.min(1), Validators.max(31)],
             ],
           },
-          { validators: validDate }
+          { validators: [futureDate, fakeDate] }
         ),
       });
 
