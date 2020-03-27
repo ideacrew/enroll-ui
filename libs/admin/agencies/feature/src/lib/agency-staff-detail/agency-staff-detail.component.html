@@ -252,10 +252,18 @@
           />
         </div>
       </div>
+      <!-- <div>
+        {{ demographicsForm.get('dob').get('year').errors | json }}
+      </div> -->
+
       <div class="hbx-error-message">
         <div *ngIf="getDateError('futureDate')">
           <span class="visually-hidden">Error:</span> Date of birth must be in
           the past
+        </div>
+        <div *ngIf="getDateError('notOldEnough')">
+          <span class="visually-hidden">Error:</span> Minimum age needs to be
+          {{ minimumAge }}
         </div>
 
         <div *ngIf="getDateError('fakeDate')">

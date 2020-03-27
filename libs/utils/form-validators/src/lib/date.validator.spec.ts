@@ -1,4 +1,4 @@
-import { isDateInFuture, isDateFake } from './date.validator';
+import { isDateInFuture, isDateFake, isAgeOldEnough } from './date.validator';
 
 describe('validating dates', () => {
   describe('check to see if date is in the future', () => {
@@ -63,6 +63,55 @@ describe('validating dates', () => {
       };
 
       expect(isDateFake(date1)).toBeTruthy();
+    });
+  });
+
+  describe('check to see if a date is an appropriate age', () => {
+    it('should return true when Jan 1, 2004 is passed in and the minimum age is 16', () => {
+      const date1 = {
+        month: '1',
+        day: '1',
+        year: '2004',
+      };
+
+      const today = new Date(2020, 2, 27);
+
+      expect(isAgeOldEnough(16, date1, today)).toBeTruthy();
+    });
+
+    it('should return true when Jan 1, 2004 is passed in and the minimum age is 16', () => {
+      const date1 = {
+        month: '1',
+        day: '1',
+        year: '2004',
+      };
+
+      const today = new Date(2020, 0, 1);
+
+      expect(isAgeOldEnough(16, date1, today)).toBeTruthy();
+    });
+
+    it('should return false when Feb 28, 2010 is passed in and the minimum age is 16', () => {
+      const date1 = {
+        month: '2',
+        day: '28',
+        year: '2010',
+      };
+
+      const today = new Date(2020, 2, 27);
+
+      expect(isAgeOldEnough(16, date1, today)).toBeFalsy();
+    });
+    it('should return true when Aug 30, 2007 is passed in and the minimum age is 16', () => {
+      const date1 = {
+        month: '8',
+        day: '30',
+        year: '2007',
+      };
+
+      const today = new Date(2027, 2, 27);
+
+      expect(isAgeOldEnough(19, date1, today)).toBeTruthy();
     });
   });
 });

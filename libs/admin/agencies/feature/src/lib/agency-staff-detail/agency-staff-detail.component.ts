@@ -10,7 +10,7 @@ import {
   AgentEmail,
   EmailKind,
 } from '@hbx/api-interfaces';
-import { futureDate, fakeDate } from '@hbx/utils/form-validators';
+import { futureDate, fakeDate, minimumAge } from '@hbx/utils/form-validators';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -35,6 +35,8 @@ export class AgencyStaffDetailComponent {
   contactForm: FormGroup;
 
   agencyStaff: AgencyStaffDetailVM;
+
+  minimumAge = 16;
 
   detailVM$: Observable<DetailVM> = combineLatest([
     this.agencyStaffFacade.loaded$,
@@ -73,7 +75,7 @@ export class AgencyStaffDetailComponent {
               [Validators.required, Validators.min(1), Validators.max(31)],
             ],
           },
-          { validators: [futureDate, fakeDate] }
+          { validators: [futureDate, fakeDate, minimumAge(this.minimumAge)] }
         ),
       });
 
@@ -208,6 +210,7 @@ export class AgencyStaffDetailComponent {
     const formControl = this.demographicsForm.get('dob').get(controlName);
 
     return (
+      formControl.hasError('min') === false &&
       formControl.hasError('max') === false &&
       formControl.hasError('required') === false
     );
