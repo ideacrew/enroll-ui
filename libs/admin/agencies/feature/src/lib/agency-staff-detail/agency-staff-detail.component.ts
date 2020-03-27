@@ -36,7 +36,7 @@ export class AgencyStaffDetailComponent {
 
   agencyStaff: AgencyStaffDetailVM;
 
-  minimumAge = 16;
+  minimumAge = 18;
 
   detailVM$: Observable<DetailVM> = combineLatest([
     this.agencyStaffFacade.loaded$,
