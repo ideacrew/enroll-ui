@@ -16,6 +16,8 @@ describe('Agency Staff Detail Page', () => {
   const agentWithDetail = mockOneFullAgencyStaff(agent);
   const { first_name, last_name, _id } = agentWithDetail;
 
+  agentWithDetail.has_active_enrollment = true;
+
   beforeEach(() => {
     cy.server();
     cy.route('**/agencies', [agency]).as('agencies');
@@ -94,6 +96,7 @@ describe('Agency Staff Detail Page', () => {
     };
 
     cy.get('#edit-demographics-button').click();
+    cy.get('#has-active-enrollment').should('exist');
     cy.get('#save-demographics-button').should('be.disabled');
     cy.get('#first-name')
       .clear()

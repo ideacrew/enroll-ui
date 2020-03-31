@@ -12,6 +12,7 @@ export interface AgencyStaffWithDetail extends AgencyStaff {
   agent_emails: AgentEmail[];
   dob: string; // will be converted to date object
   ssn: string;
+  has_active_enrollment: boolean;
 }
 
 export interface AgencyRole {

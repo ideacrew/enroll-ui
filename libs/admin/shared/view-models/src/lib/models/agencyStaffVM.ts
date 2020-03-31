@@ -18,6 +18,5 @@ export interface AgencyStaffDetailVM extends AgencyStaffVM {
   };
   email: EmailVM[];
   ssn: string;
+  activeEnrollment: boolean;
 }
-
-

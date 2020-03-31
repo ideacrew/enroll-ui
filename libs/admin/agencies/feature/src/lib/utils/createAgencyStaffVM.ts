@@ -91,6 +91,7 @@ export function createSingleAgencyStaffDetailVM(
     agent_emails,
     dob,
     ssn,
+    has_active_enrollment,
   } = staff;
 
   // Filter out roles where the agency staff role is held by the primary agent
@@ -172,6 +173,7 @@ export function createSingleAgencyStaffDetailVM(
     dob: createDobVM(dob),
     email,
     ssn,
+    activeEnrollment: has_active_enrollment,
   };
 
   return agencyStaffVM;
@@ -245,7 +247,9 @@ export function isStaffWithDetail(
   return (staff as AgencyStaffWithDetail).agent_emails !== undefined;
 }
 
-export function createDobVM(dob: string): { editing: DateOfBirth; display: Date } {
+export function createDobVM(
+  dob: string
+): { editing: DateOfBirth; display: Date } {
   const dateOfBirth: DateOfBirth = getDateOfBirth(dob);
   const displayDob: Date = createDateFromDob(dateOfBirth);
 
