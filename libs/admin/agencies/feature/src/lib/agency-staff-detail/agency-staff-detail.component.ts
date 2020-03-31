@@ -15,6 +15,8 @@ import { futureDate, fakeDate, minimumAge } from '@hbx/utils/form-validators';
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
 
+const oldestAllowableYear = new Date().getFullYear() - 100;
+
 interface DetailVM {
   agent: AgencyStaffDetailVM;
   loaded: boolean;
@@ -61,13 +63,12 @@ export class AgencyStaffDetailComponent {
               dob.editing.year,
               [
                 Validators.required,
-                Validators.min(1900),
+                Validators.min(oldestAllowableYear),
                 Validators.max(new Date().getFullYear()),
               ],
             ],
             month: [
               dob.editing.month,
-
               [Validators.required, Validators.min(1), Validators.max(12)],
             ],
             day: [
