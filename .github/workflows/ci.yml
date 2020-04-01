@@ -9,9 +9,6 @@ env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-acti
   STATUS: failing
   SHA: ${{ github.sha }}
   BRANCH: ${{ github.ref }}
-  YELLR_KEY: ${{ secrets.YELLR_KEY }}
-  YELLR_URL: ${{ secrets.YELLR_URL }}
-  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
 
 jobs:
   build:
@@ -145,4 +142,7 @@ jobs:
       - name: Echo Results
         env:
           STATUS: passing
+          YELLR_KEY: ${{ secrets.YELLR_KEY }}
+          YELLR_URL: ${{ secrets.YELLR_URL }}
+          NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
         run: ./post_build_results_ga.sh
