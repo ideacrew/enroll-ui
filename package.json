@@ -71,10 +71,10 @@
     "@nrwl/cypress": "9.2.1",
     "@nrwl/jest": "9.2.1",
     "@nrwl/workspace": "9.2.1",
-    "@types/faker": "^4.1.10",
+    "@types/faker": "^4.1.11",
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.1.2",
+    "codelyzer": "^5.2.2",
     "core-js": "^3.6.4",
     "cypress": "^4.3.0",
     "dotenv": "6.2.0",
@@ -90,7 +90,7 @@
     "stylelint-prettier": "^1.1.2",
     "ts-jest": "24.0.0",
     "ts-node": "~7.0.0",
-    "tslint": "~6.1.0",
+    "tslint": "^6.1.1",
     "typescript": "~3.8.3"
   },
   "husky": {
