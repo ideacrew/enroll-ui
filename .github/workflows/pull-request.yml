@@ -1,17 +1,17 @@
-name: Test, Lint, Build, e2e on Master
+name: Test, Lint, Build, e2e on Pull Request to Master
 
 on:
-  push:
+  pull_request:
     branches:
       - master
 
-env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
-  STATUS: failing
-  SHA: ${{ github.sha }}
-  BRANCH: ${{ github.ref }}
-  YELLR_KEY: ${{ secrets.YELLR_KEY }}
-  YELLR_URL: ${{ secrets.YELLR_URL }}
-  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+# env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
+#   STATUS: failing
+#   SHA: ${{ github.sha }}
+#   BRANCH: ${{ github.ref }}
+#   YELLR_KEY: ${{ secrets.YELLR_KEY }}
+#   YELLR_URL: ${{ secrets.YELLR_URL }}
+#   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
 
 jobs:
   build:
@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -38,18 +36,16 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Application
-        run: npm run affected:build -- --base=origin/master~1 --head=origin/master
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
+        run: npm run affected:build -- --base=origin/master --head=origin/master
+      # - name: The job has failed
+      #   if: failure()
+      #   run: ./post_build_results_ga.sh
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -69,19 +65,16 @@ jobs:
       - name: Stylelint
         run: npm run stylelint:ci
       - name: Lint
-        run: npm run affected:lint -- --base=origin/master~1 --head=origin/master --parallel
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
+        run: npm run affected:lint -- --base=origin/master --head=origin/master --parallel
+      # - name: The job has failed
+      #   if: failure()
+      #   run: ./post_build_results_ga.sh
   test:
     name: Test
     runs-on: ubuntu-latest
-    # needs: lint
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -100,18 +93,15 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run affected:test -- --base=origin/master~1 --head=origin/master --parallel --bail=1
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
+      # - name: The job has failed
+      #   if: failure()
+      #   run: ./post_build_results_ga.sh
   e2e:
     name: e2e
     runs-on: ubuntu-latest
-    # needs: test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -132,17 +122,17 @@ jobs:
         run: npm i cypress@latest --save-dev
       - name: Test
         run: npm run affected:e2e -- --base=origin/master~1 --head=origin/master --headless --parallel
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
-  post_results:
-    name: Post Results
-    runs-on: ubuntu-latest
-    needs: [test, lint, e2e, build]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Echo Results
-        env:
-          STATUS: passing
-        run: ./post_build_results_ga.sh
+      # - name: The job has failed
+      #   if: failure()
+      #   run: ./post_build_results_ga.sh
+  # post_results:
+  #   name: Post Results
+  #   runs-on: ubuntu-latest
+  #   needs: [test, lint, e2e, build]
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Echo Results
+  #       env:
+  #         STATUS: passing
+  #       run: ./post_build_results_ga.sh
