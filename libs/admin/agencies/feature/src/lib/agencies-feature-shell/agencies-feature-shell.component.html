@@ -13,7 +13,11 @@
         >General Agencies</a
       >
     </li>
-    <li routerLinkActive="active-link" class="page-navigation-list-item">
+    <li
+      *ngIf="permissionsService.checkPermission(HbxPermissions.ViewAgencyStaff)"
+      routerLinkActive="active-link"
+      class="page-navigation-list-item"
+    >
       <a class="hbx-link" routerLink="agency-staff">Agency Staff</a>
     </li>
   </ul>

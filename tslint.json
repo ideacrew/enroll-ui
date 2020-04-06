@@ -64,7 +64,8 @@
             "onlyDependOnLibsWithTags": [
               "type:data-access",
               "type:ui",
-              "type:util"
+              "type:util",
+              "type:store"
             ]
           },
           {
@@ -74,6 +75,10 @@
           {
             "sourceTag": "type:data-access",
             "onlyDependOnLibsWithTags": ["type:util"]
+          },
+          {
+            "sourceTag": "type:store",
+            "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
           },
           {
             "sourceTag": "scope:admin",

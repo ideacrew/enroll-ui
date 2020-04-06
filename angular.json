@@ -633,6 +633,134 @@
           "style": "scss"
         }
       }
+    },
+    "user-data-access": {
+      "projectType": "library",
+      "root": "libs/user/data-access",
+      "sourceRoot": "libs/user/data-access/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user/data-access/tsconfig.lib.json",
+              "libs/user/data-access/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user/data-access/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user/data-access/jest.config.js",
+            "tsConfig": "libs/user/data-access/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/user/data-access/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "user-store": {
+      "projectType": "library",
+      "root": "libs/user/store",
+      "sourceRoot": "libs/user/store/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user/store/tsconfig.lib.json",
+              "libs/user/store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user/store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user/store/jest.config.js",
+            "tsConfig": "libs/user/store/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/user/store/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "user-utils": {
+      "projectType": "library",
+      "root": "libs/user/utils",
+      "sourceRoot": "libs/user/utils/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user/utils/tsconfig.lib.json",
+              "libs/user/utils/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user/utils/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user/utils/jest.config.js",
+            "tsConfig": "libs/user/utils/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/user/utils/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "user-permissions": {
+      "projectType": "library",
+      "root": "libs/user/permissions",
+      "sourceRoot": "libs/user/permissions/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user/permissions/tsconfig.lib.json",
+              "libs/user/permissions/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user/permissions/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user/permissions/jest.config.js",
+            "tsConfig": "libs/user/permissions/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/user/permissions/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

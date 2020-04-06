@@ -43,7 +43,11 @@
       "@hbx/utils/data-transformation": [
         "libs/utils/data-transformation/src/index.ts"
       ],
-      "@hbx/utils/form-validators": ["libs/utils/form-validators/src/index.ts"]
+      "@hbx/utils/form-validators": ["libs/utils/form-validators/src/index.ts"],
+      "@hbx/user/data-access": ["libs/user/data-access/src/index.ts"],
+      "@hbx/user/store": ["libs/user/store/src/index.ts"],
+      "@hbx/user/utils": ["libs/user/utils/src/index.ts"],
+      "@hbx/user/permissions": ["libs/user/permissions/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"],

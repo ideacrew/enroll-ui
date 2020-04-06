@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
+import { PermissionsService, HbxPermissions } from '@hbx/user/permissions';
+
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { AgenciesFacade } from '../state/agencies/agencies.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -14,10 +16,13 @@ import { PrimaryAgentsFacade } from '../state/primary-agents/primary-agents.faca
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgenciesFeatureShellComponent implements OnInit {
+  HbxPermissions = HbxPermissions;
+
   constructor(
     private agencyStaffFacade: AgencyStaffFacade,
     private agenciesFacade: AgenciesFacade,
-    private primaryAgentsFacade: PrimaryAgentsFacade
+    private primaryAgentsFacade: PrimaryAgentsFacade,
+    public permissionsService: PermissionsService
   ) {}
 
   ngOnInit() {

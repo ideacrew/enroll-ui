@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  CI: true
+
 # env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
 #   STATUS: failing
 #   SHA: ${{ github.sha }}
@@ -20,6 +23,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: |
+          git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -36,7 +44,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Application
-        run: npm run affected:build -- --base=origin/master --head=origin/master
+        run: npm run affected:build -- --base=origin/master --parallel
       # - name: The job has failed
       #   if: failure()
       #   run: ./post_build_results_ga.sh
@@ -46,6 +54,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: |
+          git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -65,7 +78,7 @@ jobs:
       - name: Stylelint
         run: npm run stylelint:ci
       - name: Lint
-        run: npm run affected:lint -- --base=origin/master --head=origin/master --parallel
+        run: npm run affected:lint -- --base=origin/master --parallel
       # - name: The job has failed
       #   if: failure()
       #   run: ./post_build_results_ga.sh
@@ -75,6 +88,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: |
+          git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -92,7 +110,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
-        run: npm run affected:test -- --base=origin/master~1 --head=origin/master --parallel --bail=1
+        run: npm run affected:test -- --base=origin/master~1 --parallel --bail=1
       # - name: The job has failed
       #   if: failure()
       #   run: ./post_build_results_ga.sh
@@ -102,6 +120,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: |
+          git fetch --no-tags --prune --depth=5 origin master
       - name: Use Node.js v12
         uses: actions/setup-node@v1.1.0
         with:
@@ -121,10 +144,10 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit == 'true'
         run: npm i cypress@latest --save-dev
       - name: Test
-        run: npm run affected:e2e -- --base=origin/master~1 --head=origin/master --headless --parallel
-      # - name: The job has failed
-      #   if: failure()
-      #   run: ./post_build_results_ga.sh
+        run: npm run affected:e2e -- --base=origin/master~1 --headless --parallel
+  # - name: The job has failed
+  #   if: failure()
+  #   run: ./post_build_results_ga.sh
   # post_results:
   #   name: Post Results
   #   runs-on: ubuntu-latest

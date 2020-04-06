@@ -17,6 +17,7 @@ import { RoleChangeRequest } from '@hbx/api-interfaces';
 })
 export class StaffContainerComponent {
   @Input() staff: AgencyStaffVM;
+  @Input() canManage: boolean;
 
   @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
     RoleChangeRequest

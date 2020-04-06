@@ -57,8 +57,12 @@
     <ng-container
       *ngIf="vm.agencyStaff && vm.agencyStaff.length > 0; else noResults"
       ><hbx-staff-container
-        *ngFor="let staff of vm.agencyStaff"
+        id="staff-container-{{ i + 1 }}"
+        *ngFor="let staff of vm.agencyStaff; index as i"
         [staff]="staff"
+        [canManage]="
+          permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+        "
         (terminateRole)="terminateAgencyRole($event)"
       ></hbx-staff-container
     ></ng-container>

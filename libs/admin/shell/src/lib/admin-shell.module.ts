@@ -9,8 +9,11 @@ import {
   DefaultRouterStateSerializer,
 } from '@ngrx/router-store';
 import { NxModule } from '@nrwl/angular';
-import { AdminShellComponent } from './admin-shell/admin-shell.component';
+
 import { authInterceptorInit } from '@hbx/auth';
+import { UserStoreModule } from '@hbx/user/store';
+
+import { AdminShellComponent } from './admin-shell/admin-shell.component';
 
 @NgModule({
   imports: [
@@ -51,6 +54,7 @@ import { authInterceptorInit } from '@hbx/auth';
     StoreRouterConnectingModule.forRoot({
       serializer: DefaultRouterStateSerializer,
     }),
+    UserStoreModule,
   ],
   providers: [authInterceptorInit],
   declarations: [AdminShellComponent],

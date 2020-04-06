@@ -59,6 +59,18 @@
     },
     "utils-form-validators": {
       "tags": ["scope:shared", "type:util"]
+    },
+    "user-data-access": {
+      "tags": ["scope:shared", "type:data-access"]
+    },
+    "user-store": {
+      "tags": ["scope:shared", "type:store"]
+    },
+    "user-utils": {
+      "tags": ["scope:shared", "type:util"]
+    },
+    "user-permissions": {
+      "tags": ["type:util", "scope:shared"]
     }
   },
   "tasksRunnerOptions": {

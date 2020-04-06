@@ -11,6 +11,7 @@ import {
   EmailKind,
 } from '@hbx/api-interfaces';
 import { futureDate, fakeDate, minimumAge } from '@hbx/utils/form-validators';
+import { PermissionsService, HbxPermissions } from '@hbx/user/permissions';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
@@ -28,6 +29,7 @@ interface DetailVM {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgencyStaffDetailComponent {
+  HbxPermissions = HbxPermissions;
   editingDemographics = false;
   editingContactInfo = false;
 
@@ -90,7 +92,8 @@ export class AgencyStaffDetailComponent {
 
   constructor(
     private agencyStaffFacade: AgencyStaffFacade,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public permissionsService: PermissionsService
   ) {}
 
   terminateAgencyRole(request: RoleChangeRequest): void {

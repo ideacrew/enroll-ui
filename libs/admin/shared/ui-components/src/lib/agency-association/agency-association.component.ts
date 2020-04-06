@@ -26,6 +26,7 @@ export class AgencyAssociationComponent {
 
   @Input() role: AgencyRoleVM;
   @Input() agencyStaff: AgencyStaffVM | AgencyStaffDetailVM;
+  @Input() canManage: boolean;
 
   @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
     RoleChangeRequest

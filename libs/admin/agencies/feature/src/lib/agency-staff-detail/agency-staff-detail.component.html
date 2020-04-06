@@ -11,7 +11,12 @@
     <section class="demographics-section">
       <div class="heading-and-action">
         <h2 class="hbx-heading-l heading-light">Staff Demographics</h2>
-        <div class="action-buttons">
+        <div
+          class="action-buttons"
+          *ngIf="
+            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+          "
+        >
           <button
             id="edit-demographics-button"
             *ngIf="editingDemographics === false"
@@ -70,7 +75,12 @@
     <section>
       <div class="heading-and-action">
         <h2 class="hbx-heading-l heading-light">Staff Contact Information</h2>
-        <div class="action-buttons">
+        <div
+          class="action-buttons"
+          *ngIf="
+            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+          "
+        >
           <button
             id="edit-email-button"
             *ngIf="editingContactInfo === false"
@@ -129,6 +139,9 @@
         <hbx-agency-association
           *ngFor="let role of vm.agent.agencyRoles"
           [role]="role"
+          [canManage]="
+            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+          "
           [agencyStaff]="vm.agent"
           (terminateRole)="terminateAgencyRole($event)"
         >

@@ -13,7 +13,7 @@
       {{ role.currentState }}
     </div>
     <button
-      *ngIf="role.currentState === 'active'"
+      *ngIf="role.currentState === 'active' && canManage"
       type="button"
       class="hbx-button terminate-action"
       (click)="editing = true"

@@ -11,6 +11,7 @@
     *ngFor="let role of staff.agencyRoles"
     [role]="role"
     [agencyStaff]="staff"
+    [canManage]="canManage"
     (terminateRole)="terminateRole.emit($event)"
   >
   </hbx-agency-association>

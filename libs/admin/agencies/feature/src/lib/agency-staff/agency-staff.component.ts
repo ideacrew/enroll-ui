@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import {
   map,
@@ -10,13 +11,13 @@ import {
 
 import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
 import { RoleChangeRequest } from '@hbx/api-interfaces';
+import { PermissionsService, HbxPermissions } from '@hbx/user/permissions';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import { searchAgencyStaff } from '../utils';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
 import { AgenciesFacade } from '../state/agencies/agencies.facade';
 import { PrimaryAgentsFacade } from '../state/primary-agents/primary-agents.facade';
-import { ActivatedRoute, Params } from '@angular/router';
 import { filterRoleStatus } from '../utils/filterRoleStatus';
 
 interface AgencyStaffListVM {
@@ -31,6 +32,7 @@ interface AgencyStaffListVM {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgencyStaffComponent implements OnInit {
+  HbxPermissions = HbxPermissions;
   globalSearch: FormControl = new FormControl();
 
   globalSearch$: Observable<string> = this.globalSearch.valueChanges.pipe(
@@ -100,6 +102,7 @@ export class AgencyStaffComponent implements OnInit {
     private agencyStaffFacade: AgencyStaffFacade,
     private agenciesFacade: AgenciesFacade,
     private primaryStaffFacade: PrimaryAgentsFacade,
+    public permissionsService: PermissionsService,
     private route: ActivatedRoute
   ) {}
 

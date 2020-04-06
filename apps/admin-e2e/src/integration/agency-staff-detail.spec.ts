@@ -4,8 +4,18 @@ import {
   mockAgencyWithStaff,
   mockOneFullAgencyStaff,
 } from '@hbx/utils/testing';
+import { HbxPermissions, HbxUser } from '@hbx/api-interfaces';
+
+const user: HbxUser = {
+  account_name: 'admin@dc.gov',
+};
 
 describe('Agency Staff Detail Page', () => {
+  const permissions: HbxPermissions = {
+    view_agency_staff: true,
+    manage_agency_staff: true,
+  };
+
   const agencyProfileId = faker.random.uuid();
   const { agency, agencyStaff, primaryAgent } = mockAgencyWithStaff(
     agencyProfileId
@@ -20,6 +30,7 @@ describe('Agency Staff Detail Page', () => {
 
   beforeEach(() => {
     cy.server();
+    cy.route('**/users/current', { ...user, ...permissions }).as('currentUser');
     cy.route('**/agencies', [agency]).as('agencies');
     cy.route('**/agencies/agency_staff', agencyStaff).as('agencyStaff');
     cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
@@ -32,16 +43,13 @@ describe('Agency Staff Detail Page', () => {
     cy.visit(`/agencies/agency-staff/${_id}`);
   });
 
-  it('display a detailed view of the agent', () => {
+  it('should allow for termination of staff role', () => {
     cy.wait('@agencies');
     cy.wait('@agencyStaff');
     cy.wait('@primaryAgents');
     cy.wait('@agentDetail');
 
     cy.contains(`${first_name} ${last_name}`);
-  });
-
-  it('should allow for termination of staff role', () => {
     cy.route('post', '**/terminate/**', {}).as('terminateRole');
 
     cy.get(
@@ -184,5 +192,47 @@ describe('Agency Staff Detail Page', () => {
     cy.wait('@changeEmail');
 
     cy.get('#email-display-1').contains(firstEmail.address);
+  });
+});
+
+describe('Agency Staff Detail Page with manage permissions set to false', () => {
+  const permissions: HbxPermissions = {
+    view_agency_staff: true,
+    manage_agency_staff: false,
+  };
+
+  const agencyProfileId = faker.random.uuid();
+  const { agency, agencyStaff, primaryAgent } = mockAgencyWithStaff(
+    agencyProfileId
+  );
+
+  const [primAgent, agent] = agencyStaff;
+
+  const agentWithDetail = mockOneFullAgencyStaff(agent);
+  const { first_name, last_name, _id } = agentWithDetail;
+
+  agentWithDetail.has_active_enrollment = true;
+
+  beforeEach(() => {
+    cy.server();
+    cy.route('**/users/current', { ...user, ...permissions }).as('currentUser');
+    cy.route('**/agencies', [agency]).as('agencies');
+    cy.route('**/agencies/agency_staff', agencyStaff).as('agencyStaff');
+    cy.route('**/agencies/primary_agency_staff', [primaryAgent]).as(
+      'primaryAgents'
+    );
+
+    cy.route(`**/agencies/agency_staff/${_id}`, agentWithDetail).as(
+      'agentDetail'
+    );
+    cy.visit(`/agencies/agency-staff/${_id}`);
+  });
+
+  it(`should not allow terminating a staff if permissions don't allow it`, () => {
+    cy.get(
+      'hbx-agency-association:first .state-and-action > .hbx-button'
+    ).should('not.exist');
+    cy.get('#edit-demographics-button').should('not.exist');
+    cy.get('#edit-email-button').should('not.exist');
   });
 });
