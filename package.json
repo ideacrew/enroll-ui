@@ -29,7 +29,6 @@
     "format:check": "nx format:check",
     "update": "ng update @nrwl/workspace",
     "update:check": "ng update",
-    "update:prettier": "npm i prettier@latest --save-dev && npx prettier --write \"**/*.*\"",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
