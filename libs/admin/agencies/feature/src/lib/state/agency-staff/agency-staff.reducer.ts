@@ -69,10 +69,13 @@ const agencyStaffReducer = createReducer(
   on(AgencyStaffActions.loadAgencyStaffSuccess, (state, { agencyStaff }) =>
     agencyStaffAdapter.setAll(agencyStaff, { ...state, loaded: true })
   ),
-  on(AgencyStaffActions.loadAgencyStaffFailure, (state, { errorResponse: e }) => ({
-    ...state,
-    error: e,
-  })),
+  on(
+    AgencyStaffActions.loadAgencyStaffFailure,
+    (state, { errorResponse: e }) => ({
+      ...state,
+      error: e,
+    })
+  ),
   on(AgencyStaffActions.terminateAgencyRole, (state, { request }) => {
     const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
       state.entities,
@@ -128,10 +131,13 @@ const agencyStaffReducer = createReducer(
     AgencyStaffActions.loadAgencyStaffDetailSuccess,
     (state, { agencyStaff }) => ({ ...state, agencyStaffDetail: agencyStaff })
   ),
-  on(AgencyStaffActions.loadAgencyStaffDetailFailure, (state, { errorResponse: e }) => ({
-    ...state,
-    error: e,
-  })),
+  on(
+    AgencyStaffActions.loadAgencyStaffDetailFailure,
+    (state, { errorResponse: e }) => ({
+      ...state,
+      error: e,
+    })
+  ),
   on(AgencyStaffActions.clearCurrentlySelectedAgent, state => ({
     ...state,
     agencyStaffDetail: undefined,

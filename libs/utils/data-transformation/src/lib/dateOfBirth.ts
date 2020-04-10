@@ -24,4 +24,3 @@ export function createDateFromDob(dob: DateOfBirth): Date {
 
   return new Date(year, month - 1, day);
 }
-
