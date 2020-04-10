@@ -1,14 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { ToastsEntity } from './toasts.models';
+import { ToastRequest } from './toasts.models';
 
-export const loadToasts = createAction('[Toasts] Load Toasts');
-
-export const loadToastsSuccess = createAction(
-  '[Toasts] Load Toasts Success',
-  props<{ toasts: ToastsEntity[] }>()
+export const addToast = createAction(
+  '[Toasts] Add Toast',
+  props<{ request: ToastRequest }>()
 );
 
-export const loadToastsFailure = createAction(
-  '[Toasts] Load Toasts Failure',
-  props<{ error: any }>()
+export const dismissToast = createAction(
+  '[Toasts] Dismiss Toast',
+  props<{ toastId: number }>()
 );

@@ -36,7 +36,7 @@
     "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod/admin --delete",
     "deploy:hotfix": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-hotfix --delete",
     "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets",
-    "sanity-check": "npx stylelint \"**/*.scss\" && npm run affected:lint -- --base=origin/master --parallel && npm run affected:test -- --base=origin/master --parallel --bail=1 && npm run affected:e2e -- --base=origin/master --headless --parallel"
+    "sanity-check": "npx stylelint \"**/*.scss\" && npm run affected:lint -- --base=origin/master --parallel --maxParallel=5 && npm run affected:test -- --base=origin/master --parallel --maxParallel=5 --bail=1 && npm run affected:e2e -- --base=origin/master --headless --parallel"
   },
   "engines": {
     "node": ">=12"

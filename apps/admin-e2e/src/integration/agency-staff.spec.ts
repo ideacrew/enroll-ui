@@ -80,8 +80,8 @@ describe('Agency Staff', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
-      response: {},
-      status: 500,
+      response: { status: 'error', message: 'Person could not be found' },
+      status: 400,
     }).as('terminateRole');
 
     cy.get(
@@ -94,6 +94,7 @@ describe('Agency Staff', () => {
       '#staff-container-1 hbx-agency-association:first .state-and-action > .hbx-button.terminating'
     ).click();
     cy.wait('@terminateRole');
+    cy.get('.toast-message').contains('Person could not be found');
     cy.get(
       '#staff-container-1 hbx-agency-association:first .association-state'
     ).contains('active');

@@ -2,6 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { AuthService } from '@hbx/auth';
 import { UserFacade, loadUser } from '@hbx/user/store';
+import {
+  ToastsFacade,
+  dismissToast,
+  addToast,
+  ToastType,
+} from '@hbx/shared/notifications/toasts';
 
 @Component({
   selector: 'hbx-admin-shell',
@@ -12,7 +18,8 @@ import { UserFacade, loadUser } from '@hbx/user/store';
 export class AdminShellComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private userFacade: UserFacade
+    private userFacade: UserFacade,
+    public toastsFacade: ToastsFacade
   ) {}
 
   ngOnInit() {
@@ -42,5 +49,9 @@ export class AdminShellComponent implements OnInit {
     }
 
     return null;
+  }
+
+  dismissToast(toastId: number): void {
+    this.toastsFacade.dispatch(dismissToast({ toastId }));
   }
 }

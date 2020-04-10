@@ -6,7 +6,11 @@ import {
   Update,
 } from '@ngrx/entity';
 
-import { AgencyStaff, AgencyStaffWithDetail } from '@hbx/api-interfaces';
+import {
+  AgencyStaff,
+  AgencyStaffWithDetail,
+  ApiError,
+} from '@hbx/api-interfaces';
 
 import { AgencyStaffEntity } from './agency-staff.models';
 import * as AgencyStaffActions from './agency-staff.actions';
@@ -35,7 +39,7 @@ function sortStaff(a: AgencyStaffEntity, b: AgencyStaffEntity): number {
 export interface State extends EntityState<AgencyStaffEntity> {
   selectedId?: string | number; // which AgencyStaff record has been selected
   loaded: boolean; // has the AgencyStaff list been loaded
-  error?: string | null; // last none error (if any)
+  error?: ApiError; // last none e (if any)
   agencyStaffDetail?: AgencyStaffWithDetail;
 }
 
@@ -65,9 +69,9 @@ const agencyStaffReducer = createReducer(
   on(AgencyStaffActions.loadAgencyStaffSuccess, (state, { agencyStaff }) =>
     agencyStaffAdapter.setAll(agencyStaff, { ...state, loaded: true })
   ),
-  on(AgencyStaffActions.loadAgencyStaffFailure, (state, { error }) => ({
+  on(AgencyStaffActions.loadAgencyStaffFailure, (state, { errorResponse: e }) => ({
     ...state,
-    error,
+    error: e,
   })),
   on(AgencyStaffActions.terminateAgencyRole, (state, { request }) => {
     const updatedStaff: Update<AgencyStaff> = changeAgencyRoleStatus(
@@ -124,9 +128,9 @@ const agencyStaffReducer = createReducer(
     AgencyStaffActions.loadAgencyStaffDetailSuccess,
     (state, { agencyStaff }) => ({ ...state, agencyStaffDetail: agencyStaff })
   ),
-  on(AgencyStaffActions.loadAgencyStaffDetailFailure, (state, { error }) => ({
+  on(AgencyStaffActions.loadAgencyStaffDetailFailure, (state, { errorResponse: e }) => ({
     ...state,
-    error,
+    error: e,
   })),
   on(AgencyStaffActions.clearCurrentlySelectedAgent, state => ({
     ...state,

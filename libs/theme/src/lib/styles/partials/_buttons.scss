@@ -4,10 +4,11 @@
   --background-color: var(--neutral-010);
   --border-color: transparent;
   --focus-color: var(--content-color);
+  --padding: var(--s-4) var(--s-2);
 
   line-height: 1;
   -webkit-appearance: none;
-  padding: var(--s-4) var(--s-2);
+  padding: var(--padding);
   text-transform: uppercase;
   background-color: var(--background-color);
   color: var(--content-color);
@@ -62,5 +63,38 @@
 
   &[disabled] {
     cursor: not-allowed;
+  }
+}
+
+.hbx-close-button {
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+
+  .svg-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    fill: var(--neutral-070);
+  }
+
+  &:hover .svg-icon {
+    fill: var(--neutral-100);
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 4px var(--yellow-050), inset 0 0 0 2px var(--neutral-100);
+
+    .svg-icon {
+      fill: var(--neutral-100);
+    }
   }
 }

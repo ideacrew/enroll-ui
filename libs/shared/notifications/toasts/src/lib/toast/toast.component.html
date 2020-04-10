@@ -1,1 +1,31 @@
-<p>toast works!</p>
+<div
+  class="toast-container"
+  [ngClass]="{ error: toast.type === 'error' }"
+  [@fadeAnimation]="'in'"
+>
+  <div
+    class="message-wrapper"
+    [ngClass]="{
+      'toast-error': toast.type === 'error'
+    }"
+  >
+    <div class="toast-body">
+      <h3 class="hbx-heading-s toast-heading">{{ toast.heading }}</h3>
+      <p class="toast-message">
+        {{ toast.message }}
+      </p>
+    </div>
+
+    <button class="hbx-close-button" (click)="dismissToast.emit(toast.id)">
+      <span class="visually-hidden">Close notification</span>
+      <svg
+        class="svg-icon"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <use href="ng-assets/icons/hbx-icons.svg#close"></use>
+      </svg>
+    </button>
+  </div>
+</div>

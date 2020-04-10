@@ -7,11 +7,7 @@ import {
   PrimaryAgent,
   AgencyStaffWithDetail,
 } from '@hbx/api-interfaces';
-import {
-  AgencyVM,
-  AgencyStaffVM,
-  AgencyStaffDetailVM,
-} from '@hbx/admin/shared/view-models';
+import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
 
 import {
   AGENCYSTAFF_FEATURE_KEY,

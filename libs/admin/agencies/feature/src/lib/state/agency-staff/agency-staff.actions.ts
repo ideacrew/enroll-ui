@@ -6,6 +6,7 @@ import {
   AgencyStaffWithDetail,
   DemographicsUpdate,
   AgentEmail,
+  ApiError,
 } from '@hbx/api-interfaces';
 import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
 
@@ -20,7 +21,7 @@ export const loadAgencyStaffSuccess = createAction(
 
 export const loadAgencyStaffFailure = createAction(
   '[Agency Staff] Load Agency Staff Failure',
-  props<{ error: any }>()
+  props<{ errorResponse: ApiError }>()
 );
 
 export const terminateAgencyRole = createAction(
@@ -30,7 +31,7 @@ export const terminateAgencyRole = createAction(
 
 export const terminateAgencyRoleFailure = createAction(
   '[Agency Staff List] Terminate Agency Role Failure',
-  props<{ request: RoleChangeRequest }>()
+  props<{ request: RoleChangeRequest; errorResponse: ApiError }>()
 );
 
 export const terminateAgencyRoleDetailPage = createAction(
@@ -40,7 +41,7 @@ export const terminateAgencyRoleDetailPage = createAction(
 
 export const terminateAgencyRoleDetailPageFailure = createAction(
   '[Agency Staff Detail] Terminate Agency Role Failure',
-  props<{ request: RoleChangeRequest }>()
+  props<{ request: RoleChangeRequest; errorResponse: ApiError }>()
 );
 
 export const clearCurrentlySelectedAgent = createAction(
@@ -54,7 +55,7 @@ export const loadAgencyStaffDetailSuccess = createAction(
 
 export const loadAgencyStaffDetailFailure = createAction(
   '[Agency Staff Detail] Load Agency Staff Detail Failure',
-  props<{ error: any }>()
+  props<{ errorResponse: ApiError }>()
 );
 
 export const updateStaffDemographics = createAction(
@@ -64,7 +65,11 @@ export const updateStaffDemographics = createAction(
 
 export const updateStaffDemographicsFailure = createAction(
   '[Agency Staff Detail] Update Staff Demographics Failure',
-  props<{ agencyStaff: AgencyStaffDetailVM; update: DemographicsUpdate }>()
+  props<{
+    agencyStaff: AgencyStaffDetailVM;
+    update: DemographicsUpdate;
+    errorResponse: ApiError;
+  }>()
 );
 
 export const updateStaffEmail = createAction(
@@ -74,5 +79,9 @@ export const updateStaffEmail = createAction(
 
 export const updateStaffEmailFailure = createAction(
   '[Agency Staff Detail] Update Staff Email Failure',
-  props<{ agencyStaff: AgencyStaffDetailVM; newEmails: AgentEmail[] }>()
+  props<{
+    agencyStaff: AgencyStaffDetailVM;
+    newEmails: AgentEmail[];
+    errorResponse: ApiError;
+  }>()
 );

@@ -102,4 +102,10 @@
   </div>
 </nav>
 <router-outlet></router-outlet>
-<div class="alert-container"></div>
+<div class="toasts-container">
+  <hbx-toast
+    *ngFor="let toast of toastsFacade.visibleToasts$ | async"
+    [toast]="toast"
+    (dismissToast)="dismissToast($event)"
+  ></hbx-toast>
+</div>

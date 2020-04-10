@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { createEffect } from '@ngrx/effects';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 import {
   RoleChangeRequest,
   DemographicsUpdate,
-  EmailUpdate,
   AgentEmail,
   EmailKind,
+  ApiError,
 } from '@hbx/api-interfaces';
 import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
+import { addToast, ToastType } from '@hbx/shared/notifications/toasts';
 
 import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffActions from './agency-staff.actions';
@@ -36,11 +37,8 @@ export class AgencyStaffEffects {
       },
       onError: (
         _action: ReturnType<typeof AgencyStaffActions.loadAgencyStaff>,
-        error: any
-      ) => {
-        console.error('Error', error);
-        return AgencyStaffActions.loadAgencyStaffFailure({ error });
-      },
+        e: ApiError
+      ) => AgencyStaffActions.loadAgencyStaffFailure({ errorResponse: e }),
     })
   );
 
@@ -57,10 +55,8 @@ export class AgencyStaffEffects {
             )
           );
       },
-      onError: (a: ActivatedRouteSnapshot, error: any) => {
-        console.error('Error', error);
-        return AgencyStaffActions.loadAgencyStaffDetailFailure({ error });
-      },
+      onError: (a: ActivatedRouteSnapshot, e: any) =>
+        AgencyStaffActions.loadAgencyStaffDetailFailure({ errorResponse: e }),
     })
   );
 
@@ -78,7 +74,7 @@ export class AgencyStaffEffects {
         },
         undoAction: (
           action: ReturnType<typeof AgencyStaffActions.terminateAgencyRole>,
-          _state
+          e: ApiError
         ) => {
           console.log('UNDOING ROLE TERMINATION');
           const { from, to } = action.request;
@@ -92,6 +88,7 @@ export class AgencyStaffEffects {
 
           return AgencyStaffActions.terminateAgencyRoleFailure({
             request: undoRequest,
+            errorResponse: e,
           });
         },
       }
@@ -114,7 +111,8 @@ export class AgencyStaffEffects {
         undoAction: (
           action: ReturnType<
             typeof AgencyStaffActions.terminateAgencyRoleDetailPage
-          >
+          >,
+          e: ApiError
         ) => {
           console.log('UNDOING ROLE TERMINATION');
           const { from, to } = action.request;
@@ -128,6 +126,7 @@ export class AgencyStaffEffects {
 
           return AgencyStaffActions.terminateAgencyRoleDetailPageFailure({
             request: undoRequest,
+            errorResponse: e,
           });
         },
       }
@@ -148,7 +147,8 @@ export class AgencyStaffEffects {
             .pipe(switchMap(() => of<any>()));
         },
         undoAction: (
-          action: ReturnType<typeof AgencyStaffActions.updateStaffDemographics>
+          action: ReturnType<typeof AgencyStaffActions.updateStaffDemographics>,
+          errorResponse: ApiError
         ) => {
           const { agencyStaff } = action;
 
@@ -161,6 +161,7 @@ export class AgencyStaffEffects {
           return AgencyStaffActions.updateStaffDemographicsFailure({
             agencyStaff,
             update,
+            errorResponse: errorResponse,
           });
         },
       }
@@ -177,7 +178,8 @@ export class AgencyStaffEffects {
           .pipe(switchMap(() => of<any>()));
       },
       undoAction: (
-        action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>
+        action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>,
+        error: ApiError
       ) => {
         const { agencyStaff } = action;
 
@@ -192,15 +194,65 @@ export class AgencyStaffEffects {
         return AgencyStaffActions.updateStaffEmailFailure({
           agencyStaff,
           newEmails: update,
+          errorResponse: error,
         });
       },
     })
+  );
+
+  updateDemographicsErrorNotification$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AgencyStaffActions.updateStaffDemographicsFailure),
+      map(({ errorResponse }) =>
+        addToast({
+          request: {
+            heading: 'Update staff failed',
+            message: errorResponse.error.message,
+            type: ToastType.Error,
+          },
+        })
+      )
+    )
+  );
+
+  updateEmailErrorNotification$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AgencyStaffActions.updateStaffEmailFailure),
+      map(({ errorResponse }) =>
+        addToast({
+          request: {
+            heading: 'Update email failed',
+            message: errorResponse.error.message,
+            type: ToastType.Error,
+          },
+        })
+      )
+    )
+  );
+
+  terminateRoleErrorNotification$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        AgencyStaffActions.terminateAgencyRoleDetailPageFailure,
+        AgencyStaffActions.terminateAgencyRoleFailure
+      ),
+      map(({ errorResponse }) =>
+        addToast({
+          request: {
+            heading: 'Terminate role failed',
+            message: errorResponse.error.message,
+            type: ToastType.Error,
+          },
+        })
+      )
+    )
   );
 
   constructor(
     private dataPersistence: DataPersistence<
       fromAgencyStaff.AgencyStaffPartialState
     >,
-    private agenciesApiService: AgenciesApiService
+    private agenciesApiService: AgenciesApiService,
+    private actions$: Actions
   ) {}
 }

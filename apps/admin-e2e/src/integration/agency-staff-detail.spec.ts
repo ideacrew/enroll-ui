@@ -73,7 +73,10 @@ describe('Agency Staff Detail Page', () => {
     cy.route({
       method: 'post',
       url: '**/terminate/**',
-      response: {},
+      response: {
+        status: 'error',
+        message: 'Unknown error',
+      },
       status: 500,
     }).as('terminateRole');
 
@@ -86,6 +89,7 @@ describe('Agency Staff Detail Page', () => {
     ).click();
 
     cy.wait('@terminateRole');
+    cy.get('.toast-message').contains('Unknown error');
 
     cy.get(
       '.change-history .status-changes .association-state.terminated'
@@ -145,7 +149,10 @@ describe('Agency Staff Detail Page', () => {
     cy.route({
       method: 'PATCH',
       url: `**/${_id}`,
-      response: { status: 'success' },
+      response: {
+        status: 'error',
+        message: 'Given details match another record.',
+      },
       status: 409,
     }).as('changeDemographics');
 
@@ -156,6 +163,7 @@ describe('Agency Staff Detail Page', () => {
       .type('Ted');
     cy.get('#save-demographics-button').click();
     cy.wait('@changeDemographics');
+    cy.get('.toast-message').contains('Given details match another record.');
     cy.get('#staff-name-heading').contains(`${first_name} ${last_name}`);
   });
 
@@ -182,7 +190,7 @@ describe('Agency Staff Detail Page', () => {
     cy.route({
       method: 'PATCH',
       url: `**/${_id}/email`,
-      response: { status: 'success' },
+      response: { status: 'error', message: 'Person not found' },
       status: 400,
     }).as('changeEmail');
 
@@ -190,6 +198,7 @@ describe('Agency Staff Detail Page', () => {
     cy.get('#email-input-1').clear().type('ted@example.com');
     cy.get('#save-email-button').should('not.be.disabled').click();
     cy.wait('@changeEmail');
+    cy.get('.toast-message').contains('Person not found');
 
     cy.get('#email-display-1').contains(firstEmail.address);
   });

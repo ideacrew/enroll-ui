@@ -12,6 +12,7 @@ import { NxModule } from '@nrwl/angular';
 
 import { authInterceptorInit } from '@hbx/auth';
 import { UserStoreModule } from '@hbx/user/store';
+import { ToastsModule } from '@hbx/shared/notifications/toasts';
 
 import { AdminShellComponent } from './admin-shell/admin-shell.component';
 
@@ -55,6 +56,7 @@ import { AdminShellComponent } from './admin-shell/admin-shell.component';
       serializer: DefaultRouterStateSerializer,
     }),
     UserStoreModule,
+    ToastsModule,
   ],
   providers: [authInterceptorInit],
   declarations: [AdminShellComponent],

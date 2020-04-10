@@ -1,0 +1,44 @@
+.toast-container {
+  --border-color: var(--blue-060);
+  --background-color: var(--blue-010);
+  --text-color: var(--neutral-080);
+
+  display: block;
+  position: relative;
+  border-radius: 2px;
+  background-color: var(--background-color);
+  box-shadow: var(--box-shadow-010);
+  margin-top: 1rem;
+  overflow: hidden;
+  font-size: var(--s0);
+
+  &.error {
+    --background-color: var(--red-010);
+    --border-color: var(--red-060);
+  }
+}
+
+.toast-heading {
+  font-size: 0.75rem;
+  margin-bottom: var(--s-1);
+  margin-right: 2rem;
+}
+
+.toast-message {
+  font-size: 1rem;
+}
+
+.message-wrapper {
+  padding: var(--s-1);
+  border-left: 4px solid var(--blue-060);
+}
+
+.toast-error {
+  border-left-color: var(--red-060);
+}
+
+.hbx-close-button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
