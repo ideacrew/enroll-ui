@@ -1,4 +1,4 @@
-name: Test, Lint, Build, e2e on Master
+name: Push to Master
 
 on:
   push:

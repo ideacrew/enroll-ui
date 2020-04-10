@@ -71,6 +71,9 @@
     },
     "user-permissions": {
       "tags": ["type:util", "scope:shared"]
+    },
+    "shared-notifications-toasts": {
+      "tags": ["type:util", "scope:shared"]
     }
   },
   "tasksRunnerOptions": {

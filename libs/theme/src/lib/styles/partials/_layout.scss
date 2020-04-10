@@ -10,7 +10,17 @@
 .content-container,
 .nav-container,
 .header-container,
-.footer-container {
+.footer-container,
+.alert-container {
   max-width: var(--content-width);
   margin: 0 auto;
+}
+
+.alert-container {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  border: 2px solid var(--red-060);
+  width: 15rem;
+  height: 2rem;
 }

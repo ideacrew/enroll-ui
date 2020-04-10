@@ -47,7 +47,10 @@
       "@hbx/user/data-access": ["libs/user/data-access/src/index.ts"],
       "@hbx/user/store": ["libs/user/store/src/index.ts"],
       "@hbx/user/utils": ["libs/user/utils/src/index.ts"],
-      "@hbx/user/permissions": ["libs/user/permissions/src/index.ts"]
+      "@hbx/user/permissions": ["libs/user/permissions/src/index.ts"],
+      "@hbx/shared/notifications/toasts": [
+        "libs/shared/notifications/toasts/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"],

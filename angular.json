@@ -761,6 +761,41 @@
           "style": "scss"
         }
       }
+    },
+    "shared-notifications-toasts": {
+      "projectType": "library",
+      "root": "libs/shared/notifications/toasts",
+      "sourceRoot": "libs/shared/notifications/toasts/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/notifications/toasts/tsconfig.lib.json",
+              "libs/shared/notifications/toasts/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/shared/notifications/toasts/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/notifications/toasts/jest.config.js",
+            "tsConfig": "libs/shared/notifications/toasts/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared/notifications/toasts/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

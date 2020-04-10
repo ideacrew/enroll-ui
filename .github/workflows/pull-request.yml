@@ -1,4 +1,4 @@
-name: Test, Lint, Build, e2e on Pull Request to Master
+name: Pull Request to Master
 
 on:
   pull_request:

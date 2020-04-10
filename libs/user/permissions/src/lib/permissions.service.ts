@@ -16,10 +16,13 @@ export class PermissionsService {
   }
 
   checkPermission(requiredPermission: string): boolean {
-    return this.existingPermissions.includes(requiredPermission);
+    return this.existingPermissions?.includes(requiredPermission);
   }
 
   checkPermissions(requiredPermissions: string[]): boolean {
-    return hasAllPermissions(this.existingPermissions, requiredPermissions);
+    return (
+      this.existingPermissions &&
+      hasAllPermissions(this.existingPermissions, requiredPermissions)
+    );
   }
 }
