@@ -72,12 +72,11 @@
 
 :root {
   --viewport-scale: 0.2vw;
-
-  font-size: calc(1rem + var(--viewport-scale));
-
   --font-family: 'Open Sans', sans-serif;
   --heading-line-height: 1.15;
   --heading-font-weight: 700;
+
+  font-size: calc(1rem + var(--viewport-scale));
 }
 
 body {
