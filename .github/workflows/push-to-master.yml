@@ -115,7 +115,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Cache Cypress
-        id: cache-cypress
+        id: cypress-cache
         uses: actions/cache@v1
         with:
           path: ~/.cache/Cypress
@@ -123,7 +123,7 @@ jobs:
           restore-keys: |
             cypress-cache-v2-
       - name: Install Cypress
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
         run: npm i cypress@latest --save-dev
       - name: Test
         run: npx nx run-many --target=e2e --all --headless --parallel
