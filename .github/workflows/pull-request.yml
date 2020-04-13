@@ -45,9 +45,6 @@ jobs:
         run: npm ci
       - name: Build Application
         run: npm run affected:build -- --base=origin/master --parallel
-      # - name: The job has failed
-      #   if: failure()
-      #   run: ./post_build_results_ga.sh
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -79,9 +76,6 @@ jobs:
         run: npm run stylelint:ci
       - name: Lint
         run: npm run affected:lint -- --base=origin/master --parallel
-      # - name: The job has failed
-      #   if: failure()
-      #   run: ./post_build_results_ga.sh
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -111,9 +105,6 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run affected:test -- --base=origin/master~1 --parallel --bail=1
-      # - name: The job has failed
-      #   if: failure()
-      #   run: ./post_build_results_ga.sh
   e2e:
     name: e2e
     runs-on: ubuntu-latest
@@ -145,17 +136,3 @@ jobs:
         run: npm i cypress@latest --save-dev
       - name: Test
         run: npm run affected:e2e -- --base=origin/master~1 --headless --parallel
-  # - name: The job has failed
-  #   if: failure()
-  #   run: ./post_build_results_ga.sh
-  # post_results:
-  #   name: Post Results
-  #   runs-on: ubuntu-latest
-  #   needs: [test, lint, e2e, build]
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2
-  #     - name: Echo Results
-  #       env:
-  #         STATUS: passing
-  #       run: ./post_build_results_ga.sh

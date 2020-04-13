@@ -37,9 +37,6 @@ jobs:
         run: npm ci
       - name: Build Application
         run: npx nx run-many --target=build --all --parallel
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -68,13 +65,9 @@ jobs:
         run: npm run stylelint:ci
       - name: Lint
         run: npx nx run-many --target=lint --all --parallel --maxParallel=5
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
   test:
     name: Test
     runs-on: ubuntu-latest
-    # needs: lint
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -98,13 +91,9 @@ jobs:
         run: npm ci
       - name: Test
         run: npx nx run-many --target=test --all --parallel --maxParallel=5 --bail=1
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
   e2e:
     name: e2e
     runs-on: ubuntu-latest
-    # needs: test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -130,17 +119,3 @@ jobs:
         run: npm i cypress@latest --save-dev
       - name: Test
         run: npx nx run-many --target=e2e --all --headless --parallel
-      - name: The job has failed
-        if: failure()
-        run: ./post_build_results_ga.sh
-  post_results:
-    name: Post Results
-    runs-on: ubuntu-latest
-    needs: [test, lint, e2e, build]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Echo Results
-        env:
-          STATUS: passing
-        run: ./post_build_results_ga.sh
