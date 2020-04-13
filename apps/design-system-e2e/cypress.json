@@ -8,5 +8,6 @@
   "video": false,
   "videosFolder": "../../dist/cypress/apps/design-system-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/design-system-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "projectId": "kfr5ib"
 }
