@@ -114,8 +114,16 @@ jobs:
       - name: Install dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Cache Cypress
+        id: cache-cypress
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            cypress-cache-v2-
       - name: Install Cypress
-        if: steps.npm-cache.outputs.cache-hit == 'true'
+        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm i cypress@latest --save-dev
       - name: Test
         run: npx nx run-many --target=e2e --all --headless --parallel
