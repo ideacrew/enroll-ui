@@ -186,9 +186,9 @@ export function filterAgencyStaffWithNoRoles(
 }
 
 export function createAllAgencyStaffVMs(
-  agencyStaff: Array<AgencyStaff>,
+  agencyStaff: AgencyStaff[],
   agencies: Dictionary<AgencyVM>
-): Array<AgencyStaffVM | AgencyStaffDetailVM> {
+): (AgencyStaffVM | AgencyStaffDetailVM)[] {
   return agencyStaff
     .map(staff => {
       if (isStaffWithDetail(staff)) {
@@ -223,22 +223,22 @@ export function createPrimaryAgentDictionary(
   return primaryAgentDictionary;
 }
 
-export function convertAasmState(aasm_state: AgencyRoleState): AgencyRoleState {
+export function convertAasmState(aasmState: AgencyRoleState): AgencyRoleState {
   if (
-    aasm_state === AgencyRoleState.GATerminated ||
-    aasm_state === AgencyRoleState.BATerminated
+    aasmState === AgencyRoleState.GATerminated ||
+    aasmState === AgencyRoleState.BATerminated
   ) {
     return AgencyRoleState.Terminated;
   }
 
   if (
-    aasm_state === AgencyRoleState.GAPending ||
-    aasm_state === AgencyRoleState.BAPending
+    aasmState === AgencyRoleState.GAPending ||
+    aasmState === AgencyRoleState.BAPending
   ) {
     return AgencyRoleState.Pending;
   }
 
-  return aasm_state;
+  return aasmState;
 }
 
 export function isStaffWithDetail(

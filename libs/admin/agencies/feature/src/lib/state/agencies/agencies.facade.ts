@@ -14,8 +14,4 @@ export class AgenciesFacade {
   dispatch(action: Action) {
     this.store.dispatch(action);
   }
-
-  newMethod(): void {
-    console.log('method!');
-  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 import {
@@ -68,15 +68,17 @@ export class AgencyStaffEffects {
           action: ReturnType<typeof AgencyStaffActions.terminateAgencyRole>,
           _state
         ) => {
-          return this.agenciesApiService
-            .terminateAgencyRole(action.request)
-            .pipe(switchMap(() => of<any>()));
+          return (
+            this.agenciesApiService
+              .terminateAgencyRole(action.request)
+              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              .pipe(switchMap(() => of<any>()))
+          );
         },
         undoAction: (
           action: ReturnType<typeof AgencyStaffActions.terminateAgencyRole>,
           e: ApiError
         ) => {
-          console.log('UNDOING ROLE TERMINATION');
           const { from, to } = action.request;
 
           // Switch to and from in the change request
@@ -104,9 +106,13 @@ export class AgencyStaffEffects {
             typeof AgencyStaffActions.terminateAgencyRoleDetailPage
           >
         ) => {
-          return this.agenciesApiService
-            .terminateAgencyRole(action.request)
-            .pipe(switchMap(() => of<any>()));
+          return (
+            this.agenciesApiService
+              .terminateAgencyRole(action.request)
+              // tslint:disable-next-line: deprecation
+              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              .pipe(switchMap(() => of<any>()))
+          );
         },
         undoAction: (
           action: ReturnType<
@@ -114,7 +120,6 @@ export class AgencyStaffEffects {
           >,
           e: ApiError
         ) => {
-          console.log('UNDOING ROLE TERMINATION');
           const { from, to } = action.request;
 
           // Switch to and from in the change request
@@ -142,9 +147,12 @@ export class AgencyStaffEffects {
         ) => {
           const { agencyStaff, update } = action;
 
-          return this.agenciesApiService
-            .updateStaffDemographics(agencyStaff.personId, update)
-            .pipe(switchMap(() => of<any>()));
+          return (
+            this.agenciesApiService
+              .updateStaffDemographics(agencyStaff.personId, update)
+              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              .pipe(switchMap(() => of<any>()))
+          );
         },
         undoAction: (
           action: ReturnType<typeof AgencyStaffActions.updateStaffDemographics>,
@@ -161,7 +169,7 @@ export class AgencyStaffEffects {
           return AgencyStaffActions.updateStaffDemographicsFailure({
             agencyStaff,
             update,
-            errorResponse: errorResponse,
+            errorResponse,
           });
         },
       }
@@ -173,9 +181,12 @@ export class AgencyStaffEffects {
       run: (action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>) => {
         const { agencyStaff, newEmails: update } = action;
 
-        return this.agenciesApiService
-          .updateStaffEmail(agencyStaff.personId, update)
-          .pipe(switchMap(() => of<any>()));
+        return (
+          this.agenciesApiService
+            .updateStaffEmail(agencyStaff.personId, update)
+            // tslint:disable-next-line: no-unnecessary-callback-wrapper
+            .pipe(switchMap(() => of<any>()))
+        );
       },
       undoAction: (
         action: ReturnType<typeof AgencyStaffActions.updateStaffEmail>,

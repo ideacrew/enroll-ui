@@ -50,6 +50,9 @@
       "@hbx/user/permissions": ["libs/user/permissions/src/index.ts"],
       "@hbx/shared/notifications/toasts": [
         "libs/shared/notifications/toasts/src/index.ts"
+      ],
+      "@hbx/shared/google-analytics": [
+        "libs/shared/google-analytics/src/index.ts"
       ]
     }
   },

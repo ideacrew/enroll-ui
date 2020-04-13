@@ -4,8 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AdminShellModule } from '@hbx/admin/shell';
+import { TRACKING_ID } from '@hbx/shared/google-analytics';
 
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +17,12 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     AdminShellModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TRACKING_ID,
+      useValue: environment.trackingId,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

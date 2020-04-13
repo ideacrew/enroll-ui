@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'hbx-spacing',
@@ -6,8 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./spacing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpacingComponent implements OnInit {
-  constructor() {}
+export class SpacingComponent {
 
-  ngOnInit() {}
 }

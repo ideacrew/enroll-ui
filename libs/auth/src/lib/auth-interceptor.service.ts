@@ -18,7 +18,7 @@ import { AuthService } from './auth.service';
 export class AuthInterceptorService {
   constructor(private authService: AuthService) {}
 
-  public intercept(
+  intercept(
     req: HttpRequest<{}>,
     next: HttpHandler
   ): Observable<HttpEvent<{}>> {

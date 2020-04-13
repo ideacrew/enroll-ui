@@ -27,13 +27,11 @@ export const getAgenciesError = createSelector(
   (state: State) => state.error
 );
 
-export const getAllAgencies = createSelector(getAgenciesState, (state: State) =>
-  selectAll(state)
-);
+export const getAllAgencies = createSelector(getAgenciesState, selectAll);
 
 export const getAgenciesEntities = createSelector(
   getAgenciesState,
-  (state: State) => selectEntities(state)
+  selectEntities
 );
 
 export const getSelectedId = createSelector(

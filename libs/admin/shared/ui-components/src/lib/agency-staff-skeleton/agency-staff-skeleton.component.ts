@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'hbx-agency-staff-skeleton',
@@ -6,8 +6,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./agency-staff-skeleton.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgencyStaffSkeletonComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class AgencyStaffSkeletonComponent {}

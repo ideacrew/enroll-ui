@@ -34,8 +34,6 @@ const toastsReducer = createReducer(
       dismissed: false,
     };
 
-    console.log({ toastMessage });
-
     return toastsAdapter.addOne(toastMessage, state);
   }),
   on(ToastsActions.dismissToast, (state, { toastId }) => {

@@ -3,7 +3,7 @@ export interface HbxUser {
 }
 
 export interface HbxPermissions {
-  [permission_name: string]: boolean;
+  [permissionName: string]: boolean;
 }
 
 export type CurrentUser = HbxUser & HbxPermissions;

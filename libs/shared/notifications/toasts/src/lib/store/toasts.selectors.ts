@@ -14,13 +14,12 @@ export const getToastsState = createFeatureSelector<ToastsPartialState, State>(
 
 const { selectAll, selectEntities } = toastsAdapter.getSelectors();
 
-export const getAllToasts = createSelector(getToastsState, (state: State) =>
-  selectAll(state)
+export const getAllToasts = createSelector(getToastsState, selectAll
 );
 
 export const getToastsEntities = createSelector(
   getToastsState,
-  (state: State) => selectEntities(state)
+  selectEntities
 );
 
 export const getVisibleToasts = createSelector(

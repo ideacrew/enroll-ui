@@ -28,12 +28,12 @@ export const getPrimaryAgentsError = createSelector(
 
 export const getAllPrimaryAgents = createSelector(
   getPrimaryAgentsState,
-  (state: State) => selectAll(state)
+  selectAll
 );
 
 export const getPrimaryAgentsEntities = createSelector(
   getPrimaryAgentsState,
-  (state: State) => selectEntities(state)
+  selectEntities
 );
 
 export const getSelectedId = createSelector(

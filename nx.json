@@ -74,6 +74,9 @@
     },
     "shared-notifications-toasts": {
       "tags": ["type:util", "scope:shared"]
+    },
+    "shared-google-analytics": {
+      "tags": ["type:util", "scope:shared"]
     }
   },
   "tasksRunnerOptions": {

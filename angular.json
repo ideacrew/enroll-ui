@@ -796,6 +796,41 @@
           "style": "scss"
         }
       }
+    },
+    "shared-google-analytics": {
+      "projectType": "library",
+      "root": "libs/shared/google-analytics",
+      "sourceRoot": "libs/shared/google-analytics/src",
+      "prefix": "hbx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/google-analytics/tsconfig.lib.json",
+              "libs/shared/google-analytics/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/shared/google-analytics/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/google-analytics/jest.config.js",
+            "tsConfig": "libs/shared/google-analytics/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared/google-analytics/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

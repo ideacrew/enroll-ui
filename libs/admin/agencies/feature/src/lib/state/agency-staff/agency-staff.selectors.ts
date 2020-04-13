@@ -50,12 +50,12 @@ export const selectedAgentDetail = createSelector(
 
 export const getAllAgencyStaff = createSelector(
   getAgencyStaffState,
-  (state: State) => selectAll(state)
+  selectAll
 );
 
 export const getAgencyStaffEntities = createSelector(
   getAgencyStaffState,
-  (state: State) => selectEntities(state)
+  selectEntities
 );
 
 export const getSelectedId = createSelector(

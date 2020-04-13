@@ -48,7 +48,7 @@ export function mockOneFullAgencyStaff(
 
   const [role] = partialAgencyStaff.agency_roles;
 
-  const agency_role: AgencyRole = {
+  const agencyRole: AgencyRole = {
     ...role,
     history: transitions,
   };
@@ -74,7 +74,7 @@ export function mockOneFullAgencyStaff(
     ],
     dob: faker.date.past(20, 'Jan 1, 1980').toISOString(),
     ssn: faker.random.number({ min: 111111111, max: 999999999 }).toString(),
-    agency_roles: [agency_role],
+    agency_roles: [agencyRole],
     has_active_enrollment: faker.random.boolean(),
   };
 
