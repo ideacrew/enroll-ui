@@ -37,34 +37,6 @@ jobs:
         run: npm ci
       - name: Build Application
         run: npx nx run-many --target=build --all --parallel
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1.1.0
-        with:
-          node-version: '12.x'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node12-
-      - name: Install dependencies
-        # https://github.com/actions/cache/issues/193
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Stylelint
-        run: npm run stylelint:ci
-      - name: Lint
-        run: npx nx run-many --target=lint --all --parallel --maxParallel=5
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -89,7 +61,7 @@ jobs:
         # https://github.com/actions/cache/issues/193
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
-      - name: Test
+      - name: Run unit tests
         run: npx nx run-many --target=test --all --parallel --maxParallel=5 --bail=1
   e2e:
     name: e2e
@@ -125,5 +97,5 @@ jobs:
       - name: Install Cypress
         if: steps.cypress-cache.outputs.cache-hit != 'true'
         run: npm i cypress@latest --save-dev
-      - name: Test
+      - name: Run end to end tests
         run: npx nx run-many --target=e2e --all --headless --parallel
