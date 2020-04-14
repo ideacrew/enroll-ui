@@ -69,7 +69,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node12-
       - name: Install dependencies
-        # https://github.com/actions/cache/issues/193
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run unit tests
