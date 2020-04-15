@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 
 import { TRACKING_ID } from './trackingId';
+import { removeAuthToken } from './removeAuthToken';
 
 declare var gtag: any;
 
@@ -8,7 +9,7 @@ declare var gtag: any;
   providedIn: 'root',
 })
 export class GoogleAnalyticsService {
-  constructor(@Inject(TRACKING_ID) public trackingId: string) {}
+  constructor(@Inject(TRACKING_ID) private trackingId: string) {}
 
   // Sets the userId for tracking
   // https://developers.google.com/analytics/devguides/collection/gtagjs/cookies-user-id#set_user_id
@@ -23,8 +24,10 @@ export class GoogleAnalyticsService {
   }
 
   sendPage(path: string): void {
-    gtag('config', this.trackingId, {
-      page_path: path,
-    });
+    if (this.trackingId.length > 0) {
+      gtag('config', this.trackingId, {
+        page_path: removeAuthToken(path),
+      });
+    }
   }
 }
