@@ -10,7 +10,10 @@
     "build": "ng build",
     "build:admin": "ng build --project=admin --configuration=production --baseHref=\"/admin/\"",
     "test": "ng test",
+    "test-everything": "nx run-many --target=test --all --parallel --maxParallel=5",
+    "test-affected": "nx affected:test --base=origin/master --parallel --maxParallel=5",
     "lint": "npx stylelint \"**/*.scss\" && nx workspace-lint && ng lint",
+    "lint-everything": "npx stylelint \"**/*.scss\" && nx workspace-lint && ng lint",
     "stylelint:ci": "stylelint \"**/*.scss\"",
     "lint:fix": "npx stylelint \"**/*.scss\" --fix && nx workspace-lint --fix && ng lint --fix",
     "e2e": "ng e2e",
@@ -36,7 +39,8 @@
     "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod/admin --delete",
     "deploy:hotfix": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-hotfix --delete",
     "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets",
-    "sanity-check": "npx stylelint \"**/*.scss\" && npm run affected:lint -- --base=origin/master --parallel --maxParallel=5"
+    "lint-check": "concurrently \"npx stylelint \"**/*.scss\"\" \"npm run affected:lint -- --base=origin/master --parallel --maxParallel=5\"",
+    "full-check": "concurrently \"npm run test-affected\" \"npm run e2e:admin:ci\" \"npm run build:admin\""
   },
   "engines": {
     "node": ">=12"
@@ -75,6 +79,7 @@
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.2.2",
+    "concurrently": "^5.1.0",
     "core-js": "^3.6.4",
     "cypress": "^4.4.0",
     "dotenv": "6.2.0",
@@ -95,7 +100,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run sanity-check"
+      "pre-commit": "npm run lint-check",
+      "pre-push": "npm run full-check"
     }
   }
 }
