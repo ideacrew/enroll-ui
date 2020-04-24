@@ -155,10 +155,6 @@
             "onlyDependOnLibsWithTags": ["scope:admin", "scope:shared"]
           },
           {
-            "sourceTag": "scope:design-system",
-            "onlyDependOnLibsWithTags": ["scope:design-system", "scope:shared"]
-          },
-          {
             "sourceTag": "scope:shared",
             "onlyDependOnLibsWithTags": ["scope:shared"]
           },

@@ -22,14 +22,6 @@
     "theme": {
       "tags": ["type:theme", "scope:shared"]
     },
-    "design-system": {
-      "tags": ["type:app", "scope:design-system"],
-      "implicitDependencies": ["theme"]
-    },
-    "design-system-e2e": {
-      "tags": ["type:e2e", "scope:design-system"],
-      "implicitDependencies": ["design-system"]
-    },
     "api-interfaces": {
       "tags": ["type:util", "scope:shared"]
     },

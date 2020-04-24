@@ -6,7 +6,6 @@
     "ng": "ng",
     "nx": "nx",
     "start:admin": "ng serve --project=admin",
-    "start:design": "ng serve --project=design-system",
     "build": "ng build",
     "build:admin": "ng build --project=admin --configuration=production --baseHref=\"/admin/\"",
     "test": "ng test",
