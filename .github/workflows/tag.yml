@@ -33,7 +33,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Application
-        run: npx nx run-many --target=build --all --parallel
+        run: npm run build:admin
       - name: Compress Artifacts
         run: |
           cd dist/apps/admin
