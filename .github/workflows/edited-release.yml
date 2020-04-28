@@ -2,7 +2,7 @@ on:
   release:
     types: [edited]
 
-name: Upload and Deploy release asset
+name: Re-publish release and re-deploy artifact
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
