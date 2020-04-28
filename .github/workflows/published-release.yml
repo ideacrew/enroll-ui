@@ -43,3 +43,13 @@ jobs:
           asset_path: ./admin.zip
           asset_name: admin.zip
           asset_content_type: application/zip
+      - name: Deploy to Production S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.PROD_AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: dist/apps/admin
+          DEST_DIR: admin

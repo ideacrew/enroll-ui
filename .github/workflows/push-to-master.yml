@@ -125,3 +125,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: admin-directory
           DEST_DIR: admin
+      - name: Delete Artifact
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: admin-artifact
