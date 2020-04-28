@@ -2,8 +2,9 @@ on:
   release:
     types:
       - published
+      - edited
 
-name: Upload release asset
+name: Upload and Deploy release asset
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +42,7 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./admin.zip
-          asset_name: admin.zip
+          asset_name: admin-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
       - name: Deploy to Production S3
         uses: jakejarvis/s3-sync-action@master
