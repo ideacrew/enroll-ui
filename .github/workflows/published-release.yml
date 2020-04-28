@@ -1,8 +1,6 @@
 on:
   release:
-    types:
-      - published
-      - edited
+    types: [published]
 
 name: Upload and Deploy release asset
 
@@ -30,16 +28,17 @@ jobs:
         uses: actions/setup-node@v1.1.0
         with:
           node-version: "12.x"
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node12-
+      # Caching is not supported for release events
+      # - name: Cache node modules
+      #   uses: actions/cache@v1
+      #   id: npm-cache
+      #   with:
+      #     path: node_modules
+      #     key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node12-
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+        # if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Application
         run: npm run build:admin

@@ -1,0 +1,65 @@
+on:
+  release:
+    types: [edited]
+
+name: Upload and Deploy release asset
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Information about the workflow run
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "******************************************"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Action type: ${{ github.event.action }}"
+          echo "******************************************"
+          echo $GITHUB_CONTEXT
+          echo "******************************************"
+      # - name: Checkout Code
+      #   uses: actions/checkout@v2
+      # - name: Use Node.js v12
+      #   uses: actions/setup-node@v1.1.0
+      #   with:
+      #     node-version: "12.x"
+      # Caching is not supported for release events
+      # - name: Cache node modules
+      #   uses: actions/cache@v1
+      #   id: npm-cache
+      #   with:
+      #     path: node_modules
+      #     key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node12-
+      # - name: Install dependencies
+      #   # if: steps.npm-cache.outputs.cache-hit != 'true'
+      #   run: npm ci
+      # - name: Build Application
+      #   run: npm run build:admin
+      # - name: Compress Artifacts
+      #   run: |
+      #     cd dist/apps/admin
+      #     zip -r -j ../../../admin.zip .
+      # - name: Upload Release Asset
+      #   uses: actions/upload-release-asset@v1
+      #   with:
+      #     upload_url: ${{ github.event.release.upload_url }}
+      #     asset_path: ./admin.zip
+      #     asset_name: admin-${{ github.event.release.tag_name }}.zip
+      #     asset_content_type: application/zip
+      # - name: Deploy to Production S3
+      #   uses: jakejarvis/s3-sync-action@master
+      #   with:
+      #     args: --delete
+      #   env:
+      #     AWS_S3_BUCKET: ${{ secrets.PROD_AWS_S3_BUCKET }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+      #     SOURCE_DIR: dist/apps/admin
+      #     DEST_DIR: admin
