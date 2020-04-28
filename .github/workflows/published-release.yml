@@ -14,6 +14,16 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Information about the workflow run
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "******************************************"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Action type: ${{ github.event.action }}"
+          echo "******************************************"
+          echo $GITHUB_CONTEXT
+          echo "******************************************"
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Use Node.js v12
