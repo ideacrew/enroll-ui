@@ -45,10 +45,6 @@ describe('Agency Staff', () => {
     );
   });
 
-  it('waits 10 seconds', () => {
-    cy.wait(10000);
-  });
-
   it('should return one result if an agent name is used for the search', () => {
     const [_primaryAgent, agencyStaffOne] = agencyStaff;
     getSearchBox().type(agencyStaffOne.first_name);

@@ -96,10 +96,6 @@ describe('Agency Staff Detail Page', () => {
     ).should('not.exist');
   });
 
-  it('waits 10 seconds', () => {
-    cy.wait(10000);
-  });
-
   it('should allow for changing demographic information', () => {
     cy.route('PATCH', `**/${_id}`, { status: 'success' }).as(
       'changeDemographics'
