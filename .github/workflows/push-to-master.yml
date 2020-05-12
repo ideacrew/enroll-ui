@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        containers: [1, 2]
+        containers: [1, 2, 3, 4]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
