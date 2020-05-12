@@ -54,7 +54,7 @@ jobs:
         run: npm i cypress@latest --save-dev
       - name: Run end to end tests
         # run: npx nx run-many --target=e2e --all --headless --parallel --prod --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-        run: npm run e2e:admin:ci -- --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
+        run: npm run e2e:admin:ci -- --prod --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
   build:
     name: Build
     runs-on: ubuntu-latest
