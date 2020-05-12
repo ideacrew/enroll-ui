@@ -18,6 +18,9 @@ jobs:
   e2e:
     name: e2e
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        containers: [1, 2]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
