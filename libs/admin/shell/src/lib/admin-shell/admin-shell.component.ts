@@ -43,6 +43,9 @@ export class AdminShellComponent implements OnInit {
     return null;
   }
 
+  // Hello world
+  // TODO: Learn TS
+
   getTokenFromLocalStorage(): string {
     if (localStorage.getItem('token') !== undefined) {
       return localStorage.getItem('token');
