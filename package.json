@@ -59,7 +59,7 @@
     "@ngrx/router-store": "9.2.0",
     "@ngrx/store": "9.2.0",
     "@nrwl/angular": "^9.4.5",
-    "@nrwl/nx-cloud": "^9.0.7",
+    "@nrwl/nx-cloud": "^9.3.5",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"
