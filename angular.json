@@ -97,7 +97,7 @@
               "apps/admin/tsconfig.app.json",
               "apps/admin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/admin/**"]
+            "exclude": ["**/node_modules/**", "!apps/admin/**/*"]
           }
         },
         "test": {
@@ -133,7 +133,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["apps/admin-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/admin-e2e/**"]
+            "exclude": ["**/node_modules/**", "!apps/admin-e2e/**/*"]
           }
         }
       }
@@ -151,7 +151,7 @@
               "libs/theme/tsconfig.lib.json",
               "libs/theme/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/theme/**"]
+            "exclude": ["**/node_modules/**", "!libs/theme/**/*"]
           }
         },
         "test": {
@@ -183,7 +183,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**/*"]
           }
         },
         "test": {
@@ -217,7 +217,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/admin/agencies/data-access/**"
+              "!libs/admin/agencies/data-access/**/*"
             ]
           }
         },
@@ -250,7 +250,10 @@
               "libs/admin/agencies/feature/tsconfig.lib.json",
               "libs/admin/agencies/feature/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/admin/agencies/feature/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/admin/agencies/feature/**/*"
+            ]
           }
         },
         "test": {
@@ -284,7 +287,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/admin/shared/view-models/**"
+              "!libs/admin/shared/view-models/**/*"
             ]
           }
         },
@@ -317,7 +320,7 @@
               "libs/admin/shell/tsconfig.lib.json",
               "libs/admin/shell/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/admin/shell/**"]
+            "exclude": ["**/node_modules/**", "!libs/admin/shell/**/*"]
           }
         },
         "test": {
@@ -349,7 +352,7 @@
               "libs/utils/testing/tsconfig.lib.json",
               "libs/utils/testing/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/utils/testing/**"]
+            "exclude": ["**/node_modules/**", "!libs/utils/testing/**/*"]
           }
         },
         "test": {
@@ -383,7 +386,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/admin/shared/ui-components/**"
+              "!libs/admin/shared/ui-components/**/*"
             ]
           }
         },
@@ -416,7 +419,7 @@
               "libs/auth/tsconfig.lib.json",
               "libs/auth/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/auth/**"]
+            "exclude": ["**/node_modules/**", "!libs/auth/**/*"]
           }
         },
         "test": {
@@ -450,7 +453,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/utils/data-transformation/**"
+              "!libs/utils/data-transformation/**/*"
             ]
           }
         },
@@ -483,7 +486,10 @@
               "libs/utils/form-validators/tsconfig.lib.json",
               "libs/utils/form-validators/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/utils/form-validators/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/utils/form-validators/**/*"
+            ]
           }
         },
         "test": {
@@ -515,7 +521,7 @@
               "libs/user/data-access/tsconfig.lib.json",
               "libs/user/data-access/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/user/data-access/**"]
+            "exclude": ["**/node_modules/**", "!libs/user/data-access/**/*"]
           }
         },
         "test": {
@@ -547,7 +553,7 @@
               "libs/user/store/tsconfig.lib.json",
               "libs/user/store/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/user/store/**"]
+            "exclude": ["**/node_modules/**", "!libs/user/store/**/*"]
           }
         },
         "test": {
@@ -579,7 +585,7 @@
               "libs/user/utils/tsconfig.lib.json",
               "libs/user/utils/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/user/utils/**"]
+            "exclude": ["**/node_modules/**", "!libs/user/utils/**/*"]
           }
         },
         "test": {
@@ -611,7 +617,7 @@
               "libs/user/permissions/tsconfig.lib.json",
               "libs/user/permissions/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/user/permissions/**"]
+            "exclude": ["**/node_modules/**", "!libs/user/permissions/**/*"]
           }
         },
         "test": {
@@ -645,7 +651,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/shared/notifications/toasts/**"
+              "!libs/shared/notifications/toasts/**/*"
             ]
           }
         },
@@ -680,7 +686,7 @@
             ],
             "exclude": [
               "**/node_modules/**",
-              "!libs/shared/google-analytics/**"
+              "!libs/shared/google-analytics/**/*"
             ]
           }
         },

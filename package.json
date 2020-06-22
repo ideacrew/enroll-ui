@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
+    "ng": "nx",
     "nx": "nx",
     "start:admin": "ng serve --project=admin",
     "build": "ng build",
@@ -34,7 +34,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points && node ./decorate-angular-cli.js",
     "deploy": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-preprod/admin --delete",
     "deploy:hotfix": "aws s3 sync ./dist/apps/admin s3://dchbx-enroll-ui-hotfix --delete",
     "deploy:assets": "aws s3 sync ./dist/apps/admin/assets s3://dchbx-enroll-ui-preprod/assets",
@@ -58,7 +58,7 @@
     "@ngrx/entity": "9.1.0",
     "@ngrx/router-store": "9.1.0",
     "@ngrx/store": "9.1.0",
-    "@nrwl/angular": "^9.2.3",
+    "@nrwl/angular": "^9.4.5",
     "@nrwl/nx-cloud": "^9.0.7",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
@@ -71,9 +71,9 @@
     "@angular/language-service": "^9.1.11",
     "@ngrx/schematics": "9.1.0",
     "@ngrx/store-devtools": "9.1.0",
-    "@nrwl/cypress": "9.2.3",
-    "@nrwl/jest": "9.2.3",
-    "@nrwl/workspace": "9.2.3",
+    "@nrwl/cypress": "9.4.5",
+    "@nrwl/jest": "9.4.5",
+    "@nrwl/workspace": "9.4.5",
     "@types/faker": "^4.1.11",
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
@@ -95,7 +95,8 @@
     "ts-jest": "24.0.0",
     "ts-node": "~7.0.0",
     "tslint": "^6.1.2",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "eslint-plugin-cypress": "^2.10.3"
   },
   "husky": {
     "hooks": {
