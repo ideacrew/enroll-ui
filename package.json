@@ -16,7 +16,7 @@
     "stylelint:ci": "stylelint \"**/*.scss\"",
     "lint:fix": "npx stylelint \"**/*.scss\" --fix && nx workspace-lint --fix && ng lint --fix",
     "e2e": "ng e2e",
-    "e2e:admin": "nx e2e --project=admin-e2e -- --watch",
+    "e2e:admin": "nx e2e --project=admin-e2e --watch",
     "e2e:admin:ci": "nx e2e --project=admin-e2e --headless",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
