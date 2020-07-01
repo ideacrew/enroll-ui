@@ -1,9 +1,9 @@
 import * as faker from 'faker/locale/en_US';
 
 import { mockAgencyWithStaff } from '@hbx/utils/testing';
+import { HbxUser, HbxPermissions } from '@hbx/api-interfaces';
 
 import { getSearchBox, getStaffList } from '../support/agency-staff.po';
-import { CurrentUser, HbxUser, HbxPermissions } from '@hbx/api-interfaces';
 
 const user: HbxUser = {
   account_name: 'admin@dc.gov',

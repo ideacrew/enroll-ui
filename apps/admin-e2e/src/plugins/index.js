@@ -12,6 +12,7 @@
 // the project's config changing)
 
 const { preprocessTypescript } = require('@nrwl/cypress/plugins/preprocessor');
+const registerCodeCoverageTasks = require('@cypress/code-coverage/task');
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -19,4 +20,5 @@ module.exports = (on, config) => {
 
   // Preprocess Typescript
   on('file:preprocessor', preprocessTypescript(config));
+  return registerCodeCoverageTasks(on, config);
 };

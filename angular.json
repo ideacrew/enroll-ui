@@ -73,10 +73,11 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "admin:build",
-            "proxyConfig": "apps/admin/src/proxy.conf.json"
+            "proxyConfig": "apps/admin/src/proxy.conf.json",
+            "extraWebpackConfig": "apps/admin-e2e/coverage.webpack.js"
           },
           "configurations": {
             "production": {

@@ -69,6 +69,8 @@
     "@angular/cli": "9.1.9",
     "@angular/compiler-cli": "^9.1.11",
     "@angular/language-service": "^9.1.11",
+    "@cypress/code-coverage": "^3.8.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@ngrx/schematics": "9.2.0",
     "@ngrx/store-devtools": "9.2.0",
     "@nrwl/cypress": "9.5.0",
@@ -86,9 +88,14 @@
     "eslint-plugin-cypress": "^2.10.3",
     "faker": "^4.1.0",
     "husky": "^4.2.5",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "istanbul-lib-coverage": "^3.0.0",
     "jest": "24.1.0",
     "jest-preset-angular": "8.0.0",
+    "ngx-build-plus": "^9.0.6",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
+    "source-map-support": "^0.5.19",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
@@ -103,5 +110,9 @@
       "pre-commit": "npm run lint-check",
       "pre-push": "npm run full-check"
     }
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true
   }
 }
