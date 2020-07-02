@@ -53,7 +53,7 @@ jobs:
         # run: npx nx run-many --target=e2e --all --headless --parallel --prod --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
         run: npm run e2e:admin:ci -- --prod --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Ensure coverage has not dropped 📈
-        run: DEBUG=check-code-coverage npx set-gh-status
+        run: DEBUG=check-code-coverage npx set-gh-status --from ~/apps/admin-e2e/coverage/coverage-summary.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
