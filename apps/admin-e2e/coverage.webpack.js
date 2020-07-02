@@ -3,8 +3,12 @@ module.exports = {
     rules: [
       {
         test: /\.(js|ts)$/,
-        loader: 'istanbul-instrumenter-loader',
-        options: { esModules: true },
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['babel-plugin-istanbul'],
+          },
+        },
         enforce: 'post',
         include: [
           require('path').join(__dirname, '..', 'admin/src'),

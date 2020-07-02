@@ -69,6 +69,7 @@
     "@angular/cli": "9.1.9",
     "@angular/compiler-cli": "^9.1.11",
     "@angular/language-service": "^9.1.11",
+    "@babel/core": "^7.10.4",
     "@cypress/code-coverage": "^3.8.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@ngrx/schematics": "9.2.0",
@@ -79,6 +80,9 @@
     "@types/faker": "^4.1.12",
     "@types/jest": "24.0.9",
     "@types/node": "^12.11.1",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "check-code-coverage": "^1.9.2",
     "codelyzer": "^5.2.2",
     "concurrently": "^5.2.0",
     "core-js": "^3.6.4",
@@ -113,6 +117,7 @@
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
+    "report-dir": "../../coverage",
     "all": true
   }
 }
