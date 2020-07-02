@@ -114,10 +114,5 @@
       "pre-commit": "npm run lint-check",
       "pre-push": "npm run full-check"
     }
-  },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "report-dir": "../../coverage",
-    "all": true
   }
 }
