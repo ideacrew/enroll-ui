@@ -5,6 +5,7 @@
     <div class="filter-bar">
       <a
         class="hbx-link status-link"
+        data-cy="all"
         [routerLink]="['/agencies/agency-staff']"
         [queryParams]="{ status: 'all' }"
         [ngClass]="{ active: vm.status === 'all' }"
@@ -12,6 +13,7 @@
       >
       <a
         class="hbx-link status-link"
+        data-cy="pending"
         [routerLink]="['/agencies/agency-staff']"
         [queryParams]="{ status: 'pending' }"
         routerLinkActive="active"
@@ -19,6 +21,7 @@
       >
       <a
         class="hbx-link status-link"
+        data-cy="active"
         [routerLink]="['/agencies/agency-staff']"
         [queryParams]="{ status: 'active' }"
         routerLinkActive="active"
@@ -26,6 +29,7 @@
       >
       <a
         class="hbx-link status-link"
+        data-cy="terminated"
         [routerLink]="['/agencies/agency-staff']"
         [queryParams]="{ status: 'terminated' }"
         routerLinkActive="active"

@@ -45,6 +45,19 @@ describe('Agency Staff', () => {
     );
   });
 
+  it('display only pending staff when Pending is selected', () => {
+    const numberOfPrimaryAgents = 1;
+    const numberOfAgencyStaff = agencyStaff.length;
+    const numberOfRealAgencyStaff = numberOfAgencyStaff - numberOfPrimaryAgents;
+
+    cy.wait('@agencies');
+    cy.wait('@agencyStaff');
+    cy.wait('@primaryAgents');
+
+    cy.get('[data-cy="pending"]').click();
+    cy.get('hbx-staff-container').should('have.length', 0);
+  });
+
   it('should return one result if an agent name is used for the search', () => {
     const [_primaryAgent, agencyStaffOne] = agencyStaff;
     getSearchBox().type(agencyStaffOne.first_name);
