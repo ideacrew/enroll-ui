@@ -1,0 +1,43 @@
+.heading-and-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demographics-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(max-content, 1fr));
+  grid-gap: var(--s0);
+}
+
+.demographic-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr max-content;
+  gap: var(--s0);
+}
+
+.year-group {
+  width: 8ch;
+
+  .dob-input {
+    max-width: 8ch;
+  }
+}
+
+.dob-input {
+  max-width: 5ch;
+}
+
+.button-group {
+  display: flex;
+}
+
+section {
+  margin-bottom: var(--s2);
+}
+
+.content-container {
+  border-top: 2px solid var(--neutral-040);
+  background-color: var(--neutral-010);
+  padding: var(--s0);
+}

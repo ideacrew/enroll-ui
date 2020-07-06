@@ -11,28 +11,15 @@ import {
 } from '@hbx/admin/shared/view-models';
 import {
   RoleChangeRequest,
-  DemographicsUpdate,
   AgentEmail,
   EmailKind,
   AgencyRoleState,
 } from '@hbx/api-interfaces';
-import { futureDate, fakeDate, minimumAge } from '@hbx/utils/form-validators';
+
 import { PermissionsService, HbxPermissions } from '@hbx/user/permissions';
 
 import { AgencyStaffFacade } from '../state/agency-staff/agency-staff.facade';
 import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions';
-
-const oldestAllowableYear = new Date().getFullYear() - 100;
-
-export interface DemographicsFormValue {
-  firstName: string;
-  lastName: string;
-  dob: {
-    year: number;
-    month: number;
-    day: number;
-  };
-}
 
 export interface ContactFormValue {
   emails: string[];
@@ -52,13 +39,11 @@ interface DetailVM {
 })
 export class AgencyStaffDetailComponent {
   HbxPermissions = HbxPermissions;
-  editingDemographics = false;
   editingContactInfo = false;
   formSubscription: Subscription;
-  demographicsForm: FormGroup;
+
   contactForm: FormGroup;
   agencyStaff: AgencyStaffDetailVM;
-  minimumAge = 18;
 
   detailVM$: Observable<DetailVM> = combineLatest([
     this.agencyStaffFacade.loaded$,
@@ -72,33 +57,7 @@ export class AgencyStaffDetailComponent {
     tap((detailVM: DetailVM) => {
       this.agencyStaff = detailVM.agent;
 
-      const { firstName, lastName, dob, email } = detailVM.agent;
-
-      this.demographicsForm = this.fb.group({
-        firstName: [firstName, [Validators.required]],
-        lastName: [lastName, [Validators.required]],
-        dob: this.fb.group(
-          {
-            year: [
-              dob.editing.year,
-              [
-                Validators.required,
-                Validators.min(oldestAllowableYear),
-                Validators.max(new Date().getFullYear()),
-              ],
-            ],
-            month: [
-              dob.editing.month,
-              [Validators.required, Validators.min(1), Validators.max(12)],
-            ],
-            day: [
-              dob.editing.day,
-              [Validators.required, Validators.min(1), Validators.max(31)],
-            ],
-          },
-          { validators: [futureDate, fakeDate, minimumAge(this.minimumAge)] }
-        ),
-      });
+      const { email } = detailVM.agent;
 
       const emailFormArray = this.createEmailArray(email);
 
@@ -120,56 +79,11 @@ export class AgencyStaffDetailComponent {
     );
   }
 
-  createUpdateFromForm(demographicsForm: FormGroup): DemographicsUpdate {
-    const {
-      firstName,
-      lastName,
-      dob,
-    } = demographicsForm.value as DemographicsFormValue;
-
-    const update: DemographicsUpdate = {
-      first_name: firstName.trim(),
-      last_name: lastName.trim(),
-      dob: `${dob.year}-${dob.month}-${dob.day}`,
-    };
-
-    return update;
-  }
-
-  cancelEditingDemographics(): void {
-    this.editingDemographics = false;
-    const { firstName, lastName, dob } = this.agencyStaff;
-    this.demographicsForm.patchValue({
-      firstName,
-      lastName,
-      dob: {
-        year: dob.editing.year,
-        month: dob.editing.month,
-        day: dob.editing.day,
-      },
-    });
-  }
-
   cancelEditingEmail(): void {
     this.editingContactInfo = false;
     const { email } = this.agencyStaff;
 
     this.contactForm.get('emails').setValue(email);
-  }
-
-  updateDemographics(): void {
-    this.editingDemographics = false;
-
-    const update = this.createUpdateFromForm(this.demographicsForm);
-
-    if (this.demographicsChanged() === true) {
-      this.agencyStaffFacade.dispatch(
-        AgencyStaffActions.updateStaffDemographics({
-          agencyStaff: this.agencyStaff,
-          update,
-        })
-      );
-    }
   }
 
   updateEmail(): void {
@@ -183,21 +97,6 @@ export class AgencyStaffDetailComponent {
         newEmails,
       })
     );
-  }
-
-  demographicsChanged(): boolean {
-    const { firstName, lastName, dob } = this.agencyStaff;
-    const update = this.createUpdateFromForm(this.demographicsForm);
-
-    const sameFirstName = firstName !== update.first_name.trim();
-    const sameLastName = lastName !== update.last_name.trim();
-
-    const { year, day, month } = dob.editing;
-    const agencyStaffDob = `${year}-${month}-${day}`;
-
-    const sameDob = agencyStaffDob !== update.dob;
-
-    return sameFirstName || sameLastName || sameDob;
   }
 
   createEmailArray(emails: EmailVM[]): FormArray {
@@ -222,27 +121,6 @@ export class AgencyStaffDetailComponent {
 
   isValidEmail(index: number): boolean {
     return this.contactEmails.at(index).valid;
-  }
-
-  getDateError(errorCode: string): boolean {
-    return this.demographicsForm.get('dob').hasError(errorCode);
-  }
-
-  /**
-   * Ensures demographics form is valid and has had changes made to it
-   */
-  validDemographicsForm(): boolean {
-    return this.demographicsForm.valid && this.demographicsChanged() === true;
-  }
-
-  validDateControl(controlName: string): boolean {
-    const formControl = this.demographicsForm.get('dob').get(controlName);
-
-    return (
-      formControl.hasError('min') === false &&
-      formControl.hasError('max') === false &&
-      formControl.hasError('required') === false
-    );
   }
 
   trackByChange(index: number, change: ChangeHistory<AgencyRoleState>): number {

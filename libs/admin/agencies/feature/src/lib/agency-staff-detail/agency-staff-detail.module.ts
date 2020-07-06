@@ -6,11 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AgencyStaffUiModule } from '@hbx/admin/shared/ui-components';
 
 import { AgencyStaffDetailComponent } from './agency-staff-detail.component';
+import { StaffDemographicsComponent } from './staff-demographics/staff-demographics.component';
 
 const routes: Routes = [{ path: '', component: AgencyStaffDetailComponent }];
 
 @NgModule({
-  declarations: [AgencyStaffDetailComponent],
+  declarations: [AgencyStaffDetailComponent, StaffDemographicsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

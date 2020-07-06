@@ -58,12 +58,6 @@ section {
   margin-bottom: var(--s0);
 }
 
-.demographics-container {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(max-content, 1fr));
-  grid-gap: var(--s0);
-}
-
 .input-group .hbx-body-s {
   color: var(--neutral-070);
 }
@@ -74,32 +68,15 @@ section {
   align-items: center;
 }
 
-.dob-input {
-  max-width: 5ch;
-}
-
 .button-group {
   display: flex;
 }
 
-.email-array,
-.demographic-form {
+.email-array {
   display: grid;
   gap: var(--s0);
 }
 
-.demographic-form {
-  grid-template-columns: 1fr 1fr max-content;
-}
-
 .email-array {
   grid-template-columns: repeat(3, 1fr);
-}
-
-.year-group {
-  width: 8ch;
-
-  .dob-input {
-    max-width: 8ch;
-  }
 }

@@ -1,0 +1,196 @@
+<!-- tslint:disable:template-cyclomatic-complexity -->
+<!-- tslint:disable:template-no-call-expression -->
+<section class="demographics-section">
+  <div class="heading-and-action">
+    <h2 class="hbx-heading-l heading-light">Staff Demographics</h2>
+    <div class="action-buttons" *ngIf="canManage">
+      <button
+        id="edit-demographics-button"
+        *ngIf="editingDemographics === false"
+        type="button"
+        class="hbx-button large outline"
+        (click)="editingDemographics = true"
+      >
+        <span>Edit</span>
+        <svg class="svg-icon" viewBox="0 0 32 32">
+          <use href="ng-assets/icons/hbx-icons.svg#edit"></use>
+        </svg>
+      </button>
+      <div class="button-group" *ngIf="editingDemographics === true">
+        <button
+          type="button"
+          class="hbx-button text-only"
+          (click)="cancelEditingDemographics()"
+        >
+          <span>Cancel</span>
+        </button>
+        <button
+          id="save-demographics-button"
+          [disabled]="validDemographicsForm() === false"
+          type="button"
+          class="hbx-button large outline"
+          (click)="updateDemographics()"
+        >
+          <span>Save</span>
+          <svg class="svg-icon" viewBox="0 0 32 32">
+            <use href="ng-assets/icons/hbx-icons.svg#checkmark"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="content-container">
+    <div
+      *ngIf="editingDemographics === false; else editModeDemographics"
+      class="view-only-information demographics-container"
+    >
+      <div class="input-group">
+        <h3 class="hbx-body-s">Name</h3>
+        <span>{{ agencyStaff.firstName }} {{ agencyStaff.lastName }}</span>
+      </div>
+      <div class="input-group">
+        <h3 class="hbx-body-s">Date of Birth</h3>
+        <span id="staff-date-of-birth">{{
+          agencyStaff.dob.display | date
+        }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #editModeDemographics>
+  <div
+    id="has-active-enrollment"
+    *ngIf="agencyStaff.activeEnrollment === true"
+    class="hbx-information-banner warning"
+  >
+    <svg class="svg-icon" viewBox="0 0 32 32">
+      <use href="ng-assets/icons/hbx-icons.svg#warning"></use>
+    </svg>
+    <div class="notification-text">
+      <span class="notification-summary"
+        >This person has an active enrollment.</span
+      >
+      Updating their date of birth could result in a change of premiums for
+      their enrollment.
+    </div>
+  </div>
+  <form [formGroup]="demographicsForm" class="demographic-form">
+    <div
+      class="input-group text-input-group"
+      [class.ng-invalid]="
+        demographicsForm.get('firstName').hasError('required')
+      "
+    >
+      <label class="hbx-input-label" for="first-name">
+        First name
+      </label>
+      <input
+        type="text"
+        name="first-name"
+        id="first-name"
+        formControlName="firstName"
+      />
+      <div class="hbx-error-message">
+        <div *ngIf="demographicsForm.get('firstName').hasError('required')">
+          <span class="visually-hidden">Error:</span> First name is required
+        </div>
+      </div>
+    </div>
+    <div
+      class="input-group text-input-group"
+      [class.ng-invalid]="demographicsForm.get('lastName').hasError('required')"
+    >
+      <label class="hbx-input-label" for="last-name">
+        Last name
+      </label>
+      <input
+        type="text"
+        name="last-name"
+        id="last-name"
+        formControlName="lastName"
+      />
+      <div class="hbx-error-message">
+        <div *ngIf="demographicsForm.get('lastName').hasError('required')">
+          <span class="visually-hidden">Error:</span> Last name is required
+        </div>
+      </div>
+    </div>
+
+    <div formGroupName="dob" class="dob-form-group form-group">
+      <div class="dob-group input-collection">
+        <div class="input-group">
+          <label class="hbx-input-label" for="dob-month">
+            Month
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-month"
+            id="dob-month"
+            formControlName="month"
+          />
+        </div>
+        <div class="input-group">
+          <label class="hbx-input-label" for="dob-day">
+            Day
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-day"
+            id="dob-day"
+            formControlName="day"
+          />
+        </div>
+        <div class="input-group year-group">
+          <label class="hbx-input-label" for="dob-year">
+            Year
+          </label>
+          <input
+            class="dob-input"
+            type="text"
+            inputmode="numeric"
+            name="dob-year"
+            id="dob-year"
+            formControlName="year"
+          />
+        </div>
+      </div>
+
+      <!-- <div>
+        {{ demographicsForm.get('dob').get('year').errors | json }}
+      </div> -->
+
+      <div class="hbx-error-message">
+        <div *ngIf="getDateError('futureDate')">
+          <span class="visually-hidden">Error:</span> Date of birth must be in
+          the past
+        </div>
+        <div *ngIf="getDateError('notOldEnough')">
+          <span class="visually-hidden">Error:</span> Minimum age needs to be
+          {{ MINIMUM_AGE }}
+        </div>
+
+        <div *ngIf="getDateError('fakeDate')">
+          <span class="visually-hidden">Error:</span> Enter a real date of birth
+        </div>
+
+        <div *ngIf="validDateControl('day') === false">
+          <span class="visually-hidden">Error:</span> Date of birth must include
+          a valid day
+        </div>
+        <div *ngIf="validDateControl('month') === false">
+          <span class="visually-hidden">Error:</span> Date of birth must include
+          a valid month
+        </div>
+        <div *ngIf="validDateControl('year') === false">
+          <span class="visually-hidden">Error:</span> Date of birth must include
+          a valid year
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>
