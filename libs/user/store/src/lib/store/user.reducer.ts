@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { convertPermissions } from '@hbx/user/permissions';
+import { ApiError } from '@hbx/api-interfaces';
 
 import * as UserActions from './user.actions';
 
@@ -8,9 +8,8 @@ export const USER_FEATURE_KEY = 'user';
 
 export interface State {
   email?: string;
-  permissions?: string[];
   loaded: boolean; // has the User list been loaded
-  error?: string | null; // last none error (if any)
+  error?: ApiError; // last none error (if any)
 }
 
 export interface UserPartialState {
@@ -27,18 +26,16 @@ const userReducer = createReducer(
   on(UserActions.loadUser, state => ({ ...state, loaded: false, error: null })),
   on(UserActions.loadUserSuccess, (state, { user }) => {
     const { account_name, ...permissions } = user;
-    const newPermissions = convertPermissions(permissions);
 
     return {
       ...state,
       email: account_name,
-      permissions: newPermissions,
       loaded: true,
     };
   }),
   on(UserActions.loadUserFailure, (state, { error }) => ({ ...state, error }))
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: State | undefined, action: Action): State {
   return userReducer(state, action);
 }

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { AgencyProfile } from '@hbx/api-interfaces';
+import { AgencyProfile, ApiError } from '@hbx/api-interfaces';
 
 export const loadAgencies = createAction('[Agencies] Load Agencies');
 
@@ -11,5 +11,5 @@ export const loadAgenciesSuccess = createAction(
 
 export const loadAgenciesFailure = createAction(
   '[Agencies] Load Agencies Failure',
-  props<{ error: any }>()
+  props<{ error: ApiError }>()
 );

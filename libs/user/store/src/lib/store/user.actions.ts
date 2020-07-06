@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { CurrentUser } from '@hbx/api-interfaces';
+import { CurrentUser, ApiError } from '@hbx/api-interfaces';
 
 export const loadUser = createAction('[Current User] Load User');
 
@@ -11,5 +11,5 @@ export const loadUserSuccess = createAction(
 
 export const loadUserFailure = createAction(
   '[Current User] Load User Failure',
-  props<{ error: any }>()
+  props<{ error: ApiError }>()
 );

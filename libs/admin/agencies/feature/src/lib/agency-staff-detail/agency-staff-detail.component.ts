@@ -3,12 +3,18 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 
-import { AgencyStaffDetailVM, EmailVM } from '@hbx/admin/shared/view-models';
+import {
+  AgencyStaffDetailVM,
+  EmailVM,
+  ChangeHistory,
+  AgencyRoleVM,
+} from '@hbx/admin/shared/view-models';
 import {
   RoleChangeRequest,
   DemographicsUpdate,
   AgentEmail,
   EmailKind,
+  AgencyRoleState,
 } from '@hbx/api-interfaces';
 import { futureDate, fakeDate, minimumAge } from '@hbx/utils/form-validators';
 import { PermissionsService, HbxPermissions } from '@hbx/user/permissions';
@@ -23,6 +29,8 @@ interface DetailVM {
   loaded: boolean;
 }
 
+/* tslint:disable:template-cyclomatic-complexity */
+/* tslint:disable:template-no-call-expression */
 @Component({
   templateUrl: './agency-staff-detail.component.html',
   styleUrls: ['./agency-staff-detail.component.scss'],
@@ -32,14 +40,10 @@ export class AgencyStaffDetailComponent {
   HbxPermissions = HbxPermissions;
   editingDemographics = false;
   editingContactInfo = false;
-
   formSubscription: Subscription;
-
   demographicsForm: FormGroup;
   contactForm: FormGroup;
-
   agencyStaff: AgencyStaffDetailVM;
-
   minimumAge = 18;
 
   detailVM$: Observable<DetailVM> = combineLatest([
@@ -206,6 +210,9 @@ export class AgencyStaffDetailComponent {
     return this.demographicsForm.get('dob').hasError(errorCode);
   }
 
+  /**
+   * Ensures demographics form is valid and has had changes made to it
+   */
   validDemographicsForm(): boolean {
     return this.demographicsForm.valid && this.demographicsChanged() === true;
   }
@@ -218,5 +225,17 @@ export class AgencyStaffDetailComponent {
       formControl.hasError('max') === false &&
       formControl.hasError('required') === false
     );
+  }
+
+  trackByChange(index: number, change: ChangeHistory<AgencyRoleState>): number {
+    return change.changedAt.getTime();
+  }
+
+  trackByRole(index: number, role: AgencyRoleVM): string {
+    return role.roleId;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }

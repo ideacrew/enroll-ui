@@ -1,3 +1,5 @@
+<!-- tslint:disable:template-cyclomatic-complexity -->
+<!-- tslint:disable:template-no-call-expression -->
 <ng-container *ngIf="detailVM$ | async as vm">
   <ng-container *ngIf="vm.loaded">
     <section>
@@ -14,7 +16,7 @@
         <div
           class="action-buttons"
           *ngIf="
-            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+            permissionsService.hbxPermissions[HbxPermissions.ManageAgencyStaff]
           "
         >
           <button
@@ -78,7 +80,7 @@
         <div
           class="action-buttons"
           *ngIf="
-            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+            permissionsService.hbxPermissions[HbxPermissions.ManageAgencyStaff]
           "
         >
           <button
@@ -140,7 +142,7 @@
           *ngFor="let role of vm.agent.agencyRoles"
           [role]="role"
           [canManage]="
-            permissionsService.checkPermission(HbxPermissions.ManageAgencyStaff)
+            permissionsService.hbxPermissions[HbxPermissions.ManageAgencyStaff]
           "
           [agencyStaff]="vm.agent"
           (terminateRole)="terminateAgencyRole($event)"
@@ -153,7 +155,10 @@
     <section>
       <h2 class="hbx-heading-l heading-light">History of Changes</h2>
       <div class="content-container history-container">
-        <div *ngFor="let role of vm.agent.agencyRoles" class="change-history">
+        <div
+          *ngFor="let role of vm.agent.agencyRoles; trackBy: trackByRole"
+          class="change-history"
+        >
           <h3 class="hbx-heading-m heading-light agency-name">
             {{ role.agencyName }}
           </h3>
@@ -165,7 +170,9 @@
             class="status-changes"
             *ngIf="role.changeHistory.length > 0; else noChanges"
           >
-            <ng-container *ngFor="let change of role.changeHistory">
+            <ng-container
+              *ngFor="let change of role.changeHistory; trackBy: trackByChange"
+            >
               <span class="changed-at hbx-body-s">{{
                 change.changedAt | date: 'short'
               }}</span>
@@ -282,6 +289,7 @@
             />
           </div>
         </div>
+
         <!-- <div>
           {{ demographicsForm.get('dob').get('year').errors | json }}
         </div> -->
@@ -322,7 +330,13 @@
 <ng-template #editModeContactInfo>
   <form [formGroup]="contactForm" class="contact-form">
     <div formArrayName="emails" class="email-array grid">
-      <ng-container *ngFor="let email of contactEmails.controls; index as i">
+      <ng-container
+        *ngFor="
+          let email of contactEmails.controls;
+          index as i;
+          trackBy: trackByIndex
+        "
+      >
         <div
           id="email-group-{{ i + 1 }}"
           class="email-group input-group"

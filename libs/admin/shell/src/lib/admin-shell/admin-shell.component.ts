@@ -22,7 +22,7 @@ export class AdminShellComponent implements OnInit {
     public toastsFacade: ToastsFacade
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authService.setToken(
       this.getTokenFromUrl() || this.getTokenFromLocalStorage()
     );

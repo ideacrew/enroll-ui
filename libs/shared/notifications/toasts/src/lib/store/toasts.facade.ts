@@ -13,7 +13,11 @@ export class ToastsFacade {
 
   constructor(private store: Store) {}
 
-  dispatch(action: Action) {
+  dispatch(action: Action): void {
     this.store.dispatch(action);
+  }
+
+  trackById(index: number, toast: ToastsEntity): number {
+    return toast.id;
   }
 }

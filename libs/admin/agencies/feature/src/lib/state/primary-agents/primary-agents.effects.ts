@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import * as fromPrimaryAgents from './primary-agents.reducer';
 import * as PrimaryAgentsActions from './primary-agents.actions';
 import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
+import { ApiError } from '@hbx/api-interfaces';
 
 @Injectable()
 export class PrimaryAgentsEffects {
@@ -26,7 +27,7 @@ export class PrimaryAgentsEffects {
 
       onError: (
         _action: ReturnType<typeof PrimaryAgentsActions.loadPrimaryAgents>,
-        error
+        error: ApiError
       ) => {
         console.error('Error', error);
         return PrimaryAgentsActions.loadPrimaryAgentsFailure({ error });

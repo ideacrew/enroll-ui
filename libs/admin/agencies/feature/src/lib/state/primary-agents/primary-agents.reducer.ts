@@ -3,6 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import * as PrimaryAgentsActions from './primary-agents.actions';
 import { PrimaryAgentsEntity } from './primary-agents.models';
+import { ApiError } from '@hbx/api-interfaces';
 
 export const PRIMARYAGENTS_FEATURE_KEY = 'primaryAgents';
 
@@ -14,7 +15,7 @@ function selectAgencyProfileId(a: PrimaryAgentsEntity): string {
 export interface State extends EntityState<PrimaryAgentsEntity> {
   selectedId?: string | number; // which PrimaryAgents record has been selected
   loaded: boolean; // has the PrimaryAgents list been loaded
-  error?: string | null; // last none error (if any)
+  error?: ApiError; // last none error (if any)
 }
 
 export interface PrimaryAgentsPartialState {
@@ -53,6 +54,6 @@ const primaryAgentsReducer = createReducer(
   }))
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: State | undefined, action: Action): State {
   return primaryAgentsReducer(state, action);
 }

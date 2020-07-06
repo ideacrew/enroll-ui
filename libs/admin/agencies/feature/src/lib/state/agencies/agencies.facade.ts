@@ -10,7 +10,7 @@ export class AgenciesFacade {
 
   constructor(private store: Store) {}
 
-  dispatch(action: Action) {
+  dispatch(action: Action): void {
     this.store.dispatch(action);
   }
 }

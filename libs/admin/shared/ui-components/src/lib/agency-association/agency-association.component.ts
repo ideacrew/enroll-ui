@@ -28,11 +28,12 @@ export class AgencyAssociationComponent {
   @Input() agencyStaff: AgencyStaffVM | AgencyStaffDetailVM;
   @Input() canManage: boolean;
 
-  @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
+  @Output() readonly terminateRole: EventEmitter<
     RoleChangeRequest
-  >();
+  > = new EventEmitter<RoleChangeRequest>();
 
   terminateAgencyRole(): void {
+    this.editing = false;
     this.terminateRole.emit({
       agencyRoleId: this.role.roleId,
       agencyStaffId: this.agencyStaff.personId,

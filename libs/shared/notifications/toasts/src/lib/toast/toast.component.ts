@@ -30,5 +30,5 @@ import { ToastsEntity } from '../store/toasts.models';
 export class ToastComponent {
   @Input() toast: ToastsEntity;
 
-  @Output() dismissToast = new EventEmitter<number>();
+  @Output() readonly dismissToast = new EventEmitter<number>();
 }

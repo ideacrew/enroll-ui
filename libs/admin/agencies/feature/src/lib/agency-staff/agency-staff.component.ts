@@ -117,4 +117,8 @@ export class AgencyStaffComponent implements OnInit {
       AgencyStaffActions.terminateAgencyRole({ request })
     );
   }
+
+  trackById(index: number, agencyStaff: AgencyStaffVM): string {
+    return agencyStaff.hbxId;
+  }
 }

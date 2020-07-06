@@ -25,7 +25,7 @@ export class AgenciesFeatureShellComponent implements OnInit {
     public permissionsService: PermissionsService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.agencyStaffFacade.dispatch(AgencyStaffActions.loadAgencyStaff());
     this.agenciesFacade.dispatch(AgenciesActions.loadAgencies());
     this.primaryAgentsFacade.dispatch(PrimaryAgentsActions.loadPrimaryAgents());

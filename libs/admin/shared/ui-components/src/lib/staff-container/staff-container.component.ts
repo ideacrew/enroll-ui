@@ -6,7 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 
-import { AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import { AgencyStaffVM, AgencyRoleVM } from '@hbx/admin/shared/view-models';
 import { RoleChangeRequest } from '@hbx/api-interfaces';
 
 @Component({
@@ -19,7 +19,11 @@ export class StaffContainerComponent {
   @Input() staff: AgencyStaffVM;
   @Input() canManage: boolean;
 
-  @Output() terminateRole: EventEmitter<RoleChangeRequest> = new EventEmitter<
+  @Output() readonly terminateRole: EventEmitter<
     RoleChangeRequest
-  >();
+  > = new EventEmitter<RoleChangeRequest>();
+
+  trackByRoleId(index: number, role: AgencyRoleVM): string {
+    return role.roleId;
+  }
 }

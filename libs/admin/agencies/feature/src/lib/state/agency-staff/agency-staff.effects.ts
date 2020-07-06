@@ -55,7 +55,7 @@ export class AgencyStaffEffects {
             )
           );
       },
-      onError: (a: ActivatedRouteSnapshot, e: any) =>
+      onError: (a: ActivatedRouteSnapshot, e: ApiError) =>
         AgencyStaffActions.loadAgencyStaffDetailFailure({ errorResponse: e }),
     })
   );
@@ -71,7 +71,7 @@ export class AgencyStaffEffects {
           return (
             this.agenciesApiService
               .terminateAgencyRole(action.request)
-              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              // tslint:disable-next-line
               .pipe(switchMap(() => of<any>()))
           );
         },
@@ -110,7 +110,7 @@ export class AgencyStaffEffects {
             this.agenciesApiService
               .terminateAgencyRole(action.request)
               // tslint:disable-next-line: deprecation
-              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              // tslint:disable-next-line
               .pipe(switchMap(() => of<any>()))
           );
         },
@@ -150,7 +150,7 @@ export class AgencyStaffEffects {
           return (
             this.agenciesApiService
               .updateStaffDemographics(agencyStaff.personId, update)
-              // tslint:disable-next-line: no-unnecessary-callback-wrapper
+              // tslint:disable-next-line
               .pipe(switchMap(() => of<any>()))
           );
         },
@@ -184,7 +184,7 @@ export class AgencyStaffEffects {
         return (
           this.agenciesApiService
             .updateStaffEmail(agencyStaff.personId, update)
-            // tslint:disable-next-line: no-unnecessary-callback-wrapper
+            // tslint:disable-next-line
             .pipe(switchMap(() => of<any>()))
         );
       },

@@ -14,7 +14,7 @@
       >
     </li>
     <li
-      *ngIf="permissionsService.checkPermission(HbxPermissions.ViewAgencyStaff)"
+      *ngIf="permissionsService.hbxPermissions[HbxPermissions.ViewAgencyStaff]"
       routerLinkActive="active-link"
       class="page-navigation-list-item"
     >

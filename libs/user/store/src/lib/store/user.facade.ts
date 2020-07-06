@@ -7,11 +7,10 @@ import * as UserSelectors from './user.selectors';
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
   loaded$ = this.store.pipe(select(UserSelectors.getUserLoaded));
-  permissions$ = this.store.pipe(select(UserSelectors.getPermissions));
 
   constructor(private store: Store) {}
 
-  dispatch(action: Action) {
+  dispatch(action: Action): void {
     this.store.dispatch(action);
   }
 }

@@ -104,7 +104,10 @@
 <router-outlet></router-outlet>
 <div class="toasts-container">
   <hbx-toast
-    *ngFor="let toast of toastsFacade.visibleToasts$ | async"
+    *ngFor="
+      let toast of toastsFacade.visibleToasts$ | async;
+      trackBy: toastsFacade.trackById
+    "
     [toast]="toast"
     (dismissToast)="dismissToast($event)"
   ></hbx-toast>

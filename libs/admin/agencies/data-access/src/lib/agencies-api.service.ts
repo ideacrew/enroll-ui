@@ -61,21 +61,24 @@ export class AgenciesApiService {
   }: {
     agencyStaffId: string;
     agencyRoleId: string;
-  }): Observable<any> {
+  }): Observable<{}> {
     return this.http.post(
       `${this.api}/agencies/agency_staff/${agencyStaffId}/terminate/${agencyRoleId}`,
       {}
     );
   }
 
-  updateStaffDemographics(personId: string, update: DemographicsUpdate) {
+  updateStaffDemographics(
+    personId: string,
+    update: DemographicsUpdate
+  ): Observable<{}> {
     return this.http.patch(
       `${this.api}/agencies/agency_staff/${personId}`,
       update
     );
   }
 
-  updateStaffEmail(personId: string, update: EmailUpdate[]) {
+  updateStaffEmail(personId: string, update: EmailUpdate[]): Observable<{}> {
     return this.http.patch(
       `${this.api}/agencies/agency_staff/${personId}/email`,
       { emails: update }

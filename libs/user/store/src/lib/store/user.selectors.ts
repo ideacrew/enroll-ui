@@ -6,11 +6,6 @@ export const getUserState = createFeatureSelector<UserPartialState, State>(
   USER_FEATURE_KEY
 );
 
-export const getPermissions = createSelector(
-  getUserState,
-  (state: State) => state.permissions
-);
-
 export const getUserLoaded = createSelector(
   getUserState,
   (state: State) => state.loaded

@@ -1,6 +1,8 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
+import { ApiError } from '@hbx/api-interfaces';
+
 import * as AgenciesActions from './agencies.actions';
 import { AgenciesEntity } from './agencies.models';
 
@@ -14,7 +16,7 @@ function selectAgencyId(a: AgenciesEntity): string {
 export interface State extends EntityState<AgenciesEntity> {
   selectedId?: string | number; // which Agencies record has been selected
   loaded: boolean; // has the Agencies list been loaded
-  error?: string | null; // last none error (if any)
+  error?: ApiError; // last none error (if any)
 }
 
 export interface AgenciesPartialState {
@@ -48,6 +50,6 @@ const agenciesReducer = createReducer(
   }))
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: State | undefined, action: Action): State {
   return agenciesReducer(state, action);
 }
