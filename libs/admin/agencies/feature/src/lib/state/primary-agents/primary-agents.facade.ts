@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { select, Store, Action } from '@ngrx/store';
 
-import * as fromPrimaryAgents from './primary-agents.reducer';
 import * as PrimaryAgentsSelectors from './primary-agents.selectors';
 
 @Injectable()
@@ -17,9 +16,7 @@ export class PrimaryAgentsFacade {
     select(PrimaryAgentsSelectors.getSelected)
   );
 
-  constructor(
-    private store: Store<fromPrimaryAgents.PrimaryAgentsPartialState>
-  ) {}
+  constructor(private store: Store) {}
 
   dispatch(action: Action) {
     this.store.dispatch(action);

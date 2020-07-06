@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { select, Store, Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromToasts from './toasts.reducer';
 import * as ToastsSelectors from './toasts.selectors';
 import { ToastsEntity } from './toasts.models';
 
@@ -12,7 +11,7 @@ export class ToastsFacade {
     select(ToastsSelectors.getVisibleToasts)
   );
 
-  constructor(private store: Store<fromToasts.ToastsPartialState>) {}
+  constructor(private store: Store) {}
 
   dispatch(action: Action) {
     this.store.dispatch(action);

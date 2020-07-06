@@ -4,7 +4,6 @@ import { select, Store, Action } from '@ngrx/store';
 
 import { AgencyStaffDetailVM } from '@hbx/admin/shared/view-models';
 
-import * as fromAgencyStaff from './agency-staff.reducer';
 import * as AgencyStaffSelectors from './agency-staff.selectors';
 
 @Injectable()
@@ -18,7 +17,7 @@ export class AgencyStaffFacade {
     select(AgencyStaffSelectors.selectedAgencyStaffVM)
   );
 
-  constructor(private store: Store<fromAgencyStaff.AgencyStaffPartialState>) {}
+  constructor(private store: Store) {}
 
   dispatch(action: Action) {
     this.store.dispatch(action);
