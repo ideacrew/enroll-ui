@@ -71,12 +71,3 @@ section {
 .button-group {
   display: flex;
 }
-
-.email-array {
-  display: grid;
-  gap: var(--s0);
-}
-
-.email-array {
-  grid-template-columns: repeat(3, 1fr);
-}

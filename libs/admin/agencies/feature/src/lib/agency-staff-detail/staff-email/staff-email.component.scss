@@ -1,0 +1,25 @@
+section {
+  margin-bottom: var(--s2);
+}
+
+.content-container {
+  border-top: 2px solid var(--neutral-040);
+  background-color: var(--neutral-010);
+  padding: var(--s0);
+}
+
+.heading-and-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+}
+
+.email-array {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s0);
+}
