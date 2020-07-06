@@ -30,6 +30,7 @@ export class PrimaryAgentsEffects {
         error: ApiError
       ) => {
         console.error('Error', error);
+
         return PrimaryAgentsActions.loadPrimaryAgentsFailure({ error });
       },
     })

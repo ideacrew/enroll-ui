@@ -37,21 +37,19 @@ export class AdminShellComponent implements OnInit {
 
       // Find the equals sign, take what's after it
       const equalsIndex = search.indexOf('=');
+
       return search.substring(equalsIndex + 1);
     }
 
-    return null;
+    return undefined;
   }
-
-  // Hello world
-  // TODO: Learn TS
 
   getTokenFromLocalStorage(): string {
     if (localStorage.getItem('token') !== undefined) {
       return localStorage.getItem('token');
     }
 
-    return null;
+    return undefined;
   }
 
   dismissToast(toastId: number): void {

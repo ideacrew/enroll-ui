@@ -7,7 +7,11 @@ import {
   PrimaryAgent,
   AgencyStaffWithDetail,
 } from '@hbx/api-interfaces';
-import { AgencyVM, AgencyStaffVM } from '@hbx/admin/shared/view-models';
+import {
+  AgencyVM,
+  AgencyStaffVM,
+  AgencyStaffDetailVM,
+} from '@hbx/admin/shared/view-models';
 
 import {
   AGENCYSTAFF_FEATURE_KEY,
@@ -48,10 +52,7 @@ export const selectedAgentDetail = createSelector(
   (state: State) => state.agencyStaffDetail
 );
 
-export const getAllAgencyStaff = createSelector(
-  getAgencyStaffState,
-  selectAll
-);
+export const getAllAgencyStaff = createSelector(getAgencyStaffState, selectAll);
 
 export const getAgencyStaffEntities = createSelector(
   getAgencyStaffState,
@@ -87,7 +88,7 @@ export const getAgencyVMs = createSelector(
 const getAgencyVMEntities = createSelector(
   getAgencyVMs,
   (agencyVMs): Dictionary<AgencyVM> => {
-    return agencyVMs.reduce((dictionary, agency) => {
+    return agencyVMs.reduce((dictionary: Dictionary<AgencyVM>, agency) => {
       return {
         ...dictionary,
         [agency.agencyProfileId]: agency,
@@ -114,7 +115,7 @@ export const getAgencyStaffVMs = createSelector(
 const getAgencyStaffVMDictionary = createSelector(
   getAgencyStaffVMs,
   (agencyStaff: AgencyStaffVM[]): Dictionary<AgencyStaffVM> =>
-    agencyStaff.reduce((dictionary, staff) => {
+    agencyStaff.reduce((dictionary: Dictionary<AgencyStaffVM>, staff) => {
       return {
         ...dictionary,
         [staff.personId]: staff,
@@ -125,11 +126,12 @@ const getAgencyStaffVMDictionary = createSelector(
 export const selectedAgencyStaffVM = createSelector(
   selectedAgentDetail,
   getAgencyVMEntities,
-  (agent: AgencyStaffWithDetail, agencies: Dictionary<AgencyVM>) => {
-    if (agent !== undefined) {
-      return createSingleAgencyStaffDetailVM(agent, agencies);
-    } else {
-      return null;
-    }
-  }
+  (
+    agent: AgencyStaffWithDetail,
+    agencies: Dictionary<AgencyVM>
+  ): AgencyStaffDetailVM =>
+    agent !== undefined
+      ? createSingleAgencyStaffDetailVM(agent, agencies)
+      : // tslint:disable-next-line: no-null-keyword
+        null
 );

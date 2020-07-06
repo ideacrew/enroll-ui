@@ -61,7 +61,7 @@ export function createSingleAgencyVM(
 export function createAgencyVMDictionary(
   agencies: AgencyVM[]
 ): Dictionary<AgencyVM> {
-  return agencies.reduce((dictionary, agency) => {
+  return agencies.reduce((dictionary: Dictionary<AgencyVM>, agency) => {
     return {
       ...dictionary,
       [agency.agencyProfileId]: agency,

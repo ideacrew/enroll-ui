@@ -39,6 +39,7 @@ export function createSingleAgencyStaffVM(
 
     if (agencyVM !== undefined) {
       primaryAgent = agencyVM.primaryAgent;
+
       return hbx_id !== primaryAgent.hbxId;
     } else {
       return false;
@@ -104,6 +105,7 @@ export function createSingleAgencyStaffDetailVM(
 
     if (agencyVM !== undefined) {
       primaryAgent = agencyVM.primaryAgent;
+
       return hbx_id !== primaryAgent.hbxId;
     } else {
       return false;
@@ -211,7 +213,7 @@ export function createPrimaryAgentDictionary(
   primaryAgents: PrimaryAgent[]
 ): Dictionary<PrimaryAgent> {
   const primaryAgentDictionary: Dictionary<PrimaryAgent> = primaryAgents.reduce(
-    (dictionary, agent) => {
+    (dictionary: Dictionary<PrimaryAgent>, agent) => {
       return {
         ...dictionary,
         [agent.connected_profile_id]: agent,

@@ -7,6 +7,7 @@ import { AgenciesApiService } from '@hbx/admin/agencies/data-access';
 
 import * as fromAgencies from './agencies.reducer';
 import * as AgenciesActions from './agencies.actions';
+import { ApiError } from '@hbx/api-interfaces';
 
 @Injectable()
 export class AgenciesEffects {
@@ -27,9 +28,10 @@ export class AgenciesEffects {
 
       onError: (
         _action: ReturnType<typeof AgenciesActions.loadAgencies>,
-        error
+        error: ApiError
       ) => {
         console.error('Error', error);
+
         return AgenciesActions.loadAgenciesFailure({ error });
       },
     })

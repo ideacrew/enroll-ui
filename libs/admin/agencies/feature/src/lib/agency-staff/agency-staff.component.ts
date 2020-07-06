@@ -41,6 +41,7 @@ export class AgencyStaffComponent implements OnInit {
   );
 
   statusFilter$: Observable<string> = this.route.queryParams.pipe(
+    // tslint:disable-next-line: no-unsafe-any
     map((params: Params) => params['status'] || 'all')
   );
 

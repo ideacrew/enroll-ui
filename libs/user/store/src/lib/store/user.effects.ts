@@ -8,6 +8,7 @@ import { PermissionsService } from '@hbx/user/permissions';
 
 import * as fromUser from './user.reducer';
 import * as UserActions from './user.actions';
+import { ApiError } from '@hbx/api-interfaces';
 
 @Injectable()
 export class UserEffects {
@@ -28,8 +29,12 @@ export class UserEffects {
         );
       },
 
-      onError: (action: ReturnType<typeof UserActions.loadUser>, error) => {
+      onError: (
+        action: ReturnType<typeof UserActions.loadUser>,
+        error: ApiError
+      ) => {
         console.error('Error', error);
+
         return UserActions.loadUserFailure({ error });
       },
     })

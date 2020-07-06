@@ -64,7 +64,7 @@ const agencyStaffReducer = createReducer(
   on(AgencyStaffActions.loadAgencyStaff, state => ({
     ...state,
     loaded: false,
-    error: null,
+    error: undefined,
   })),
   on(AgencyStaffActions.loadAgencyStaffSuccess, (state, { agencyStaff }) =>
     agencyStaffAdapter.setAll(agencyStaff, { ...state, loaded: true })

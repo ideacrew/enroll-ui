@@ -38,7 +38,7 @@ const primaryAgentsReducer = createReducer(
   on(PrimaryAgentsActions.loadPrimaryAgents, state => ({
     ...state,
     loaded: false,
-    error: null,
+    error: undefined,
   })),
   on(
     PrimaryAgentsActions.loadPrimaryAgentsSuccess,

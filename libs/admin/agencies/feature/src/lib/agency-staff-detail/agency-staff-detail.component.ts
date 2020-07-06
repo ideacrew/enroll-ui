@@ -24,6 +24,20 @@ import * as AgencyStaffActions from '../state/agency-staff/agency-staff.actions'
 
 const oldestAllowableYear = new Date().getFullYear() - 100;
 
+export interface DemographicsFormValue {
+  firstName: string;
+  lastName: string;
+  dob: {
+    year: number;
+    month: number;
+    day: number;
+  };
+}
+
+export interface ContactFormValue {
+  emails: string[];
+}
+
 interface DetailVM {
   agent: AgencyStaffDetailVM;
   loaded: boolean;
@@ -107,7 +121,11 @@ export class AgencyStaffDetailComponent {
   }
 
   createUpdateFromForm(demographicsForm: FormGroup): DemographicsUpdate {
-    const { firstName, lastName, dob } = demographicsForm.value;
+    const {
+      firstName,
+      lastName,
+      dob,
+    } = demographicsForm.value as DemographicsFormValue;
 
     const update: DemographicsUpdate = {
       first_name: firstName.trim(),

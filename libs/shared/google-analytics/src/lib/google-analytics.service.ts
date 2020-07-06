@@ -1,9 +1,9 @@
+// tslint:disable:no-any no-unsafe-any
 import { Injectable, Inject } from '@angular/core';
 
 import { TRACKING_ID } from './trackingId';
 import { removeAuthToken } from './removeAuthToken';
 
-// tslint:disable-next-line: no-any
 declare var gtag: any;
 
 @Injectable({

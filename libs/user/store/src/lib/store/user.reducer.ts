@@ -23,7 +23,7 @@ export const initialState: State = {
 
 const userReducer = createReducer(
   initialState,
-  on(UserActions.loadUser, state => ({ ...state, loaded: false, error: null })),
+  on(UserActions.loadUser, state => ({ ...state, loaded: false, error: undefined })),
   on(UserActions.loadUserSuccess, (state, { user }) => {
     const { account_name, ...permissions } = user;
 

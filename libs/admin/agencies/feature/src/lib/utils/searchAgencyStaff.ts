@@ -46,6 +46,7 @@ function searchPrimaryAgent(
   return (
     roles.filter(role => {
       const fullName = `${role.primaryAgent.firstName} ${role.primaryAgent.lastName}`;
+
       return fullName.toLowerCase().includes(query);
     }).length > 0
   );

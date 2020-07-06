@@ -39,7 +39,7 @@ const agenciesReducer = createReducer(
   on(AgenciesActions.loadAgencies, state => ({
     ...state,
     loaded: false,
-    error: null,
+    error: undefined,
   })),
   on(AgenciesActions.loadAgenciesSuccess, (state, { agencies }) =>
     agenciesAdapter.setAll(agencies, { ...state, loaded: true })
