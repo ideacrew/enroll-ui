@@ -52,10 +52,6 @@ jobs:
       - name: Run end to end tests
         # run: npx nx run-many --target=e2e --all --headless --parallel --prod --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
         run: npm run e2e:admin:ci -- --prod --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: Ensure coverage has not dropped 📈
-        run: DEBUG=check-code-coverage npx set-gh-status
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
     name: Build
     runs-on: ubuntu-latest
