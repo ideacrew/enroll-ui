@@ -16,6 +16,7 @@ import {
   AgencyRoleState,
   AgencyStaffWithDetail,
   EmailKind,
+  AgentEmail,
 } from '@hbx/api-interfaces';
 import {
   getDateOfBirth,
@@ -89,7 +90,6 @@ export function createSingleAgencyStaffDetailVM(
     last_name,
     agency_roles,
     hbx_id,
-    agent_emails,
     dob,
     ssn,
     has_active_enrollment,
@@ -145,27 +145,6 @@ export function createSingleAgencyStaffDetailVM(
     return agencyRole;
   });
 
-  const workEmail = agent_emails
-    .filter(personEmail => personEmail.kind === EmailKind.Work)
-    .map(personEmail => {
-      return {
-        id: personEmail.id,
-        address: personEmail.address,
-        kind: personEmail.kind,
-      };
-    });
-
-  const email =
-    workEmail.length > 0
-      ? workEmail
-      : [
-          {
-            id: 'no-work-email',
-            address: 'No work email set',
-            kind: EmailKind.Work,
-          },
-        ];
-
   const agencyStaffVM: AgencyStaffDetailVM = {
     agencyRoles,
     firstName: first_name,
@@ -173,7 +152,7 @@ export function createSingleAgencyStaffDetailVM(
     hbxId: hbx_id,
     personId: _id,
     dob: createDobVM(dob),
-    email,
+    email: workEmail(staff.agent_emails),
     ssn,
     activeEnrollment: has_active_enrollment,
   };
@@ -259,4 +238,29 @@ export function createDobVM(
     editing: dateOfBirth,
     display: displayDob,
   };
+}
+
+function workEmail(allEmails: AgentEmail[]): AgentEmail[] {
+  const workEmails: AgentEmail[] = allEmails
+    .filter(personEmail => personEmail.kind === EmailKind.Work)
+    .map(personEmail => {
+      return {
+        id: personEmail.id,
+        address: personEmail.address,
+        kind: personEmail.kind,
+      };
+    });
+
+  const email: AgentEmail[] =
+    workEmails.length > 0
+      ? workEmails
+      : [
+          {
+            id: 'no-work-email',
+            address: 'No work email set',
+            kind: EmailKind.Work,
+          },
+        ];
+
+  return email;
 }
