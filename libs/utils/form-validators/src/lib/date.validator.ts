@@ -30,6 +30,24 @@ export function isDateInFuture(incomingDate: DateFromForm): boolean {
 
   return today.getTime() < dateObj.getTime();
 }
+export function isDateInBob(incomingDate: DateFromForm): boolean {
+  const today = new Date();
+  const dateObj = convertFormDateToObject(incomingDate);
+
+  return today.getTime() < dateObj.getTime();
+}
+export function isDateInBob2(incomingDate: DateFromForm): boolean {
+  const today = new Date();
+  const dateObj = convertFormDateToObject(incomingDate);
+
+  return today.getTime() < dateObj.getTime();
+}
+export function isDateInBob3(incomingDate: DateFromForm): boolean {
+  const today = new Date();
+  const dateObj = convertFormDateToObject(incomingDate);
+
+  return today.getTime() < dateObj.getTime();
+}
 
 export function isDateFake(incomingDate: DateFromForm): boolean {
   const { year, month, day } = incomingDate;
