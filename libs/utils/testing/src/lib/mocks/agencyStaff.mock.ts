@@ -8,6 +8,7 @@ import {
   WorkflowStateTransition,
   AgencyStaffWithDetail,
   AgencyRole,
+  AgentEmail,
 } from '@hbx/api-interfaces';
 
 export function mockOnePartialAgencyStaff(
@@ -35,43 +36,16 @@ export function mockOnePartialAgencyStaff(
 export function mockOneFullAgencyStaff(
   partialAgencyStaff: AgencyStaff
 ): AgencyStaffWithDetail {
-  const recent = faker.date.recent(10).toISOString();
-
-  const transitions: WorkflowStateTransition<AgencyRoleState>[] = [
-    {
-      _id: faker.random.uuid(),
-      from_state: AgencyRoleState.Pending,
-      to_state: AgencyRoleState.Active,
-      transition_at: recent,
-    },
-  ];
-
   const [role] = partialAgencyStaff.agency_roles;
 
   const agencyRole: AgencyRole = {
     ...role,
-    history: transitions,
+    history: mockTransitions(),
   };
 
   const agencyStaff: AgencyStaffWithDetail = {
     ...partialAgencyStaff,
-    agent_emails: [
-      {
-        address: faker.internet.email(),
-        kind: EmailKind.Work,
-        id: faker.random.uuid(),
-      },
-      {
-        address: faker.internet.email(),
-        kind: EmailKind.Work,
-        id: faker.random.uuid(),
-      },
-      {
-        address: faker.internet.email(),
-        kind: EmailKind.Work,
-        id: faker.random.uuid(),
-      },
-    ],
+    agent_emails: [mockWorkEmail(), mockWorkEmail(), mockWorkEmail()],
     dob: faker.date.past(20, 'Jan 1, 1980').toISOString(),
     ssn: faker.random.number({ min: 111111111, max: 999999999 }).toString(),
     agency_roles: [agencyRole],
@@ -96,4 +70,27 @@ export function mockPrimaryAgent(agencyProfileId: string): PrimaryAgent {
   };
 
   return primaryAgent;
+}
+
+function mockWorkEmail(): AgentEmail {
+  return {
+    address: faker.internet.email(),
+    kind: EmailKind.Work,
+    id: faker.random.uuid(),
+  };
+}
+
+function mockTransitions(): WorkflowStateTransition<AgencyRoleState>[] {
+  const recent = faker.date.recent(10).toISOString();
+
+  const transitions: WorkflowStateTransition<AgencyRoleState>[] = [
+    {
+      _id: faker.random.uuid(),
+      from_state: AgencyRoleState.Pending,
+      to_state: AgencyRoleState.Active,
+      transition_at: recent,
+    },
+  ];
+
+  return transitions;
 }
