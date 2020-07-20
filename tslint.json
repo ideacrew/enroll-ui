@@ -3,11 +3,7 @@
     "node_modules/@nrwl/workspace/src/tslint",
     "node_modules/codelyzer"
   ],
-  "extends": [
-    "tslint:recommended",
-    "ngrx-tslint-rules/recommended",
-    "rxjs-tslint-rules"
-  ],
+  "extends": ["tslint:recommended", "rxjs-tslint-rules"],
 
   "rules": {
     "adjacent-overload-signatures": true,
