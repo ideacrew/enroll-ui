@@ -1,8 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["cypress", "node", "faker"]
   },
   "lib": ["es2019"],
-  "include": ["**/*.ts", "**/*.js"]
+  "include": [],
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.e2e.json"
+    }
+  ]
 }

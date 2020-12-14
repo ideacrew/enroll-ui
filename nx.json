@@ -6,9 +6,9 @@
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tsconfig.json": "*",
     "tslint.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
   },
   "projects": {
     "admin": {
@@ -79,5 +79,8 @@
         "cacheableOperations": ["build", "test", "lint", "e2e"]
       }
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }
