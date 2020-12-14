@@ -35,7 +35,7 @@ import { AdminShellComponent } from './admin-shell/admin-shell.component';
         //   pathMatch: 'full',
         // },
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }
     ),
     NxModule.forRoot(),
 
