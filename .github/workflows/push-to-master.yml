@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-  # pull_request:
-  #   branches:
-  #     - master
+  pull_request:
+    branches:
+      - master
 
 env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
