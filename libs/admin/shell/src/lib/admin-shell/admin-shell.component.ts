@@ -24,7 +24,7 @@ export class AdminShellComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.setToken(
-      this.getTokenFromUrl() || this.getTokenFromLocalStorage()
+      this.getTokenFromLocalStorage()
     );
     this.userFacade.dispatch(loadUser());
   }
@@ -45,8 +45,8 @@ export class AdminShellComponent implements OnInit {
   }
 
   getTokenFromLocalStorage(): string {
-    if (localStorage.getItem('token') !== undefined) {
-      return localStorage.getItem('token');
+    if (localStorage.getItem('jwt') !== undefined) {
+      return localStorage.getItem('jwt');
     }
 
     return undefined;
