@@ -1,12 +1,10 @@
-name: Push to Master
+
+name: PR checks
 
 on:
-  push:
+  pull_request:
     branches:
-      - master
-  # pull_request:
-  #   branches:
-  #     - master
+      - trunk
 
 env: # https://stackoverflow.com/questions/59867124/how-can-i-access-github-action-environment-variables-within-a-bash-script-run-by
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
@@ -52,34 +50,7 @@ jobs:
       - name: Run end to end tests
         # run: npx nx run-many --target=e2e --all --headless --parallel --prod --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
         run: npm run e2e:admin:ci -- --prod --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js v12
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node12-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node12-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Build Application
-        run: npm run build:admin
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: admin-artifact
-          path: dist/apps/admin
+        
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -106,27 +77,3 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npx nx run-many --target=test --all --parallel --maxParallel=5 --bail=1
-  deploy:
-    name: Deploy to S3
-    runs-on: ubuntu-latest
-    needs: [e2e, build, test]
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: admin-artifact
-          path: admin-directory
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.DEV_AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: admin-directory
-          DEST_DIR: admin
-      - name: Delete Artifact
-        uses: geekyeggo/delete-artifact@v1
-        with:
-          name: admin-artifact
