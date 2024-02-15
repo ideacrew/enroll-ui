@@ -47,10 +47,12 @@ jobs:
       - name: Install Cypress
         if: steps.cypress-cache.outputs.cache-hit != 'true'
         run: npm i cypress@latest --save-dev
+      - name: what is the current directory
+        run: pwd ; ls -la; ls -lha apps/admin-e2e 
       - name: Run end to end tests
         # run: npx nx run-many --target=e2e --all --headless --parallel --prod --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
         run: npm run e2e:admin:ci -- --prod --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-        
+
   test:
     name: Test
     runs-on: ubuntu-latest
